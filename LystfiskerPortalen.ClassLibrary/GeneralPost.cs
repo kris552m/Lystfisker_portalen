@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class GeneralPost
+    public class GeneralPost
     {
         //Propperties
         public bool IsQuestion { get; set; }

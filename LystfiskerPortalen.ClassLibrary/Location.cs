@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Location
+    public class Location
     {
         //Properties
         public string Name { get; set; }

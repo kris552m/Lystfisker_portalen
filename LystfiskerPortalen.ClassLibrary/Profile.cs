@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Profile
+    public class Profile
     {
         //Properties
         public string Username { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Reaction
+    public class Reaction
     {
         //Propperties
         public string Icon { get; set; }

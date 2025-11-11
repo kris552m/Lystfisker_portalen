@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Fish
+    public class Fish
     {
         //Properties
         public string Name { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Comment
+    public class Comment
     {
         // Properties
         public string Text { get; set; }

@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace RazorClassLibrary
 {
-    internal class Post
+    public class Post
     {
         // Properties
         public DateTime PostTime { get; set; }

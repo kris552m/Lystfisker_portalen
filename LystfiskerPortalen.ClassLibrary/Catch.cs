@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Catch
+    public class Catch
     {
         //Properties
         public DateTime CatchTime { get; set; }

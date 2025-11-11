@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Event
+    public class Event
     {
         //Properties
         public string Title { get; set; }
