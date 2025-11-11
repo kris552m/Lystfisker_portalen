@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.Backend", "LystfiskerPortalen.Backend.csproj", "{463C9DED-97CA-497A-BED9-18DA5AC0520E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{463C9DED-97CA-497A-BED9-18DA5AC0520E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463C9DED-97CA-497A-BED9-18DA5AC0520E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463C9DED-97CA-497A-BED9-18DA5AC0520E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463C9DED-97CA-497A-BED9-18DA5AC0520E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A64278FE-04C0-4D27-8C93-DD9DF3A556F4}
+	EndGlobalSection
+EndGlobal
