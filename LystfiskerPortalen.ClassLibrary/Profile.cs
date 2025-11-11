@@ -8,5 +8,38 @@ namespace RazorClassLibrary
 {
     internal class Profile
     {
+        //Properties
+        public string Username { get; set; }
+        private string Password { get; set; }
+        public string ProfilePicture { get; set; }
+        public Profile[] Following { get; set; }
+
+        //Constructor
+        public Profile(string username, string profilePicture, Profile[] following)
+        {
+            Username = username;
+            ProfilePicture = profilePicture;
+            Following = following;
+        }
+
+        //CRUD Methods
+        public void CreateProfile()
+        {
+            // Logic to create a new profile
+        }
+        public void ReadProfile()
+        {
+            // Logic to read a profile
+        }
+        public void UpdateProfile()
+        {
+            // Logic to update a profile
+        }
+        public void DeleteProfile()
+        {
+            // Logic to delete a profile
+        }
+
+
     }
 }
