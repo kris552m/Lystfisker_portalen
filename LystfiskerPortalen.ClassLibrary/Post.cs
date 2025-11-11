@@ -14,13 +14,13 @@ namespace RazorClassLibrary
         public string Picture { get; set; }
         public string Description { get; set; }
         public Location Location { get; set; }
-        public Comments[] Comments { get; set; }
-        public Reaction[] Reactions { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<Reaction> Reactions { get; set; }
 
 
 
         // Constructor
-        public Post(DateTime postTime, string picture, string description, Location location, Comments[] comments, Reaction[] reactions)
+        public Post(DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
         {
             PostTime = postTime;
             Picture = picture;

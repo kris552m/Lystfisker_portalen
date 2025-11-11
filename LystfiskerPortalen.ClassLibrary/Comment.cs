@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    internal class Comments
+    internal class Comment
     {
         // Properties
         public string Text { get; set; }
         public DateTime CommentTime { get; set; }
-        public Reaction[] Reactions { get; set; }
+        public List<Reaction> Reactions { get; set; }
         public Profile Profile { get; set; }
 
         // Constructor
-        public Comments(string text, DateTime commentTime, Reaction[] reactions, Profile profile)
+        public Comment(string text, DateTime commentTime, List<Reaction> reactions, Profile profile)
         {
             Text = text;
             CommentTime = commentTime;

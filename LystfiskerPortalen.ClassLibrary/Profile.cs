@@ -12,10 +12,10 @@ namespace RazorClassLibrary
         public string Username { get; set; }
         private string Password { get; set; }
         public string ProfilePicture { get; set; }
-        public Profile[] Following { get; set; }
+        public List<Reaction> Following { get; set; }
 
         //Constructor
-        public Profile(string username, string profilePicture, Profile[] following)
+        public Profile(string username, string profilePicture, List<Reaction> following)
         {
             Username = username;
             ProfilePicture = profilePicture;
