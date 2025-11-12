@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public abstract class Post
     {
@@ -13,7 +13,7 @@ namespace RazorClassLibrary
         public DateTime PostTime { get; set; }
         public string Picture { get; set; }
         public string Description { get; set; }
-        public Location Location { get; set; }
+        public Location Locations { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Reaction> Reactions { get; set; }
 
@@ -29,21 +29,6 @@ namespace RazorClassLibrary
             Comments = comments;
             Reactions = reactions;
         }
-
-
-        
-        // Additional Methods
-        public List<Reaction> GetAllReactions()
-        {
-            // Logic to get all reactions for the post
-        }
-        public List<Comment> GetAllComments()
-        {
-            // Logic to get all comments for the post
-        }
-
-
-
     }
 }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class Comment
     {
@@ -21,14 +21,6 @@ namespace RazorClassLibrary
             CommentTime = commentTime;
             Reactions = reactions;
             Profile = profile;
-        }
-
-
-        
-        // Additional Methods
-        public List<Reaction> GetAllReactions()
-        {
-            // Logic to get all reactions for the comment
         }
     }
 }
