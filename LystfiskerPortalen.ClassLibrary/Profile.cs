@@ -10,7 +10,7 @@ namespace LystfiskerPortalen.ClassLibrary
     {
         //Properties
         public string Username { get; set; }
-        private string Password { get; set; }
+        public string Password { get; set; }
         public string ProfilePicture { get; set; }
         public List<Profile> Following { get; set; }
 
@@ -20,6 +20,11 @@ namespace LystfiskerPortalen.ClassLibrary
             Username = username;
             ProfilePicture = profilePicture;
             Following = following;
+        }
+
+        public Profile() 
+        {
+            
         }
     }
 }
