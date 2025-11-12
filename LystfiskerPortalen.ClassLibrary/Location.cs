@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class Location
     {
@@ -12,6 +12,7 @@ namespace RazorClassLibrary
         public string Name { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public List<Post> Posts { get; set; }
 
 
         //Constructor
@@ -23,6 +24,6 @@ namespace RazorClassLibrary
         }
 
 
-       
+
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public abstract class Post
     {
@@ -29,21 +29,6 @@ namespace RazorClassLibrary
             Comments = comments;
             Reactions = reactions;
         }
-
-
-        
-        // Additional Methods
-        public List<Reaction> GetAllReactions()
-        {
-            // Logic to get all reactions for the post
-        }
-        public List<Comment> GetAllComments()
-        {
-            // Logic to get all comments for the post
-        }
-
-
-
     }
 }
 

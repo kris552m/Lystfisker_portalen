@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class Comment
     {
@@ -13,6 +13,7 @@ namespace RazorClassLibrary
         public DateTime CommentTime { get; set; }
         public List<Reaction> Reactions { get; set; }
         public Profile Profile { get; set; }
+        public Post Post { get; set; }
 
         // Constructor
         public Comment(string text, DateTime commentTime, List<Reaction> reactions, Profile profile)
@@ -21,14 +22,6 @@ namespace RazorClassLibrary
             CommentTime = commentTime;
             Reactions = reactions;
             Profile = profile;
-        }
-
-
-        
-        // Additional Methods
-        public List<Reaction> GetAllReactions()
-        {
-            // Logic to get all reactions for the comment
         }
     }
 }
