@@ -22,24 +22,7 @@ namespace RazorClassLibrary
             Following = following;
         }
 
-        //CRUD Methods
-        public void CreateProfile()
-        {
-            // Logic to create a new profile
-        }
-        public void ReadProfile()
-        {
-            // Logic to read a profile
-        }
-        public void UpdateProfile()
-        {
-            // Logic to update a profile
-        }
-        public void DeleteProfile()
-        {
-            // Logic to delete a profile
-        }
-
+        
         // Additional Methods
         public List<Profile> GetAllFollowing()
         {

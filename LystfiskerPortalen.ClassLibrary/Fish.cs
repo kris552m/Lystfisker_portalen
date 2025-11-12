@@ -22,23 +22,7 @@ namespace RazorClassLibrary
         }
 
 
-        //CRUD Methods
-        public void CreateFish()
-        {
-            // Logic to create a new fish
-        }
-        public void ReadFish()
-        {
-            // Logic to read a fish
-        }
-        public void UpdateFish()
-        {
-            // Logic to update a fish
-        }
-        public void DeleteFish()
-        {
-            // Logic to delete a fish
-        }
+       
 
     }
 }

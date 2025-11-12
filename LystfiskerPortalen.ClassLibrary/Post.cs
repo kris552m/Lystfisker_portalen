@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace RazorClassLibrary
 {
-    public class Post
+    public abstract class Post
     {
         // Properties
         public DateTime PostTime { get; set; }
@@ -31,24 +31,7 @@ namespace RazorClassLibrary
         }
 
 
-        // CRUD Methods
-        public void CreatePost()
-        {
-            // Logic to create a new post
-        }
-        public void ReadPost()
-        {
-            // Logic to read a post
-        }
-        public void UpdatePost()
-        {
-            // Logic to update a post
-        }
-        public void DeletePost()
-        {
-            // Logic to delete a post
-        }
-
+        
         // Additional Methods
         public List<Reaction> GetAllReactions()
         {

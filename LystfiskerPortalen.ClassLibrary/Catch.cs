@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RazorClassLibrary
 {
-    public class Catch
+    public class Catch : Post
     {
         //Properties
         public DateTime CatchTime { get; set; }
@@ -16,32 +17,18 @@ namespace RazorClassLibrary
 
 
         //Constructor
-        public Catch(Fish caughtFish, DateTime catchTime, string lure, string technique)
+        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, picture, description, location, comments, reactions)
         {
-            Fish = caughtFish;
             CatchTime = catchTime;
             Lure = lure;
             Technique = technique;
+            Fish = fish;
         }
+
+       
 
 
 
-        //CRUD Methods
-        public void CreateCatch()
-        {
-            // Logic to create a new catch
-        }
-        public void ReadCatch()
-        {
-            // Logic to read a catch
-        }
-        public void UpdateCatch()
-        {
-            // Logic to update a catch
-        }
-        public void DeleteCatch()
-        {
-            // Logic to delete a catch
-        }
     }
 }

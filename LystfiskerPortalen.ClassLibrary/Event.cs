@@ -6,36 +6,20 @@ using System.Threading.Tasks;
 
 namespace RazorClassLibrary
 {
-    public class Event
+    public class Event : Post
     {
         //Properties
         public string Title { get; set; }
         public DateTime EventTime { get; set; }
 
         //Constructor
-        public Event(string title, DateTime eventTime)
+        public Event(string title, DateTime eventTime, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, picture, description, location, comments, reactions)
         {
             Title = title;
             EventTime = eventTime;
         }
 
-        //CRUD Methods
-        public void CreateEvent()
-        {
-            // Logic to create a new event
-        }
-        public void ReadEvent()
-        {
-            // Logic to read an event
-        }
-        public void UpdateEvent()
-        {
-            // Logic to update an event
-        }
-        public void DeleteEvent()
-        {
-            // Logic to delete an event
-        }
 
 
     }

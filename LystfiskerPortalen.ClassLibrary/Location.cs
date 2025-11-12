@@ -23,22 +23,6 @@ namespace RazorClassLibrary
         }
 
 
-        //CRUD Methods
-        public void CreateLocation()
-        {
-            // Logic to create a new location
-        }
-        public void ReadLocation()
-        {
-            // Logic to read a location
-        }
-        public void UpdateLocation()
-        {
-            // Logic to update a location
-        }
-        public void DeleteLocation()
-        {
-            // Logic to delete a location
-        }
+       
     }
 }

@@ -19,22 +19,6 @@ namespace RazorClassLibrary
             Profile = profile;
         }
 
-        //CRUD Methods
-        public void CreateReaction()
-        {
-            // Logic to create a new reaction
-        }
-        public void ReadReaction()
-        {
-            // Logic to read a reaction
-        }
-        public void UpdateReaction()
-        {
-            // Logic to update a reaction
-        }
-        public void DeleteReaction()
-        {
-            // Logic to delete a reaction
-        }
+        
     }
 }

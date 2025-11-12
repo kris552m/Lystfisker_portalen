@@ -24,25 +24,7 @@ namespace RazorClassLibrary
         }
 
 
-        // CRUD Methods
-        public void CreateComment()
-        {
-            // Logic to create a new comment
-        }
-        public void ReadComment()
-        {
-            // Logic to read a comment
-        }
-        public void UpdateComment()
-        {
-            // Logic to update a comment
-        }
-        public void DeleteComment()
-        {
-            // Logic to delete a comment
-        }
-
-
+        
         // Additional Methods
         public List<Reaction> GetAllReactions()
         {
