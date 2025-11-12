@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.Backend"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.Frontend", "LystfiskerPortalen.Frontend\LystfiskerPortalen.Frontend.csproj", "{EA83833F-4AD2-4181-BD2B-1BA79146620F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.ClassLibrary", "LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj", "{23C3AF31-4133-4138-A525-A997A1813CE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,8 +43,23 @@ Global
 		{EA83833F-4AD2-4181-BD2B-1BA79146620F}.Release|x64.Build.0 = Release|Any CPU
 		{EA83833F-4AD2-4181-BD2B-1BA79146620F}.Release|x86.ActiveCfg = Release|Any CPU
 		{EA83833F-4AD2-4181-BD2B-1BA79146620F}.Release|x86.Build.0 = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|x64.Build.0 = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|x64.ActiveCfg = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|x64.Build.0 = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{23C3AF31-4133-4138-A525-A997A1813CE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB035DA7-CC98-4D86-9603-D8DE2AD7867F}
 	EndGlobalSection
 EndGlobal
