@@ -1,0 +1,25 @@
+﻿@page "/Login"
+<h3>Login</h3>
+
+<div id="login">
+    <p>
+        Velcommen til LystfiskerPortalen. Her kan du logge ind for at få adgang til dine personlige fiskedata og funktioner.
+        Vænligst intast dine loginoplysninger nedenfor for at fortsætte.
+    </p>
+
+    <EditForm Model="@profile">
+        <div>
+            <label for="Username"> Brugernavn </label>
+            <InputText id="Username" @bind-Value="profile.Username" class="form-control" />
+
+            <label for="Password"> Adgangskode </label>
+            <InputText id="Password" @bind-Value="profile.Password" type="password" class="form-control" />
+        </div>
+    </EditForm>
+
+</div>
+
+
+@code {
+    private LystfiskerPortalen.ClassLibrary.Profile profile = new LystfiskerPortalen.ClassLibrary.Profile();
+}
