@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RazorClassLibrary;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {
@@ -26,25 +27,28 @@ namespace LystfiskerPortalen.Backend.Controllers
 
         [HttpPost]
         [Route("/post")]
-        //    public void AddAsync(Profile profile)
-        //    {
-        //        return //repository.CreateAsync();
-        //}
-
-        //    [HttpPost]
-        //    [Route("/profile")]
-        //    public void AddAsync(Profile profile)
-        //    {
-        //        return //repository.CreateAsync();
-        //}
-        //    [HttpPut]
-        //    [Route("/profile")]
-        //    public void ÚpdateAsync(Profile profile)
-        //    {
-
-        //        return //repository.UpdateAsync(profile);
-        //}
+        public void AddAsync(Post post)
+        {
+            return //repository.CreateAsync();
+        }
 
 
+        [HttpPut]
+        [Route("/post")]
+        public void ÚpdateAsync(Post post)
+        {
+
+            return //repository.UpdateAsync(profile);
+        }
+        [HttpDelete]
+        [Route("/post")]
+        public void DeleteAsync(int id)
+        {
+
+            return //repository.DeleteAsync(id);
+        }
+
+
+        //api endpoint for get all comments and reactions (future task)
     }
 }
