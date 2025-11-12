@@ -13,7 +13,7 @@ namespace LystfiskerPortalen.ClassLibrary
         public DateTime PostTime { get; set; }
         public string Picture { get; set; }
         public string Description { get; set; }
-        public Location Locations { get; set; }
+        public Location Location { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Reaction> Reactions { get; set; }
 
