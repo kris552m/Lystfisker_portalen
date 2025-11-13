@@ -42,6 +42,7 @@ namespace LystfiskerPortalen.Backend.Persistence
                 profileToUpdate.ProfilePicture = profile.ProfilePicture;
                 profileToUpdate.Following = profile.Following;
 
+                await context.SaveChangesAsync();
             }
         }
     }

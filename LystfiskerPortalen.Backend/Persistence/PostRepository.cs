@@ -44,6 +44,8 @@ namespace LystfiskerPortalen.Backend.Persistence
                 postToUpdate.Description = post.Description;
                 postToUpdate.Location = post.Location;
 
+                await context.SaveChangesAsync();
+
             }
         }
     }
