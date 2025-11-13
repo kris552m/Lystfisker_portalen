@@ -7,7 +7,6 @@ namespace LystfiskerPortalen.Backend.Controllers
     public class PostController : Controller, IPostRepository
     {
         private readonly IPostRepository repository;
-
         public PostController(IPostRepository repository)
         {
             this.repository = repository;
@@ -19,6 +18,7 @@ namespace LystfiskerPortalen.Backend.Controllers
         {
             return repository.GetAllAsync();
         }
+
         [HttpGet]
         [Route("/Post{id}")]
         public Task<Post> GetByIdAsync(int id)
@@ -33,19 +33,19 @@ namespace LystfiskerPortalen.Backend.Controllers
             repository.AddAsync(post);
         }
 
-
-        [HttpPut]
-        [Route("/post")]
-        public void UpdateAsync(Post post)
-        {
-            repository.UpdateAsync(post);
-        }
         [HttpDelete]
         [Route("/post")]
         public void DeleteAsync(int id)
         {
 
             repository.DeleteAsync(id);
+        }
+
+        [HttpPut]
+        [Route("/post")]
+        public void UpdateAsync(Post post)
+        {
+            repository.UpdateAsync(post);
         }
 
 

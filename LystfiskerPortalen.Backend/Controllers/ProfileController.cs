@@ -12,6 +12,20 @@ namespace LystfiskerPortalen.Backend.Controllers
             this.repository = repository;
         }
 
+        [HttpGet]
+        [Route("/Profile")]
+        public Task<List<Profile>> GetAllAsync()
+        {
+            return repository.GetAllAsync();
+        }
+
+        [HttpGet]
+        [Route("/Profile{id}")]
+        public Task<Profile?> GetByIdAsync(int id)
+        {
+            return repository.GetByIdAsync(id);
+        }
+
         [HttpPost]
         [Route("/Profile")]
         public void AddAsync(Profile profile)
@@ -26,18 +40,6 @@ namespace LystfiskerPortalen.Backend.Controllers
             repository?.DeleteAsync(Id);
         }
 
-        [HttpGet]
-        [Route("/Profile")]
-        public Task<List<Profile>> GetAllAsync()
-        {
-            return repository.GetAllAsync();
-        }
-        [HttpGet]
-        [Route("/Profile{id}")]
-        public Task<Profile?> GetByIdAsync(int id)
-        {
-            return repository.GetByIdAsync(id);
-        }
 
         [HttpPut]
         [Route("/Profile")]
