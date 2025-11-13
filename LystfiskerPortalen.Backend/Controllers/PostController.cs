@@ -1,51 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RazorClassLibrary;
+﻿using LystfiskerPortalen.Backend.Persistence;
+using LystfiskerPortalen.ClassLibrary;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {
-    public class PostController : Controller//, IPostRepository
+    public class PostController : Controller, IPostRepository
     {
-        //private readonly IPostRepository repository;
+        private readonly IPostRepository repository;
 
-        public PostController(//IProfileRepository repository)
+        public PostController(IPostRepository repository)
         {
-            //this.repository = repository;
+            this.repository = repository;
         }
 
         [HttpGet]
         [Route("/Post")]
         public Task<List<Post>> GetAllAsync()
         {
-            return//repository.GetAllAsync();
+            return repository.GetAllAsync();
         }
         [HttpGet]
         [Route("/Post{id}")]
         public Task<Post> GetByIdAsync(int id)
         {
-            return//repository.GetByIdAsync();
+            return repository.GetByIdAsync(id);
         }
 
         [HttpPost]
         [Route("/post")]
         public void AddAsync(Post post)
         {
-            return //repository.CreateAsync();
+            repository.AddAsync(post);
         }
 
 
         [HttpPut]
         [Route("/post")]
-        public void ÚpdateAsync(Post post)
+        public void UpdateAsync(Post post)
         {
 
-            return //repository.UpdateAsync(profile);
+            repository.UpdateAsync(post);
         }
         [HttpDelete]
         [Route("/post")]
         public void DeleteAsync(int id)
         {
 
-            return //repository.DeleteAsync(id);
+            repository.DeleteAsync(id);
         }
 
 

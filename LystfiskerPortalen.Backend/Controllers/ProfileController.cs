@@ -1,6 +1,6 @@
 ﻿using LystfiskerPortalen.Backend.Persistence;
+using LystfiskerPortalen.ClassLibrary;
 using Microsoft.AspNetCore.Mvc;
-using RazorClassLibrary;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {

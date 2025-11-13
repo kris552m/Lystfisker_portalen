@@ -1,4 +1,4 @@
-﻿using RazorClassLibrary;
+﻿using LystfiskerPortalen.ClassLibrary;
 
 namespace LystfiskerPortalen.Backend.Persistence
 {
