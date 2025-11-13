@@ -6,29 +6,34 @@ namespace LystfiskerPortalen.Backend.Controllers
 {
     public class ProfileController : Controller, IProfileRepository
     {
+        private readonly IProfileRepository repository;
+        public ProfileController(IProfileRepository repository)
+        {
+            this.repository = repository;
+        }
         public void AddAsync(Profile profile)
         {
-            throw new NotImplementedException();
+            repository.AddAsync(profile);
         }
 
         public void DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            repository?.DeleteAsync(Id);
         }
 
         public Task<List<Profile>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return repository.GetAllAsync();
         }
 
         public Task<Profile?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return repository.GetByIdAsync(id);
         }
 
         public void UpdateAsync(Profile profile)
         {
-            throw new NotImplementedException();
+            repository.UpdateAsync(profile);
         }
     }
 }

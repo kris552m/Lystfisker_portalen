@@ -38,7 +38,6 @@ namespace LystfiskerPortalen.Backend.Controllers
         [Route("/post")]
         public void UpdateAsync(Post post)
         {
-
             repository.UpdateAsync(post);
         }
         [HttpDelete]
