@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class Event : Post
     {

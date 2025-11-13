@@ -1,4 +1,7 @@
 
+using LystfiskerPortalen.Backend.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace LystfiskerPortalen.Backend
 {
     public class Program
@@ -8,6 +11,8 @@ namespace LystfiskerPortalen.Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<LystFiskerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

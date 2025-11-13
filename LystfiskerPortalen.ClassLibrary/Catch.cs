@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class Catch : Post
     {
@@ -26,7 +26,7 @@ namespace RazorClassLibrary
             Fish = fish;
         }
 
-       
+
 
 
 

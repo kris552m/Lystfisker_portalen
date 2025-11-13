@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RazorClassLibrary
+namespace LystfiskerPortalen.ClassLibrary
 {
     public class GeneralPost : Post
-    {     
+    {
 
         //Propperties
         public bool IsQuestion { get; set; }
@@ -20,7 +20,7 @@ namespace RazorClassLibrary
             IsQuestion = isQuestion;
         }
 
-       
+
 
     }
 }
