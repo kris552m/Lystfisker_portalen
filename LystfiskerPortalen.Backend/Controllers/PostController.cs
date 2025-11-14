@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {
-    public class PostController : Controller, IPostRepository
+    [ApiController]
+    [Route("[controller]")]
+    public class PostController : ControllerBase, IPostRepository
     {
         private readonly IPostRepository repository;
         public PostController(IPostRepository repository)
@@ -13,39 +15,34 @@ namespace LystfiskerPortalen.Backend.Controllers
         }
 
         [HttpGet]
-        [Route("/Post")]
-        public Task<List<Post>> GetAllAsync()
+        public async Task<List<Post>> GetAllAsync()
         {
-            return repository.GetAllAsync();
+            return await repository.GetAllAsync();
         }
 
-        [HttpGet]
-        [Route("/Post{id}")]
-        public Task<Post> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Post>> GetByIdAsync(int id)
         {
-            return repository.GetByIdAsync(id);
+            return Ok(await repository.GetByIdAsync(id));
         }
 
         [HttpPost]
-        [Route("/post")]
-        public void AddAsync(Post post)
+        public async void AddAsync(Post post)
         {
             repository.AddAsync(post);
         }
 
-        [HttpDelete]
-        [Route("/post")]
-        public void DeleteAsync(int id)
+        [HttpDelete("{id}")]
+        public async void DeleteAsync(int id)
         {
 
             repository.DeleteAsync(id);
         }
 
-        [HttpPut]
-        [Route("/post")]
-        public void UpdateAsync(Post post)
+        [HttpPut("{id}")]
+        public async void UpdateAsync(int id)
         {
-            repository.UpdateAsync(post);
+            repository.UpdateAsync(id);
         }
 
 

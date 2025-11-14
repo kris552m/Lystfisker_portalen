@@ -24,7 +24,7 @@ namespace LystfiskerPortalen.Backend.Persistence
 
         public async Task<List<Post>> GetAllAsync()
         {
-            return context.Posts.ToList();
+            return context.Posts.Include(p => p.Comments).ToList();
         }
 
         public async Task<Post?> GetByIdAsync(int id)

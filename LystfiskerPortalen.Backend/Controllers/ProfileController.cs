@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {
-    public class ProfileController : Controller, IProfileRepository
+    [Controller]
+    [Route("[controller]")]
+    public class ProfileController : ControllerBase, IProfileRepository
     {
         private readonly IProfileRepository repository;
         public ProfileController(IProfileRepository repository)
@@ -13,29 +15,27 @@ namespace LystfiskerPortalen.Backend.Controllers
         }
 
         [HttpGet]
-        [Route("/Profile")]
-        public Task<List<Profile>> GetAllAsync()
+        public async Task<List<Profile>> GetAllAsync()
         {
-            return repository.GetAllAsync();
+            return await repository.GetAllAsync();
         }
 
-        [HttpGet]
-        [Route("/Profile{id}")]
-        public Task<Profile?> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<Profile?> GetByIdAsync(int id)
         {
-            return repository.GetByIdAsync(id);
+            return await repository.GetByIdAsync(id);
         }
 
         [HttpPost]
         [Route("/Profile")]
-        public void AddAsync(Profile profile)
+        public async void AddAsync(Profile profile)
         {
             repository.AddAsync(profile);
         }
 
         [HttpDelete]
         [Route("/Profile{id}")]
-        public void DeleteAsync(int Id)
+        public async void DeleteAsync(int Id)
         {
             repository?.DeleteAsync(Id);
         }
@@ -43,7 +43,7 @@ namespace LystfiskerPortalen.Backend.Controllers
 
         [HttpPut]
         [Route("/Profile")]
-        public void UpdateAsync(Profile profile)
+        public async void UpdateAsync(Profile profile)
         {
             repository.UpdateAsync(profile);
         }
