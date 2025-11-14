@@ -12,6 +12,8 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
+                        @* ProfileComponent indsættes her *@
+
                         <EditForm Model="@generalPost">
                             <div class="form-group">
                                 <InputTextArea class="form-control" @bind-Value="generalPost"
@@ -89,6 +91,7 @@
                                 </div>
                             </div>
 
+                            @* PostAddons Component indsættes her*@
                         </EditForm>
                     </div>
                 </div>
@@ -96,6 +99,7 @@
 
             </div>
             <div class="modal-footer">
+                @* Buttons her skal ændres til PostCreateButton komponent *@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
