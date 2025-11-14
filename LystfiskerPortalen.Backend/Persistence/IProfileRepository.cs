@@ -6,8 +6,8 @@ namespace LystfiskerPortalen.Backend.Persistence
     {
         public Task<List<Profile>> GetAllAsync();
         public Task<Profile?> GetByIdAsync(int id);
-        public void AddAsync(Profile profile);
-        public void DeleteAsync(int Id);
-        public void UpdateAsync(Profile profile);
+        public Task<Profile> AddAsync(Profile profile);
+        public Task DeleteAsync(int Id);
+        public Task UpdateAsync(Profile profile);
     }
 }

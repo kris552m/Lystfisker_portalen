@@ -6,7 +6,7 @@ namespace LystfiskerPortalen.Backend.Controllers
 {
     [Controller]
     [Route("[controller]")]
-    public class ProfileController : ControllerBase, IProfileRepository
+    public class ProfileController : ControllerBase
     {
         private readonly IProfileRepository repository;
         public ProfileController(IProfileRepository repository)
@@ -15,37 +15,40 @@ namespace LystfiskerPortalen.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Profile>> GetAllAsync()
+        public async Task<ActionResult<List<Profile>>> GetAllAsync()
         {
-            return await repository.GetAllAsync();
+            return Ok(await repository.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<Profile?> GetByIdAsync(int id)
+        public async Task<ActionResult<Profile?>> GetByIdAsync(int id)
         {
-            return await repository.GetByIdAsync(id);
+            if (id <= 0) return BadRequest();
+            return Ok(await repository.GetByIdAsync(id));
         }
 
         [HttpPost]
-        [Route("/Profile")]
-        public async void AddAsync(Profile profile)
+        public async Task<ActionResult> AddAsync(Profile profile)
         {
-            repository.AddAsync(profile);
+            var newProfil = await repository.AddAsync(profile);
+            return CreatedAtAction("AddProfile", newProfil);
         }
 
-        [HttpDelete]
-        [Route("/Profile{id}")]
-        public async void DeleteAsync(int Id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int Id)
         {
-            repository?.DeleteAsync(Id);
+            var profileToDelete = repository.GetByIdAsync(Id);
+            if (profileToDelete == null) 
+            {
+                return NotFound();
+            }
+            return Ok(repository?.DeleteAsync(profileToDelete.Id));
         }
-
 
         [HttpPut]
-        [Route("/Profile")]
-        public async void UpdateAsync(Profile profile)
+        public async Task<ActionResult> UpdateAsync(Profile profile)
         {
-            repository.UpdateAsync(profile);
+            return Ok(repository.UpdateAsync(profile));
         }
     }
 }
