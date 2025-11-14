@@ -1,0 +1,43 @@
+﻿@page "/feed"
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User avatar" />
+            <textarea class="form-control ms-4" placeholder="hvad har du på krogen?" rows="2" disabled></textarea>
+        </div>
+        <div class="text-end mt-2">
+        </div>
+    </div>
+
+    @foreach (var post in posts)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <img src="@post.AvatarUrl" class="rounded-circle me-2" alt="User avatar" />
+                    <h6 class="card-title mb-0">@post.User</h6>
+                </div>
+                <p class="card-text mt-2">@post.Content</p>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Post>
+    posts = new()
+    {
+    new Post { User = "Alice", Content = "Caught a big fish today!", AvatarUrl = "https://via.placeholder.com/40" },
+    new Post { User = "Bob", Content = "The weather is perfect for fishing.", AvatarUrl = "https://via.placeholder.com/40" }
+    };
+
+    private string newPostContent = string.Empty;
+
+    private class Post
+    {
+    public string User { get; set; }
+    public string Content { get; set; }
+    public string AvatarUrl { get; set; }
+    }
+    }
