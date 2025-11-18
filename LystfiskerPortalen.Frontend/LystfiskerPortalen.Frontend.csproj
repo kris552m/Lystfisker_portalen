@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GEmojiSharp.Blazor" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
   </ItemGroup>
 
