@@ -1,9 +1,11 @@
 using LystfiskerPortalen.ClassLibrary;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Backend.Data
 {
-    public class LystFiskerContext : DbContext
+    public class LystFiskerContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Catch> Catches { get; set; }
         public DbSet<Comment> Comments { get; set; }

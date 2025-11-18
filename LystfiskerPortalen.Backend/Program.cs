@@ -12,7 +12,7 @@ namespace LystfiskerPortalen.Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<LystfiskerPortalenIdentityDbContext>();
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<LystFiskerContext>();
             builder.Services.AddAuthorization();
 
             // Add DbContexts
