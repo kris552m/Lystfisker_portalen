@@ -1,4 +1,6 @@
 ﻿@page "/Login"
+@using Microsoft.AspNetCore.Components.Forms
+
 <h3>Velcommen til LystfiskerPortalen</h3>
 
 <div>
@@ -12,24 +14,26 @@
             <div id="login-row" class="row justify-content-center align-content-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
-                            <h3 class="text-center text-info">Login</h3>
-                            <EditForm Model="@profile">
-                                <div>
-                                    <label for="Username"> Brugernavn </label>
-                                    <InputText id="Username" @bind-Value="profile.Username" type="text" class="form-control" />
-                                </div>
-                                <br />
-                                <div>
-                                    <label for="Password"> Adgangskode </label>
-                                    <InputText id="Password" @bind-Value="profile.Password" type="password" class="form-control"  />
-                                </div>
-                                <br />
-                                <div>
-                                    <input type="submit" name="submit" class="btn btn-primary btn-outline-primary" />
-                                </div>
-                            </EditForm>
-                        </form>
+                        <EditForm Model="profile" FormName="login" OnValidSubmit="HandleLogin">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            
+                            <div>
+                                <label for="Username">Brugernavn</label>
+                                <InputText id="Username" @bind-Value="profile.Username" class="form-control" />
+                                <ValidationMessage For="@(() => profile.Username)" />
+                            </div>
+                            <br />
+                            <div>
+                                <label for="Password">Adgangskode</label>
+                                <InputText id="Password" @bind-Value="profile.Password" type="password" class="form-control" />
+                                <ValidationMessage For="@(() => profile.Password)" />
+                            </div>
+                            <br />
+                            <div>
+                                <button type="submit" class="btn btn-primary">Log ind</button>
+                            </div>
+                        </EditForm>
                     </div>
                 </div>
             </div>
@@ -37,7 +41,13 @@
     </div>
 </div>
 
-
 @code {
     private LystfiskerPortalen.ClassLibrary.Profile profile = new LystfiskerPortalen.ClassLibrary.Profile();
+
+    private async Task HandleLogin()
+    {
+        // TODO: Implement login logic
+        Console.WriteLine($"Login attempt: {profile.Username}");
+        // Add your authentication logic here
+    }
 }
