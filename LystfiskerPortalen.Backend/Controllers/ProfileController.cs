@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LystfiskerPortalen.Backend.Controllers
 {
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public class ProfileController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace LystfiskerPortalen.Backend.Controllers
         public async Task<ActionResult> DeleteAsync(int Id)
         {
             var profileToDelete = repository.GetByIdAsync(Id);
-            if (profileToDelete == null) 
+            if (profileToDelete == null)
             {
                 return NotFound();
             }
