@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace LystfiskerPortalen.ClassLibrary
 {
-    public class Profile
+    public class Profile : IdentityUser
     {
         //Properties
         public string ProfilePicture { get; set; }
@@ -16,9 +17,8 @@ namespace LystfiskerPortalen.ClassLibrary
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
 
         //Constructor
-        public Profile(string username, string profilePicture, List<Profile> following)
+        public Profile(string profilePicture, List<Profile> following)
         {
-            Username = username;
             ProfilePicture = profilePicture;
             Following = following;
         }
