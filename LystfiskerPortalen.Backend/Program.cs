@@ -16,7 +16,7 @@ namespace LystfiskerPortalen.Backend
             builder.Services.AddAuthorization();
 
             // Add DbContexts
-            builder.Services.AddDbContext<LystfiskerPortalenIdentityDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+            
             builder.Services.AddDbContext<LystFiskerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
