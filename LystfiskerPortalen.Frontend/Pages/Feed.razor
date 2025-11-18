@@ -1,43 +1,223 @@
 ﻿@page "/feed"
+@using RazorClassLibrary
 
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="d-flex align-items-center">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User avatar" />
-            <textarea class="form-control ms-4" placeholder="hvad har du på krogen?" rows="2" disabled></textarea>
-        </div>
-        <div class="text-end mt-2">
-        </div>
-    </div>
 
-    @foreach (var post in posts)
-    {
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                    <img src="@post.AvatarUrl" class="rounded-circle me-2" alt="User avatar" />
-                    <h6 class="card-title mb-0">@post.User</h6>
-                </div>
-                <p class="card-text mt-2">@post.Content</p>
-            </div>
-        </div>
-    }
+<div class="feed-sort-bar">
+    <button class="sort-btn">Sorter efter:</button>
+    <button class="filter-btn">fangst</button>
 </div>
 
+<div class="feed-input">
+    <img src="https://via.placeholder.com/40" class="avatar" alt="User avatar" />
+    <input class="input-box" placeholder="hvad har du på krogen? ..." disabled />
+</div>
+
+@foreach (var post in posts)
+{
+    <div class="feed-post">
+        <div class="post-header">
+            <img src="@post.Reactions.FirstOrDefault()?.Profile?.ProfilePicture ?? " https: //via.placeholder.com/40"" class="avatar" alt="User avatar" />
+            <div>
+                <span class="user-name">@post.Reactions.FirstOrDefault()?.Profile?.Username ?? "Bruger"</span>
+                <span class="post-tag">Generel</span>
+                <div class="post-date">@post.PostTime.ToString("d. MMMM 'kl.' HH:mm")</div>
+            </div>
+            <button class="post-menu">...</button>
+        </div>
+        <div class="post-content">
+            <p>@post.Description</p>
+            @if (!string.IsNullOrEmpty(post.Picture))
+            {
+                <img src="@post.Picture" class="post-image" alt="Post image" />
+            }
+        </div>
+        <div class="post-actions">
+            <span>@post.Reactions?.Count ?? 0</span> <span>Synes godt om</span>
+            <span>@post.Comments?.Count ?? 0 kommentarer</span>
+        </div>
+        @if (post.Comments != null && post.Comments.Count > 0)
+        {
+            var comment = post.Comments[0];
+            <div class="post-comment">
+                <img src="@comment.Profile?.ProfilePicture ?? " https: //via.placeholder.com/30"" class="avatar" alt="Commenter avatar" />
+                <div>
+                    <span class="comment-user">@comment.Profile?.Username ?? "Bruger"</span>
+                    <span class="comment-text">@comment.Text</span>
+                    <div class="comment-actions">
+                        <span>@(DateTime.Now.Subtract(comment.CommentTime).Days)d</span>
+                        <span>Synes godt om</span>
+                        <span>Del</span>
+                    </div>
+                </div>
+            </div>
+            @if (post.Comments.Count > 1)
+            {
+                <div class="post-replies">Vis alle @post.Comments.Count svar</div>
+            }
+        }
+    </div>
+}
+
 @code {
-    private List<Post>
-    posts = new()
+    private List<Post> posts = new()
     {
-    new Post { User = "Alice", Content = "Caught a big fish today!", AvatarUrl = "https://via.placeholder.com/40" },
-    new Post { User = "Bob", Content = "The weather is perfect for fishing.", AvatarUrl = "https://via.placeholder.com/40" }
+        new GeneralPost(
+    false, // or true, depending on your intent
+    DateTime.Now,
+    "https://via.placeholder.com/200x100",
+    "Description here",
+    new Location("Lake", 55.0, 12.0),
+    new List<Comment>(),
+    new List<Reaction>()
+)
     };
+}
 
-    private string newPostContent = string.Empty;
 
-    private class Post
-    {
-    public string User { get; set; }
-    public string Content { get; set; }
-    public string AvatarUrl { get; set; }
+            <style>
+    .feed-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 2px solid #b3c6e7;
+        border-radius: 20px;
+        padding: 10px 20px;
+        margin-bottom: 20px;
     }
+
+    .logo, .profile-btn {
+        font-weight: bold;
     }
+
+    .nav-links span {
+        margin: 0 10px;
+        cursor: pointer;
+    }
+
+    .nav-links .active {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .feed-sort-bar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .sort-btn, .filter-btn {
+        border: 1px solid #b3c6e7;
+        border-radius: 10px;
+        background: #fff;
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+
+    .feed-input {
+        display: flex;
+        align-items: center;
+        border: 1px solid #b3c6e7;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+        background: #f7faff;
+    }
+
+    .input-box {
+        flex: 1;
+        margin-left: 10px;
+        border: none;
+        background: transparent;
+        font-size: 1rem;
+    }
+
+    .feed-post {
+        border: 2px solid #b3c6e7;
+        border-radius: 20px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background: #fff;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .avatar {
+        border-radius: 50%;
+    }
+
+    .user-name {
+        font-weight: bold;
+    }
+
+    .post-tag {
+        border: 1px solid #b3c6e7;
+        border-radius: 8px;
+        padding: 2px 8px;
+        margin-left: 5px;
+        font-size: 0.8rem;
+    }
+
+    .post-date {
+        font-size: 0.8rem;
+        color: #888;
+    }
+
+    .post-menu {
+        margin-left: auto;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .post-content {
+        margin: 10px 0;
+    }
+
+    .post-image {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 10px;
+    }
+
+    .post-actions {
+        display: flex;
+        gap: 20px;
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .post-comment {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+
+    .comment-user {
+        font-weight: bold;
+    }
+
+    .comment-text {
+        display: block;
+    }
+
+    .comment-actions {
+        font-size: 0.8rem;
+        color: #888;
+        display: flex;
+        gap: 10px;
+    }
+
+    .post-replies {
+        font-size: 0.8rem;
+        color: #007bff;
+        cursor: pointer;
+    }
+
+            </style>

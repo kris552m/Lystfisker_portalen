@@ -35,11 +35,11 @@ namespace RazorClassLibrary
         // Additional Methods
         public List<Reaction> GetAllReactions()
         {
-            // Logic to get all reactions for the post
+            return Reactions;
         }
         public List<Comment> GetAllComments()
         {
-            // Logic to get all comments for the post
+            return Comments;
         }
 
 

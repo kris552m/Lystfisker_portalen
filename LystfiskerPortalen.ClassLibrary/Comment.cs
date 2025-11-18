@@ -24,11 +24,11 @@ namespace RazorClassLibrary
         }
 
 
-        
+
         // Additional Methods
         public List<Reaction> GetAllReactions()
         {
-            // Logic to get all reactions for the comment
+            return Reactions;
         }
     }
 }

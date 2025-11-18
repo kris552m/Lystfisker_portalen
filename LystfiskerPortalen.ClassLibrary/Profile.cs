@@ -26,21 +26,25 @@ namespace RazorClassLibrary
         // Additional Methods
         public List<Profile> GetAllFollowing()
         {
-            // Logic to get all profiles this profile is following
-            
+            return Following;
         }
         public List<Profile> AddProfileToFollowing(Profile profile)
         {
-            // Logic to add a profile to the following list
-           
+            if (Following == null)
+                Following = new List<Profile>();
+            if (!Following.Contains(profile))
+                Following.Add(profile);
+            return Following;
         }
 
         public List<Profile> RemoveProfileFromFollowing(Profile profile)
         {
-            // Logic to remove a profile from the following list
-
+            if (Following != null && Following.Contains(profile))
+                Following.Remove(profile);
+            return Following;
         }
-
-
     }
+
+
+    
 }
