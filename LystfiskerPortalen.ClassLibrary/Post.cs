@@ -21,6 +21,10 @@ namespace LystfiskerPortalen.ClassLibrary
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
 
+        [ForeignKey(nameof(Profile))]
+        public string ProfileId { get; set; }
+        public Profile Profile { get; set; }
+
 
 
         // Constructor

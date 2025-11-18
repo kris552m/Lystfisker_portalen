@@ -1,6 +1,7 @@
 using LystfiskerPortalen.Backend.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using LystfiskerPortalen.ClassLibrary;
 
 namespace LystfiskerPortalen.Backend
 {
