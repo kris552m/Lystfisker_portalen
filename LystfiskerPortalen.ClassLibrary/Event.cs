@@ -19,6 +19,10 @@ namespace LystfiskerPortalen.ClassLibrary
             Title = title;
             EventTime = eventTime;
         }
+        public Event()
+        {
+
+        }
 
 
 

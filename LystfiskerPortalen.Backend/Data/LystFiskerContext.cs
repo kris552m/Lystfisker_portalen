@@ -43,9 +43,28 @@ namespace LystfiskerPortalen.Backend.Data
                 .WithMany(r => r.Comments)
                 .UsingEntity(j => j.ToTable("CommentReactions"));
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Posts)
+                .WithOne(post => post.Profile)
+                .HasForeignKey(post => post.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Comments)
+                .WithOne(c => c.Profile)
+                .HasForeignKey(c => c.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Reactions)
+                .WithOne(r => r.Profile)
+                .HasForeignKey(r => r.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Following)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("ProfileFollowings"));
         }
-
     }
 }

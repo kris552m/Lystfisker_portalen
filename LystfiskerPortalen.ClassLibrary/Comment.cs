@@ -9,10 +9,16 @@ namespace LystfiskerPortalen.ClassLibrary
     public class Comment
     {
         // Properties
+        public int CommentId { get; set; }
         public string Text { get; set; }
         public DateTime CommentTime { get; set; }
-        public List<Reaction> Reactions { get; set; }
+        public List<Reaction> Reactions { get; set; } = new List<Reaction>();
+
+        [ForeignKey(nameof(Profile))]
+        public int ProfileId { get; set; }
         public Profile Profile { get; set; }
+        [ForeignKey(nameof(Post))]
+        public int PostId { get; set; }
         public Post Post { get; set; }
 
         // Constructor
@@ -22,6 +28,10 @@ namespace LystfiskerPortalen.ClassLibrary
             CommentTime = commentTime;
             Reactions = reactions;
             Profile = profile;
+        }
+        public Comment()
+        {
+
         }
     }
 }

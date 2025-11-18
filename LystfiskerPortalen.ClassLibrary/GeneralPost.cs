@@ -19,6 +19,10 @@ namespace LystfiskerPortalen.ClassLibrary
         {
             IsQuestion = isQuestion;
         }
+        public GeneralPost()
+        {
+
+        }
 
 
 

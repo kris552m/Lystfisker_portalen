@@ -9,10 +9,11 @@ namespace LystfiskerPortalen.ClassLibrary
     public class Location
     {
         //Properties
+        public int LocationId { get; set; }
         public string Name { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; } = new List<Post>();
 
 
         //Constructor
@@ -23,7 +24,10 @@ namespace LystfiskerPortalen.ClassLibrary
             Longitude = longitude;
         }
 
-
+        public Location()
+        {
+            
+        }
 
     }
 }

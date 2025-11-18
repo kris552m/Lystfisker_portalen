@@ -9,17 +9,25 @@ namespace LystfiskerPortalen.ClassLibrary
     public class Reaction
     {
         //Propperties
+        public int ReactionId { get; set; }
         public string Icon { get; set; }
+        [ForeignKey(nameof(Profile))]
         public Profile Profile { get; set; }
-
-        public List<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+        [ForeignKey(nameof(Post))]
+        public int PostId { get; set; }
         public Post Post { get; set; }
 
         //Constructor
-        public Reaction(string icon, Profile profile)
+        public Reaction(string icon, Profile profile, int postId)
         {
             Icon = icon;
             Profile = profile;
+            PostId = postId;
+        }
+        public Reaction()
+        {
+
         }
 
 

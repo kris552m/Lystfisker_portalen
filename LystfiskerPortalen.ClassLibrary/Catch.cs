@@ -13,6 +13,9 @@ namespace LystfiskerPortalen.ClassLibrary
         public DateTime CatchTime { get; set; }
         public string Lure { get; set; }
         public string Technique { get; set; }
+
+        [ForeignKey(nameof(Fish))]
+        public int FishId { get; set; }
         public Fish Fish { get; set; }
 
 
@@ -24,6 +27,10 @@ namespace LystfiskerPortalen.ClassLibrary
             Lure = lure;
             Technique = technique;
             Fish = fish;
+        }
+        public Catch()
+        {
+
         }
 
 
