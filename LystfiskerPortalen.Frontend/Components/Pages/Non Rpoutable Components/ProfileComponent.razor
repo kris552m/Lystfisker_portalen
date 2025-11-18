@@ -1,0 +1,19 @@
+﻿
+
+<div class="d-flex align-items-center">
+    <img class="rounded-circle me-1" width="24" height="24" src="@ProfileImgPath"> @* https://github.com/mdo.png *@
+    <span>@ProfileUserName</span>
+</div>
+@code{
+    public int ProfileId { get; set; }
+    public string ProfileUserName { get; set; }
+    public string? ProfileImgPath { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ProfileImgPath = "https://github.com/mdo.png";
+        ProfileUserName = "user.identity.name";
+    }
+    
+    
+}
