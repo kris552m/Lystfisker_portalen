@@ -10,6 +10,7 @@ namespace LystfiskerPortalen.Frontend
 
             // Add services to the container.
             builder.Services.AddRazorComponents();
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
 

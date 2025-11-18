@@ -1,0 +1,107 @@
+﻿@page "/Login"
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Velkommen til LystfiskerPortalen</h3>
+
+<div>
+    <p>
+        Her kan du logge ind for at få adgang til dine personlige fiskedata og funktioner.
+        Vænligst indtast dine loginoplysninger nedenfor for at fortsætte. 
+    </p>
+    <br />
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-content-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <EditForm Model="loginModel" FormName="login" OnValidSubmit="HandleLogin">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            
+                            <div>
+                                <label for="Email">Email</label>
+                                <InputText id="Email" @bind-Value="loginModel.Email" class="form-control" />
+                                <ValidationMessage For="@(() => loginModel.Email)" />
+                            </div>
+                            <br />
+                            <div>
+                                <label for="Password">Adgangskode</label>
+                                <InputText id="Password" @bind-Value="loginModel.Password" type="password" class="form-control" />
+                                <ValidationMessage For="@(() => loginModel.Password)" />
+                            </div>
+                            <br />
+                            <div>
+                                <button type="submit" class="btn btn-primary" disabled="@isLoading">
+                                    @if (isLoading)
+                                    {
+                                        <span>Logger ind...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Log ind</span>
+                                    }
+                                </button>
+                            </div>
+                        </EditForm>
+                        
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <div class="alert alert-danger mt-3">
+                                @errorMessage
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private bool isLoading = false;
+    private string? errorMessage;
+
+    private async Task HandleLogin()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("login", loginModel);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                // Redirect to dashboard or home page
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Ugyldig email eller adgangskode.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Der opstod en fejl under login. Prøv igen senere.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "Email er påkrævet")]
+        [EmailAddress(ErrorMessage = "Indtast en gyldig email")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Adgangskode er påkrævet")]
+        [MinLength(6, ErrorMessage = "Adgangskoden skal være mindst 6 tegn")]
+        public string Password { get; set; } = "";
+    }
+}

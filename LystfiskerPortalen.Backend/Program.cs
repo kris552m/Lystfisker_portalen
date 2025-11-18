@@ -11,7 +11,11 @@ namespace LystfiskerPortalen.Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<LystfiskerPortalenIdentityDbContext>();
+            builder.Services.AddAuthorization();
 
+            // Add DbContexts
+            builder.Services.AddDbContext<LystfiskerPortalenIdentityDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
             builder.Services.AddDbContext<LystFiskerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
@@ -22,6 +26,9 @@ namespace LystfiskerPortalen.Backend
                             //.AddEntityFrameworkStores<LystFiskerContext>();
 
             var app = builder.Build();
+
+            //Mapping for Identity Endpoints
+            app.MapIdentityApi<IdentityUser>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LystfiskerPortalen.Backend\LystfiskerPortalen.Backend.csproj" />
+    <ProjectReference Include="..\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>
