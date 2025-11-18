@@ -1,13 +1,4 @@
-﻿@* <div class="modal-dialog modal-dialog-scrollable" id="staticBackdrop">
-    <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalScrollableTitle">Opret Opslag</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-        <textarea class="form-control" id="message-text" style="height: 156px;" placeholder="Opret et offentligt opslag"></textarea>
-    </div>
-    
-</div> *@
+﻿
 <!-- Modal -->
 <div class="modal fade" id="CreatePostModal" tabindex="-1" role="dialog" aria-labelledby="CreatePostModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -21,16 +12,17 @@
             <div class="modal-body">
                     <ProfileComponent></ProfileComponent>
 
-                <textarea class="form-control" id="message-text" 
-                    style="height: 156px; margin-top:12px;" 
-                    placeholder="Opret et offentligt opslag">
+                <textarea class="form-control" id="message-text"
+                          style="height: 156px; margin-top:12px;"
+                          placeholder="Opret et offentligt opslag"
+                          >
                 </textarea>
 
                 <div class="form-check "style="margin:10px 8px;"> 
                     <input type="checkbox" class="form-check-input" id="isQuestion"> 
                     <label class="form-check-label" for="isQuestion">Er det et spørgsmål?</label> 
                 </div>
-               <PostAddonsComponent></PostAddonsComponent>
+                <PostAddonsComponent></PostAddonsComponent>
 
 
             </div>
@@ -38,6 +30,8 @@
         </div>
     </div>
 </div>
-@code {
 
+
+@code {
+   
 }

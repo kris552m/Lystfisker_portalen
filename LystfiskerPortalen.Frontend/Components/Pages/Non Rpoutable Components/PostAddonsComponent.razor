@@ -1,4 +1,6 @@
-﻿<div class="d-flex align-items-center " style="border-radius:6px; padding-left:12px; border: solid 1px; border-color: lightgrey;">
+﻿@rendermode InteractiveServer
+
+<div class="d-flex align-items-center " style="border-radius:6px; padding-left:12px; border: solid 1px; border-color: lightgrey;">
     <span>Føj noget til dit opslag</span>
 
     <div class="ms-auto d-flex">
@@ -9,9 +11,19 @@
         <button class="btn">
             <i class="bi bi-geo-alt"></i>
         </button>
-
-        <button class="btn">
+        
+        <button type="button" class="btn" data-toggle="modal" data-target="#OpenEmojiePicker">
             <i class="bi bi-emoji-smile"></i>
         </button>
     </div>
 </div>
+
+
+<Emojipicker></Emojipicker>
+
+@code {
+    
+}
+
+
+

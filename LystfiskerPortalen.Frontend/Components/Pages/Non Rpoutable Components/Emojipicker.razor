@@ -1,0 +1,70 @@
+﻿<div class="modal fade" id="OpenEmojiePicker" tabindex="-1" role="dialog" aria-labelledby="Emopjipicker" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="text-muted" style="font-size:12px;">Smilies & emojies</p>
+                <div class="emoji-picker">
+                    @foreach (var emoji in EmojiMap)
+                    {
+                        <button type="button">
+                            @emoji.Value
+                        </button>
+                    }
+                </div>
+                
+            </div>
+        </div>
+                
+    </div>
+</div>
+
+
+@code {
+   
+    
+    private Dictionary<string, string> EmojiMap = new()
+    {
+        { ":tada:", "🎉" },
+        { ":heart:", "❤️" },
+        { ":smile:", "😄" },
+        // 🎣 Fishing-related
+    { ":fishing_pole:", "🎣" },
+    { ":fish:", "🐟" },
+    { ":tropical_fish:", "🐠" },
+    { ":blowfish:", "🐡" },
+    { ":shrimp:", "🦐" },
+    { ":crab:", "🦀" },
+    { ":octopus:", "🐙" },
+    { ":boat:", "🚤" },
+    { ":anchor:", "⚓" },
+    { ":wave:", "🌊" },
+    // 🌿 Nature & outdoor
+    { ":sun:", "☀️" },
+    { ":cloud:", "☁️" },
+    { ":rainbow:", "🌈" },
+    { ":tree:", "🌳" },
+    { ":camping:", "🏕️" },
+    { ":mountain:", "⛰️" },
+
+    // 😀 Expressions
+    { ":laughing:", "😆" },
+    { ":wink:", "😉" },
+    { ":cool:", "😎" },
+    { ":thinking:", "🤔" },
+    { ":thumbsup:", "👍" },
+    { ":group_hug:", "🤗" },
+    { ":salute:", "🫡" },
+    { ":clap:", "👏" },
+    { ":smile_face:", "😊" },
+    { ":autumn_leaf:", "🍂" },
+    { ":maple_leaf:", "🍁" },
+    { ":starstruck:", "🤩" },
+    { ":eyes:", "👀" },
+    { ":facepalm:", "🤦‍♂️" },
+    { ":mind_blown:", "🤯" },   
+    { ":sparkles:", "✨" }
+    };
+
+   
+
+}
