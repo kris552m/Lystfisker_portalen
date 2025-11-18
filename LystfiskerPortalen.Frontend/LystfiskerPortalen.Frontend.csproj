@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
+    <ProjectReference Include="..\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

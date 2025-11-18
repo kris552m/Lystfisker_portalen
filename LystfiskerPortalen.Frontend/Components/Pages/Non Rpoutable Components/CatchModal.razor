@@ -1,0 +1,133 @@
+﻿<div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catchModalLabel">Opret Fangst</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="mb-2">
+                            <ProfileComponent />
+                        </div>
+
+                        <EditForm Model="@generalPost">
+                            <div class="form-group">
+                                <InputTextArea class="form-control" @bind-Value="generalPost"
+                                    Placeholder="Del din fangst her..." />
+                            </div>
+                        </EditForm>
+
+                        <EditForm Model="@catchPost">
+                            <div class="row">
+
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="fishSpecies">Fiskearter</label>
+                                        <InputSelect @bind-Value="selectedFishSpecies" TValue="string"
+                                            class="form-select">
+                                            <option value="">Vælg fiskearter</option>
+                                            @foreach (var species in fishSpecies)
+                                            {
+                                                <option value="@species">@species</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fishWeight">Vægt</label>
+                                        <InputNumber id="fishWeight" @bind-Value="fishWeight" class="form-control" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lure">Blink</label>
+                                        <InputSelect class="form-select" @bind-Value="selectedLure" TValue="string">
+                                            <option value="">Vælg blink</option>
+                                            @foreach (var lure in lures)
+                                            {
+                                                <option value="@lure">@lure</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="catchDate">Dato</label>
+                                        <InputDate id="catchDate" class="form-control" @bind-Value="catchDate" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="fishSpecies">Teknik</label>
+                                        <InputSelect @bind-Value="selectedFishingTechnique" TValue="string"
+                                            class="form-select">
+                                            <option value="">Vælg teknik</option>
+                                            @foreach (var technique in fishingTechniques)
+                                            {
+                                                <option value="@technique">@technique</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fishLength">Længde</label>
+                                        <InputNumber id="fishLength" @bind-Value="fishLength" class="form-control" />
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="equipment">Udstyr</label>
+                                        <InputTextArea id="equipment" class="form-control" @bind-Value="equipment" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="timeCaught">Klokkeslæt</label>
+                                        <InputText id="timeCaught" class="form-control" @bind-Value="timeCaught" />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <PostAddonsComponent />
+                        </EditForm>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <PostCreateButton />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    #region Slet
+    private string generalPost { get; set; } = string.Empty;
+    private string catchPost { get; set; } = string.Empty;
+    private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3" };
+
+    private string selectedFishSpecies { get; set; } = string.Empty;
+
+    private List<string> fishingTechniques = new List<string> { "Teknik 1", "Teknik 2", "Teknik 3" };
+
+    private string selectedFishingTechnique { get; set; } = string.Empty;
+
+    private int fishWeight { get; set; } = 0;
+    private int fishLength { get; set; } = 0;
+
+    private string selectedLure { get; set; } = string.Empty;
+    private List<string> lures = new List<string> { "Lure1", "Lure2", "Lure3" };
+    private DateTime catchDate { get; set; } = DateTime.Now;
+    private string timeCaught { get; set; } = string.Empty;
+    private string equipment { get; set; } = string.Empty;
+
+    #endregion
+}
