@@ -12,14 +12,17 @@ namespace LystfiskerPortalen.Backend.Persistence
 
             this.context = context;
         }
-        public async void AddAsync(Post post)
+        public async Task<Post> AddAsync(Post post)
         {
             context.Posts.Add(post);
+            context.SaveChanges();
+            return post;
         }
 
-        public async void DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
             context.Posts.Remove(await GetByIdAsync(Id));
+            context.SaveChanges();
         }
 
         public async Task<List<Post>> GetAllAsync()
@@ -32,7 +35,7 @@ namespace LystfiskerPortalen.Backend.Persistence
             return await context.Posts.FindAsync(id);
         }
 
-        public async void UpdateAsync(Post post)
+        public async Task UpdateAsync(Post post)
         {
             Post postToUpdate = await GetByIdAsync(post.Id);
             if (postToUpdate != null)
