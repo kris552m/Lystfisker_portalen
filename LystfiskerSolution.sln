@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.Backend", "LystfiskerPortalen.Backend\LystfiskerPortalen.Backend.csproj", "{64476E16-E149-489B-93DC-8CC5ECC8385F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LystfiskerPortalen.Backend", "LystfiskerPortalen.Backend\LystfiskerPortalen.Backend.csproj", "{64476E16-E149-489B-93DC-8CC5ECC8385F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.Frontend", "LystfiskerPortalen.Frontend\LystfiskerPortalen.Frontend.csproj", "{EA83833F-4AD2-4181-BD2B-1BA79146620F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LystfiskerPortalen.Frontend", "LystfiskerPortalen.Frontend\LystfiskerPortalen.Frontend.csproj", "{EA83833F-4AD2-4181-BD2B-1BA79146620F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LystfiskerPortalen.ClassLibrary", "LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj", "{23C3AF31-4133-4138-A525-A997A1813CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LystfiskerPortalen.ClassLibrary", "LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj", "{23C3AF31-4133-4138-A525-A997A1813CE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
