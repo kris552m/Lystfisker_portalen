@@ -5,6 +5,7 @@ namespace LystfiskerPortalen.Backend.Data
 {
     public class LystFiskerContext : DbContext
     {
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<Catch> Catches { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Event> Events { get; set; }
