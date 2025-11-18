@@ -15,9 +15,9 @@ namespace LystfiskerPortalen.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Post>> GetAllAsync()
+        public async Task<ActionResult<List<Post>>> GetAllAsync()
         {
-            return await repository.GetAllAsync();
+            return Ok(await repository.GetAllAsync());
         }
 
         [HttpGet("{id}")]
