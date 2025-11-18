@@ -1,4 +1,3 @@
-
 using LystfiskerPortalen.Backend.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +18,8 @@ namespace LystfiskerPortalen.Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<LystFiskerContext>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>();
+                            //.AddEntityFrameworkStores<LystFiskerContext>();
 
             var app = builder.Build();
 
@@ -34,6 +33,7 @@ namespace LystfiskerPortalen.Backend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
 
             app.MapControllers();
