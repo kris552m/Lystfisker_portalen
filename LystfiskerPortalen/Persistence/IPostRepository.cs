@@ -1,6 +1,6 @@
 ﻿using LystfiskerPortalen.ClassLibrary;
 
-namespace LystfiskerPortalen.Backend.Persistence
+namespace LystfiskerPortalen.Persistence
 {
     public interface IPostRepository
     {

@@ -2,7 +2,7 @@
 using LystfiskerPortalen.ClassLibrary;
 using Microsoft.EntityFrameworkCore;
 
-namespace LystfiskerPortalen.Backend.Persistence
+namespace LystfiskerPortalen.Persistence
 {
     public class PostRepository : LystFiskerContext, IPostRepository
     {

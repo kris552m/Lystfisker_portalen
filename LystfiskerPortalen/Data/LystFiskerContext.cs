@@ -1,7 +1,7 @@
 using LystfiskerPortalen.ClassLibrary;
 using Microsoft.EntityFrameworkCore;
 
-namespace LystfiskerPortalen.Backend.Data
+namespace LystfiskerPortalen.Data
 {
     public class LystFiskerContext : DbContext
     {
