@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LystfiskerPortalen.Frontend.Models;
+using LystfiskerPortalen.Models;
 
-namespace LystfiskerPortalen.Frontend.Models
+namespace LystfiskerPortalen.Models
 {
     public class GeneralPost : Post
     {

@@ -1,4 +1,4 @@
-using LystfiskerPortalen.ClassLibrary;
+using LystfiskerPortalen.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Data

@@ -1,4 +1,8 @@
-using LystfiskerPortalen.Frontend.Components;
+
+using LystfiskerPortalen.Components;
+using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

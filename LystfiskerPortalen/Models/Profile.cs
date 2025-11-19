@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LystfiskerPortalen.Frontend.Models
+namespace LystfiskerPortalen.Models
 {
     public class Profile
     {

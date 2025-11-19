@@ -1,38 +1,38 @@
-﻿using LystfiskerPortalen.Backend.Data;
-using LystfiskerPortalen.ClassLibrary;
+﻿using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Persistence
 {
-    public class ProfileRepository : LystFiskerContext, IProfileRepository
+    public class ProfileRepository : IProfileRepository
     {
-        private readonly LystFiskerContext context;
-        public ProfileRepository(LystFiskerContext context, DbContextOptions<LystFiskerContext> options) : base(options)
+        private readonly LystFiskerContext _context;
+        public ProfileRepository(LystFiskerContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public async Task<Profile> AddAsync(Profile profile)
         {
-            context.Profiles.Add(profile);
-            context.SaveChanges();
+            _context.Profiles.Add(profile);
+            _context.SaveChanges();
             return profile;
         }
 
         public async Task DeleteAsync(int Id)
         {
-            context.Profiles.Remove(await GetByIdAsync(Id));
-            context.SaveChanges();
+            _context.Profiles.Remove(await GetByIdAsync(Id));
+            _context.SaveChanges();
         }
 
         public async Task<List<Profile>> GetAllAsync()
         {
-            return context.Profiles.ToList();
+            return _context.Profiles.ToList();
         }
 
         public async Task<Profile?> GetByIdAsync(int id)
         {
-            return await context.Profiles.FindAsync(id);
+            return await _context.Profiles.FindAsync(id);
         }
 
         public async Task UpdateAsync(Profile profile)
@@ -41,11 +41,11 @@ namespace LystfiskerPortalen.Persistence
             if (profileToUpdate != null)
             {
                 profileToUpdate.Username = profile.Username;
-                profileToUpdate.Password = profile.Password;
+                //profileToUpdate.Password = profile.Password;
                 profileToUpdate.ProfilePicture = profile.ProfilePicture;
                 profileToUpdate.Following = profile.Following;
 
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
     }

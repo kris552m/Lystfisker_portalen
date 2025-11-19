@@ -1,4 +1,5 @@
-﻿using LystfiskerPortalen.ClassLibrary;
+﻿
+using LystfiskerPortalen.Models;
 
 namespace LystfiskerPortalen.Persistence
 {

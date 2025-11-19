@@ -1,5 +1,5 @@
-﻿using LystfiskerPortalen.Backend.Data;
-using LystfiskerPortalen.ClassLibrary;
+﻿using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Persistence
