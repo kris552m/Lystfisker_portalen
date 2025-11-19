@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace LystfiskerPortalen.Models
 {
-    public class Profile
+    public class Profile : IdentityUser
     {
         //Properties
-        public string Username { get; set; }
-        private string Password { get; set; }
-        public string ProfilePicture { get; set; }
-        public List<Profile> Following { get; set; }
+        public string ProfilePicture { get; set; } = string.Empty;
+        public List<Profile> Following { get; set; } = new List<Profile>();
+        public List<Post> Posts { get; set; } = new List<Post>();
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<Reaction> Reactions { get; set; } = new List<Reaction>();
 
         //Constructor
-        public Profile(string username, string profilePicture, List<Profile> following)
+        public Profile(string profilePicture, List<Profile> following)
         {
-            Username = username;
             ProfilePicture = profilePicture;
             Following = following;
+        }
+        public Profile()
+        {
+            
         }
 
 

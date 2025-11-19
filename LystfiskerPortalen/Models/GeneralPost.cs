@@ -20,6 +20,10 @@ namespace LystfiskerPortalen.Models
         {
             IsQuestion = isQuestion;
         }
+        public GeneralPost()
+        {
+            
+        }
 
 
 

@@ -9,7 +9,8 @@ namespace LystfiskerPortalen.Models
     public class Fish
     {
         //Properties
-        public string Name { get; set; }
+        public int FishId { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Length { get; set; }
         public double Weight { get; set; }
 
@@ -19,6 +20,10 @@ namespace LystfiskerPortalen.Models
             Name = name;
             Length = length;
             Weight = weight;
+        }
+        public Fish()
+        {
+            
         }
 
 

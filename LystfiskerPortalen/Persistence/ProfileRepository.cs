@@ -37,11 +37,9 @@ namespace LystfiskerPortalen.Persistence
 
         public async Task UpdateAsync(Profile profile)
         {
-            Profile profileToUpdate = await GetByIdAsync(profile.Id);
+            Profile profileToUpdate = await GetByIdAsync(int.Parse(profile.Id));
             if (profileToUpdate != null)
             {
-                profileToUpdate.Username = profile.Username;
-                //profileToUpdate.Password = profile.Password;
                 profileToUpdate.ProfilePicture = profile.ProfilePicture;
                 profileToUpdate.Following = profile.Following;
 

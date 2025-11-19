@@ -9,7 +9,7 @@ namespace LystfiskerPortalen.Models
     public class Event : Post
     {
         //Properties
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public DateTime EventTime { get; set; }
 
         //Constructor
@@ -19,6 +19,11 @@ namespace LystfiskerPortalen.Models
             Title = title;
             EventTime = eventTime;
         }
+        public Event()
+        {
+            
+        }
+        
 
 
 

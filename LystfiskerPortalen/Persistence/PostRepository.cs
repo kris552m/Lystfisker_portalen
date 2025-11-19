@@ -37,7 +37,7 @@ namespace LystfiskerPortalen.Persistence
 
         public async Task UpdateAsync(Post post)
         {
-            Post postToUpdate = await GetByIdAsync(post.Id);
+            Post postToUpdate = await GetByIdAsync(post.PostId);
             if (postToUpdate != null)
             {
                 postToUpdate.Picture = post.Picture;
