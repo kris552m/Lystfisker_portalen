@@ -19,12 +19,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="/begivenheder">Begivenheder</a>
             </li>
+            
+            @*Replace or delte after dev is done  *@
             <li class="nav-item">
                 <NavLink class="nav-link" href="/Account/Login">Login</NavLink>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Weather">Weather</a>
-            </li>
+           
+
+
         </ul>
     </nav>
     <div class="row">
@@ -50,10 +52,13 @@
             return "Statistik";
         if (uri.Contains("/begivenheder"))
             return "Begivenheder";
-        if (uri.Contains("/account/login"))
+        
+        @*Replace or delte after dev is done  *@
+            if (uri.Contains("/account/login"))
             return "Log in";
-        if (uri.Contains("/weather"))
-            return "Weather";
-        return "Home";
+        
+        
+            
+            return "Home";
     }
 }
