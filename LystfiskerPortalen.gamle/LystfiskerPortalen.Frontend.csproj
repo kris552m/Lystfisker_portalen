@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LystfiskerPortalen.Backend\LystfiskerPortalen.Backend.csproj" />
+    <ProjectReference Include="..\LystfiskerPortalen.ClassLibrary\LystfiskerPortalen.ClassLibrary.csproj" />
+    <Folder Include="wwwroot\Pictures\" />
+  </ItemGroup>
+
+
+</Project>

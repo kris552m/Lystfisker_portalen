@@ -1,0 +1,77 @@
+﻿@page "/feed"
+@using LystfiskerPortalen.Frontend.Models
+
+
+<div class="feed-sort-bar">
+    <button class="sort-btn">Sorter efter:</button>
+    <button class="filter-btn">fangst</button>
+</div>
+
+<div class="feed-input">
+    <img src="https://via.placeholder.com/40" class="avatar" alt="User avatar" />
+    <input class="input-box" placeholder="hvad har du på krogen? ..." disabled />
+</div>
+
+@foreach (var post in posts)
+{
+    <div class="feed-post">
+        <div class="post-header">
+            <img src="@post.Reactions.FirstOrDefault()?.Profile?.ProfilePicture ?? " https: //via.placeholder.com/40"" class="avatar" alt="User avatar" />
+            <div>
+                <span class="user-name">@post.Reactions.FirstOrDefault()?.Profile?.Username ?? "Bruger"</span>
+                <span class="post-tag">Generel</span>
+                <div class="post-date">@post.PostTime.ToString("d. MMMM 'kl.' HH:mm")</div>
+            </div>
+            <button class="post-menu">...</button>
+        </div>
+        <div class="post-content">
+            <p>@post.Description</p>
+            @if (!string.IsNullOrEmpty(post.Picture))
+            {
+                <img src="@post.Picture" class="post-image" alt="Post image" />
+            }
+        </div>
+        <div class="post-actions">
+            <span>@post.Reactions?.Count ?? 0</span> <span>Synes godt om</span>
+            <span>@post.Comments?.Count ?? 0 kommentarer</span>
+        </div>
+        @if (post.Comments != null && post.Comments.Count > 0)
+        {
+            var comment = post.Comments[0];
+            <div class="post-comment">
+                <img src="@comment.Profile?.ProfilePicture ?? " https: //via.placeholder.com/30"" class="avatar" alt="Commenter avatar" />
+                <div>
+                    <span class="comment-user">@comment.Profile?.Username ?? "Bruger"</span>
+                    <span class="comment-text">@comment.Text</span>
+                    <div class="comment-actions">
+                        <span>@(DateTime.Now.Subtract(comment.CommentTime).Days)d</span>
+                        <span>Synes godt om</span>
+                        <span>Del</span>
+                    </div>
+                </div>
+            </div>
+            @if (post.Comments.Count > 1)
+            {
+                <div class="post-replies">Vis alle @post.Comments.Count svar</div>
+            }
+        }
+    </div>
+}
+
+@code {
+    private List<Post> posts = new()
+    {
+        new GeneralPost(
+    false, // or true, depending on your intent
+    DateTime.Now,
+    "https://via.placeholder.com/200x100",
+    "Description here",
+    new Location("Lake", 55.0, 12.0),
+    new List<Comment>(),
+    new List<Reaction>()
+)
+    };
+}
+
+
+  

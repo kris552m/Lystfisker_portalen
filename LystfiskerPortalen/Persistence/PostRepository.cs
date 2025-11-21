@@ -1,8 +1,8 @@
-﻿using LystfiskerPortalen.Backend.Data;
-using LystfiskerPortalen.ClassLibrary;
+﻿using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LystfiskerPortalen.Backend.Persistence
+namespace LystfiskerPortalen.Persistence
 {
     public class PostRepository : LystFiskerContext, IPostRepository
     {
@@ -37,7 +37,7 @@ namespace LystfiskerPortalen.Backend.Persistence
 
         public async Task UpdateAsync(Post post)
         {
-            Post postToUpdate = await GetByIdAsync(post.Id);
+            Post postToUpdate = await GetByIdAsync(post.PostId);
             if (postToUpdate != null)
             {
                 postToUpdate.Picture = post.Picture;
