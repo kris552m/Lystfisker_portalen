@@ -12,38 +12,38 @@ namespace LystfiskerPortalen.Persistence
             _context = context;
         }
 
-        public async Task<Profile> AddAsync(Profile profile)
+        public Profile Add(Profile profile)
         {
             _context.Profiles.Add(profile);
             _context.SaveChanges();
             return profile;
         }
 
-        public async Task DeleteAsync(int Id)
+        public void Delete(int Id)
         {
-            _context.Profiles.Remove(await GetByIdAsync(Id));
+            _context.Profiles.Remove(GetById(Id));
             _context.SaveChanges();
         }
 
-        public async Task<List<Profile>> GetAllAsync()
+        public List<Profile> GetAll()
         {
             return _context.Profiles.ToList();
         }
 
-        public async Task<Profile?> GetByIdAsync(int id)
+        public Profile? GetById(int id)
         {
-            return await _context.Profiles.FindAsync(id);
+            return _context.Profiles.Find(id);
         }
 
-        public async Task UpdateAsync(Profile profile)
+        public void Update(Profile profile)
         {
-            Profile profileToUpdate = await GetByIdAsync(int.Parse(profile.Id));
+            Profile profileToUpdate = GetById(int.Parse(profile.Id));
             if (profileToUpdate != null)
             {
                 profileToUpdate.ProfilePicture = profile.ProfilePicture;
                 profileToUpdate.Following = profile.Following;
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
     }
