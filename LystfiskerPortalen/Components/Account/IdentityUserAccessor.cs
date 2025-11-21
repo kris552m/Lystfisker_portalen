@@ -1,5 +1,6 @@
 ﻿using LystfiskerPortalen.Data;
 using Microsoft.AspNetCore.Identity;
+using LystfiskerPortalen.Models;
 
 namespace LystfiskerPortalen.Components.Account
 {

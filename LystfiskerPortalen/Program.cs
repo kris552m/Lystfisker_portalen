@@ -1,4 +1,3 @@
-
 using LystfiskerPortalen.Components;
 using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
@@ -42,7 +41,6 @@ builder.Services.AddIdentityCore<Profile>(options => options.SignIn.RequireConfi
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<Profile>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
 
