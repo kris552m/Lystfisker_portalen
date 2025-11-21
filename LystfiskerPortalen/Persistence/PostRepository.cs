@@ -4,40 +4,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Persistence
 {
-    public class PostRepository : LystFiskerContext, IPostRepository
+    public class PostRepository : IPostRepository
     {
         private readonly LystFiskerContext context;
-        public PostRepository(LystFiskerContext context, DbContextOptions<LystFiskerContext> options) : base(options)
+        public PostRepository(LystFiskerContext context)
         {
 
             this.context = context;
         }
-        public async Task<Post> AddAsync(Post post)
+        public Post Add(Post post)
         {
             context.Posts.Add(post);
             context.SaveChanges();
             return post;
         }
 
-        public async Task DeleteAsync(int Id)
+        public void Delete(int Id)
         {
-            context.Posts.Remove(await GetByIdAsync(Id));
+            context.Posts.Remove(GetById(Id));
             context.SaveChanges();
         }
 
-        public async Task<List<Post>> GetAllAsync()
+        public List<Post> GetAll()
         {
             return context.Posts.Include(p => p.Comments).ToList();
         }
 
-        public async Task<Post?> GetByIdAsync(int id)
+        public Post? GetById(int id)
         {
-            return await context.Posts.FindAsync(id);
+            return context.Posts.Find(id);
         }
 
-        public async Task UpdateAsync(Post post)
+        public void Update(Post post)
         {
-            Post postToUpdate = await GetByIdAsync(post.PostId);
+            Post postToUpdate = GetById(post.PostId);
             if (postToUpdate != null)
             {
                 postToUpdate.Picture = post.Picture;
@@ -47,7 +47,7 @@ namespace LystfiskerPortalen.Persistence
                 postToUpdate.Description = post.Description;
                 postToUpdate.Location = post.Location;
 
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
             }
         }

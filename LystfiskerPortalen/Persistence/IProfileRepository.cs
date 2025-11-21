@@ -5,10 +5,10 @@ namespace LystfiskerPortalen.Persistence
 {
     public interface IProfileRepository
     {
-        public Task<List<Profile>> GetAllAsync();
-        public Task<Profile?> GetByIdAsync(int id);
-        public Task<Profile> AddAsync(Profile profile);
-        public Task DeleteAsync(int Id);
-        public Task UpdateAsync(Profile profile);
+        public List<Profile> GetAll();
+        public Profile? GetById(int id);
+        public Profile Add(Profile profile);
+        public void Delete(int Id);
+        public void Update(Profile profile);
     }
 }

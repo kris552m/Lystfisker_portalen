@@ -5,10 +5,10 @@ namespace LystfiskerPortalen.Persistence
 {
     public interface IPostRepository
     {
-        public Task<List<Post>> GetAllAsync();
-        public Task<Post?> GetByIdAsync(int id);
-        public Task<Post> AddAsync(Post post);
-        public Task DeleteAsync(int id);
-        public Task UpdateAsync(Post post);
+        public List<Post> GetAll();
+        public Post? GetById(int id);
+        public Post Add(Post post);
+        public void Delete(int id);
+        public void Update(Post post);
     }
 }
