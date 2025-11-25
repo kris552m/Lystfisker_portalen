@@ -15,23 +15,25 @@
                 <textarea class="form-control" id="message-text"
                           style="height: 156px; margin-top:12px;"
                           placeholder="Opret et offentligt opslag"
+                          @bind="Description"
                           >
                 </textarea>
 
                 <div class="form-check "style="margin:10px 8px;"> 
-                    <input type="checkbox" class="form-check-input" id="isQuestion"> 
-                    <label class="form-check-label" for="isQuestion">Er det et spørgsmål?</label> 
+                    <input type="checkbox" class="form-check-input" id="isQuestion" @bind="IsQuestion">
+                    <label class="form-check-label" for="isQuestion" >Er det et spørgsmål?</label> 
                 </div>
                 <PostAddonsComponent></PostAddonsComponent>
 
 
             </div>
-            <PostCreateButton></PostCreateButton>
+            <PostCreateButton PostType="general" Description="@Description" IsQuestion="@IsQuestion"></PostCreateButton>
         </div>
     </div>
 </div>
 
 
 @code {
-   
+    public string Description { get; set; } = string.Empty;
+    public bool IsQuestion { get; set; } = false;
 }
