@@ -64,7 +64,6 @@ namespace PostTests
             using var context = new LystFiskerContext(_options);
             var location = new Location
             {
-                LocationId = 3,
                 Name = "TestLocation",
                 Latitude = 10.21,
                 Longitude = 10.20,

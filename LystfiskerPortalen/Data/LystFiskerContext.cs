@@ -40,10 +40,10 @@ namespace LystfiskerPortalen.Data
                 .WithMany(l => l.Posts);
 
             modelBuilder.Entity<Comment>()
-      .HasMany(c => c.Reactions)
-      .WithMany(r => r.Comments)
-      .UsingEntity<Dictionary<string, object>>(
-          "CommentReactions",
+              .HasMany(c => c.Reactions)
+              .WithMany(r => r.Comments)
+              .UsingEntity<Dictionary<string, object>>(
+              "CommentReactions",
           j => j
               .HasOne<Reaction>()
               .WithMany()
