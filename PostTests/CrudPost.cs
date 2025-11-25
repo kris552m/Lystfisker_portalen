@@ -49,7 +49,6 @@ namespace PostTests
             ProfileRepository Profilerepo = new ProfileRepository(context);
 
 
-
             // Assert: query back from the real DB
             var savedProfile = Profilerepo.GetById("acee7f97-286e-4f36-9186-607a8834aeac");
 
@@ -80,35 +79,34 @@ namespace PostTests
             Assert.AreEqual("TestLocation", savedLocation.Name);
         }
 
-        //[TestMethod]
-        //public async Task CanAddGeneralPostToDatabase()
-        //{
-        //    using var context = new LystFiskerContext(_options);
-        //    PostRepository Postrepo = new PostRepository(context);
+        [TestMethod]
+        public async Task CanAddGeneralPostRepoToDatabase()
+        {
+            using var context = new LystFiskerContext(_options);
+            PostRepository Postrepo = new PostRepository(context);
 
-        //    //arrange get user from db
-        //    var savedProfile = context.Users
-        //    .Where(u => u.UserName == "testuser4")
-        //    .Select(u => new { u.UserName, u.Email })
+            //arrange get user from db
+            var savedProfile = context.Users.Find("fb34823d-803e-48fb-b353-64934a3272d3");
 
-        //    .FirstOrDefault();
+            // Act: add a GeneralPost
+            var post = new GeneralPost
+            {
+                PostTime = DateTime.UtcNow,
+                Description = "Integration test post",
+                Location = context.Locations.Find(1),
+                ProfileId = savedProfile.Id,
+                IsQuestion = true,
 
-        //    // Act: add a GeneralPost
-        //    var post = new GeneralPost
-        //    {
-        //        PostTime = DateTime.UtcNow,
-        //        Description = "Integration test post",
-        //        ProfileId = savedProfile.Id
-        //    };
-        //    context.Posts.Add(post);
-        //    await context.SaveChangesAsync();
+            };
+            Postrepo.Add(post);
+            await context.SaveChangesAsync();
 
-        //    // Assert: query back from the real DB
-        //    var savedPost = context.Posts.Include(p => p.Profile).FirstOrDefault(p => p.Description == "Integration test post");
+            // Assert: query back from the real DB
+            var savedPost = Postrepo.GetById(post.PostId);
 
-        //    Assert.IsNotNull(savedPost);
-        //    Assert.AreEqual("testuser", savedPost.Profile.UserName);
-        //}
+            Assert.IsNotNull(savedPost);
+            Assert.AreEqual("testuser4", savedPost.Profile.UserName);
+        }
 
     }
 }
