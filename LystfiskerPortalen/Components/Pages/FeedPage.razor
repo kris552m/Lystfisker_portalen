@@ -4,14 +4,19 @@
 <div class="d-flex justify-content-center mb-3">
     <div style="width:45rem; display:flex; justify-content:space-between;">
         <button class="btn btn-outline-secondary">Sorter Efter:</button>
-        <button class="btn btn-outline-primary">Ny Fangst</button>
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#catchModal">Ny Fangst</button>
     </div>
 </div>
 
 <div class="d-flex flex-column align-items-center">
-    @*
-GeneralPost Component
- *@
+    <textarea class="form-control mb-4 border-4" 
+        style="width:45rem; cursor:pointer;" 
+        placeholder="Nyt opslag.."
+        data-bs-toggle="modal" 
+        data-bs-target="#CreatePostModal"></textarea>
+    <CreatePostModal />
+    
+      
     @foreach (GeneralPost post in Posts)
     {
         <div class="card mb-5 border-3" style="width: 45rem;">
@@ -36,6 +41,7 @@ GeneralPost Component
                 <li class="list-group-item">@post.Reactions.Count</li>
                 @foreach (var comment in post.Comments)
                 {
+                    @* @comment.Profile.UserName mangler her, så vi kan se en profil på hver kommentar *@
                     <li class="list-group-item">@comment.Text</li>
                 }
             </ul>
@@ -47,57 +53,79 @@ GeneralPost Component
         </div>
     }
 
-            </div>
+</div>
 
 
 
 @code {
+    public GeneralPost NewPost { get; set; } = new GeneralPost();
     public Comment NewComment { get; set; } = new Comment();
     public List<Post> Posts { get; set; } = new List<Post>()
-{
-new GeneralPost { PostId = 1, Description = "Jeg fangede en rødspætte", IsQuestion = false, Location = new Location
-{Name = "Odense Å" }, Picture ="/Images/Makrel.jpg",
-PostTime = DateTime.Now, Comments = new List<Comment>() { new Comment {CommentId = 1, CommentTime =
-DateTime.Now.AddHours(2), Text = "Wow tillykke!!"},
-new Comment {CommentId = 2, CommentTime = DateTime.Now, Text = "Hvor er du sej"}},Reactions = new List<Reaction> { new
-Reaction {ReactionId = 1}}
-},
-
-new GeneralPost 
-{ 
-    PostId = 2, 
-    Description = "Hvor kan jeg fange makreller", 
-    IsQuestion = true,
-    Location = new Location 
-        { 
-        Name = "Århus" 
-        }, 
-    Picture = "/Images/Makrel.jpg", 
-    PostTime = DateTime.Now, 
-    Comments = new List<Comment>
-    { 
-        new Comment 
-        {
-            CommentId = 1, CommentTime = DateTime.Now.AddHours(2), 
-            Text = "Du kan fange makreller i Århus havn" 
-        },
-        new Comment 
-        {
-            CommentId = 2, 
-            CommentTime = DateTime.Now, 
-            Text = "Makreller kan fanges i søen"}
-        },
-    Reactions = new List<Reaction> 
     {
-         new Reaction 
-         {   
-            ReactionId = 1
-         }, 
-         new Reaction 
-         {
-            ReactionId = 2
-        }
-    }
-},
-};
+        new GeneralPost 
+        { 
+            PostId = 1, 
+            Description = "Jeg fangede en rødspætte", 
+            IsQuestion = false, 
+            Location = new Location
+            {
+                Name = "Odense Å" 
+            }, 
+            Picture ="/Images/Makrel.jpg", 
+            PostTime = DateTime.Now, 
+            Comments = new List<Comment>() 
+            { 
+                new Comment 
+                {
+                    CommentId = 1, CommentTime = DateTime.Now.AddHours(2), Text = "Wow tillykke!!" 
+                },
+                new Comment 
+                {
+                    CommentId = 2, CommentTime = DateTime.Now, Text = "Hvor er du sej"}},
+                    Reactions = new List<Reaction> 
+                    { 
+                        new Reaction 
+                        {
+                            ReactionId = 1
+                        }
+                    }
+            },
+        new GeneralPost
+        {
+            PostId = 2,
+            Description = "Hvor kan jeg fange makreller",
+            IsQuestion = true,
+            Location = new Location
+            {
+                Name = "Århus"
+            },
+            Picture = "/Images/Makrel.jpg",
+            PostTime = DateTime.Now,
+            Comments = new List<Comment>
+            {
+                new Comment
+                {
+                    CommentId = 1, 
+                    CommentTime = DateTime.Now.AddHours(2),
+                    Text = "Du kan fange makreller i Århus havn"
+                },
+                new Comment
+                {
+                    CommentId = 2,
+                    CommentTime = DateTime.Now,
+                    Text = "Makreller kan fanges i søen"}
+                },
+            Reactions = new List<Reaction>
+            {
+                new Reaction
+                {
+                    ReactionId = 1
+                },
+                new Reaction
+                {
+                    ReactionId = 2
+                }
+            }
+        },
+    };
 }
