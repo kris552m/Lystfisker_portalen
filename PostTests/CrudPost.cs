@@ -94,7 +94,9 @@ namespace PostTests
                 PostTime = DateTime.UtcNow,
                 Description = "Integration test post",
                 Location = context.Locations.Find(1),
-                ProfileId = savedProfile.Id
+                ProfileId = savedProfile.Id,
+                IsQuestion = true,
+
             };
             Postrepo.Add(post);
             await context.SaveChangesAsync();
