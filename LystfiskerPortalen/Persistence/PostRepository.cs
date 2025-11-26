@@ -1,6 +1,8 @@
 ﻿using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace LystfiskerPortalen.Persistence
 {
