@@ -1,4 +1,4 @@
-﻿
+﻿@rendermode InteractiveServer
 <!-- Modal -->
 <div class="modal fade" id="CreatePostModal" tabindex="-1" role="dialog" aria-labelledby="CreatePostModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -35,6 +35,6 @@
 
 
 @code {
-    public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = null;
     public bool IsQuestion { get; set; } = false;
 }
