@@ -29,7 +29,11 @@ namespace LystfiskerPortalen.Persistence
 
         public List<Post> GetAll()
         {
-            return context.Posts.Include(p => p.Comments).ToList();
+            return context.Posts
+            .Include(p => p.Comments)
+            .ThenInclude(c => c.Profile)
+            .ThenInclude(c => c.Reactions)
+            .Include(p => p.Reactions).ToList();
         }
 
         public Post? GetById(int id)

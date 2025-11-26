@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@inject IPostRepository PostRepo
 
 <div class="d-flex justify-content-center mb-3">
     <div style="width:45rem; display:flex; justify-content:space-between;">
@@ -17,16 +19,19 @@
     <CreatePostModal />
     
       
-    @foreach (GeneralPost post in Posts)
+    @foreach (var post in Posts)
     {
         <div class="card mb-5 border-3" style="width: 45rem;">
             <div class="card-body">
                 <div class="card-title">
                     <div class="d-flex">
-                        <h5>Profile</h5>
-                        @if (post.IsQuestion)
+                        <ProfileComponent ProfileUserName="@post.Profile.UserName"/>
+                        @if ((post as GeneralPost)?.IsQuestion == true)
                         {
                             <span class="badge bg-success ms-3 " style="height:23px ">Spørgsmål</span>
+                        }
+                        @if ((post is Catch)) {
+                            <span class="badge bg-info ms-3 " style="height:23px ">Fangst</span>
                         }
                     </div>
                 </div>
@@ -37,12 +42,18 @@
                     <img class="card-img-top" src="@post.Picture" alt="Card image">
                 }
             </div>
+            <div class="card-text ms-3 mb-2"><span class="badge bg-warning">@post.Reactions.Count</span></div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">@post.Reactions.Count</li>
                 @foreach (var comment in post.Comments)
                 {
-                    @* @comment.Profile.UserName mangler her, så vi kan se en profil på hver kommentar *@
-                    <li class="list-group-item">@comment.Text</li>
+                    <li class="list-group-item">
+                    <img class="rounded-circle me-1" 
+                            width="24" 
+                            height="24"
+                            src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
+                            @comment.Profile | 
+                            @comment.Text
+                        </li>
                 }
             </ul>
             <EditForm Model="post" class="card-text p-2">
@@ -58,74 +69,13 @@
 
 
 @code {
+    protected override void OnInitialized()
+    {
+        Posts = PostRepo.GetAll().ToList();
+        base.OnInitialized();
+    }
     public GeneralPost NewPost { get; set; } = new GeneralPost();
     public Comment NewComment { get; set; } = new Comment();
-    public List<Post> Posts { get; set; } = new List<Post>()
-    {
-        new GeneralPost 
-        { 
-            PostId = 1, 
-            Description = "Jeg fangede en rødspætte", 
-            IsQuestion = false, 
-            Location = new Location
-            {
-                Name = "Odense Å" 
-            }, 
-            Picture ="/Images/Makrel.jpg", 
-            PostTime = DateTime.Now, 
-            Comments = new List<Comment>() 
-            { 
-                new Comment 
-                {
-                    CommentId = 1, CommentTime = DateTime.Now.AddHours(2), Text = "Wow tillykke!!" 
-                },
-                new Comment 
-                {
-                    CommentId = 2, CommentTime = DateTime.Now, Text = "Hvor er du sej"}},
-                    Reactions = new List<Reaction> 
-                    { 
-                        new Reaction 
-                        {
-                            ReactionId = 1
-                        }
-                    }
-            },
-        new GeneralPost
-        {
-            PostId = 2,
-            Description = "Hvor kan jeg fange makreller",
-            IsQuestion = true,
-            Location = new Location
-            {
-                Name = "Århus"
-            },
-            Picture = "/Images/Makrel.jpg",
-            PostTime = DateTime.Now,
-            Comments = new List<Comment>
-            {
-                new Comment
-                {
-                    CommentId = 1, 
-                    CommentTime = DateTime.Now.AddHours(2),
-                    Text = "Du kan fange makreller i Århus havn"
-                },
-                new Comment
-                {
-                    CommentId = 2,
-                    CommentTime = DateTime.Now,
-                    Text = "Makreller kan fanges i søen"}
-                },
-            Reactions = new List<Reaction>
-            {
-                new Reaction
-                {
-                    ReactionId = 1
-                },
-                new Reaction
-                {
-                    ReactionId = 2
-                }
-            }
-        },
-    };
+    public List<Post> Posts { get; set; } = new List<Post>();
+
 }
