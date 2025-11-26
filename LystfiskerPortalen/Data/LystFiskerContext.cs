@@ -24,6 +24,7 @@ namespace LystfiskerPortalen.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Post>().UseTptMappingStrategy();
 
+
             modelBuilder.Entity<Post>()
                .HasMany(p => p.Comments)
                .WithOne(c => c.Post)
@@ -36,13 +37,48 @@ namespace LystfiskerPortalen.Data
 
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.Location)
-                .WithMany(l => l.Posts)
-                .OnDelete(DeleteBehavior.SetNull);
+                .WithMany(l => l.Posts);
 
             modelBuilder.Entity<Comment>()
-                .HasMany(c => c.Reactions)
-                .WithMany(r => r.Comments)
-                .UsingEntity(j => j.ToTable("CommentReactions"));
+              .HasMany(c => c.Reactions)
+              .WithMany(r => r.Comments)
+              .UsingEntity<Dictionary<string, object>>(
+              "CommentReactions",
+          j => j
+              .HasOne<Reaction>()
+              .WithMany()
+              .HasForeignKey("ReactionId")
+              .HasPrincipalKey(r => r.ReactionId)
+              .OnDelete(DeleteBehavior.NoAction), // prevent cascade from Reaction side
+          j => j
+              .HasOne<Comment>()
+              .WithMany()
+              .HasForeignKey("CommentId")
+              .HasPrincipalKey(c => c.CommentId)
+              .OnDelete(DeleteBehavior.Cascade), // deleting a Comment removes join rows
+          j =>
+          {
+              j.HasKey("CommentId", "ReactionId");
+              j.ToTable("CommentReactions");
+          });
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Profile)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.ProfileId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Reaction>()
+                .HasOne(r => r.Post)
+                .WithMany(p => p.Reactions)
+                .HasForeignKey(r => r.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Posts)

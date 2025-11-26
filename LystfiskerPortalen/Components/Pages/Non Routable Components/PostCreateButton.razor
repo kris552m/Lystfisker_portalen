@@ -1,3 +1,61 @@
-﻿<div class="modal-footer">
-    <button type="button" class="btn btn-primary w-100">Slå op</button>
+﻿@using LystfiskerPortalen.Data
+@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@inject IPostRepository PostRepository
+@inject NavigationManager navManager
+
+@rendermode InteractiveServer
+<div class="modal-footer">
+    <button type="button" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
 </div>
+
+@code{
+    [Parameter]
+    public string Description { get; set; }
+
+    [CascadingParameter]
+    public string ProfileId { get; set; }
+
+    [Parameter]
+    public bool IsQuestion { get; set; }
+
+
+    [Parameter]
+    public string PostType { get; set; }
+
+    public void CreatePost()
+    {
+       navManager.Refresh();
+        switch(PostType){
+            case "general":
+                CreateGeneralPost();
+                break;
+            case "catch":
+                // Logic for creating a catch post
+                break;
+            case "event":
+                // Logic for creating a catch post
+                break;
+        }
+       
+    }
+
+    public void CreateGeneralPost()
+    {
+        var generalPost = new GeneralPost
+        {
+            PostTime = DateTime.UtcNow,
+            Description = Description,
+            Location = new Location
+            {
+                Name = "Placeholder",
+                Latitude = 0.0,
+                Longitude = 0.0
+            },
+            ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
+            IsQuestion = IsQuestion,
+        };
+        PostRepository.Add(generalPost);
+        Console.WriteLine("General Post Created");
+    }
+}

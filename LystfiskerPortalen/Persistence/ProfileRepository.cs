@@ -1,6 +1,5 @@
 ﻿using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace LystfiskerPortalen.Persistence
 {
@@ -19,7 +18,7 @@ namespace LystfiskerPortalen.Persistence
             return profile;
         }
 
-        public void Delete(int Id)
+        public void Delete(string Id)
         {
             _context.Profiles.Remove(GetById(Id));
             _context.SaveChanges();
@@ -30,14 +29,14 @@ namespace LystfiskerPortalen.Persistence
             return _context.Profiles.ToList();
         }
 
-        public Profile? GetById(int id)
+        public Profile? GetById(string id)
         {
             return _context.Profiles.Find(id);
         }
 
         public void Update(Profile profile)
         {
-            Profile profileToUpdate = GetById(int.Parse(profile.Id));
+            Profile profileToUpdate = GetById(profile.Id);
             if (profileToUpdate != null)
             {
                 profileToUpdate.ProfilePicture = profile.ProfilePicture;

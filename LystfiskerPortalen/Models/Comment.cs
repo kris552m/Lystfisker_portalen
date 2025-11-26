@@ -15,7 +15,7 @@ namespace LystfiskerPortalen.Models
         public DateTime CommentTime { get; set; }
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
         [ForeignKey(nameof(Profile))]
-        public int ProfileId { get; set; }
+        public string ProfileId { get; set; }
         public Profile Profile { get; set; }
         [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
