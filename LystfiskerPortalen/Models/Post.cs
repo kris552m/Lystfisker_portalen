@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LystfiskerPortalen.Models
 {
@@ -13,7 +7,7 @@ namespace LystfiskerPortalen.Models
         // Properties
         public int PostId { get; set; }
         public DateTime PostTime { get; set; }
-        public string Picture { get; set; } = string.Empty;
+        public List<Image> Images { get; set; } = new List<Image>();
         public string Description { get; set; } = string.Empty;
         public Location Location { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();

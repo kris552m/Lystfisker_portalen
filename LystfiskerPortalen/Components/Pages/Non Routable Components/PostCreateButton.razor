@@ -62,6 +62,7 @@
         PostRepository.Add(generalPost);
         Console.WriteLine("General Post Created");
     }
+
     private async Task ImageHandler(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -74,7 +75,6 @@
 
         await using var fs = new FileStream(path, FileMode.Create);
         await file.OpenReadStream().CopyToAsync(fs);
-
         
     }
 }
