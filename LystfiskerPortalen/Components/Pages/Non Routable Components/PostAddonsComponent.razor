@@ -19,18 +19,11 @@
     </div>
 </div>
 
-<ImagePicker ImgName="@ImgHandler"></ImagePicker>
 
 <Emojipicker></Emojipicker>
 
 @code {
-    [Parameter]
-    public EventCallback<string> ImgName { get; set; }
 
-    public async Task ImgHandler(string name)
-    {
-        await ImgName.InvokeAsync(name);
-    }
 }
 
 

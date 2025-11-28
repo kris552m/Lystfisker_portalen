@@ -3,13 +3,15 @@
 @using LystfiskerPortalen.Persistence
 @inject IPostRepository PostRepository
 @inject NavigationManager navManager
-
 @rendermode InteractiveServer
+
+<InputFile OnChange="@ImageHandler"></InputFile>
 <div class="modal-footer">
     <button type="button" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
 </div>
 
 @code{
+    public string fileName = null;
     [Parameter]
     public string Description { get; set; }
 
@@ -25,10 +27,10 @@
 
     public void CreatePost()
     {
-       navManager.Refresh();
+        navManager.Refresh();
         switch(PostType){
             case "general":
-                CreateGeneralPost();
+                    CreateGeneralPost();
                 break;
             case "catch":
                 // Logic for creating a catch post
@@ -37,7 +39,7 @@
                 // Logic for creating a catch post
                 break;
         }
-       
+
     }
 
     public void CreateGeneralPost()
@@ -54,8 +56,25 @@
             },
             ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
             IsQuestion = IsQuestion,
-        };
+            Picture = fileName
+            
+    };
         PostRepository.Add(generalPost);
         Console.WriteLine("General Post Created");
+    }
+    private async Task ImageHandler(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (!file.ContentType.StartsWith("image/")) return;
+
+        var folder = Path.Combine("wwwroot", "Images");
+
+        fileName = $"{Guid.NewGuid()}_{file.Name}";
+        var path = Path.Combine(folder, fileName);
+
+        await using var fs = new FileStream(path, FileMode.Create);
+        await file.OpenReadStream().CopyToAsync(fs);
+
+        
     }
 }
