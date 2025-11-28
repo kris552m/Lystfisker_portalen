@@ -26,7 +26,7 @@
                         <InputCheckbox type="checkbox" class="form-check-input" id="isQuestion" @bind-Value="IsQuestion"></InputCheckbox>
                         <label class="form-check-label" for="isQuestion" >Er det et spørgsmål?</label> 
                     </div>
-                    <PostAddonsComponent></PostAddonsComponent>
+                    <PostAddonsComponent ImgName="@ImgHandler"></PostAddonsComponent>
 
                 </div>
            
@@ -37,7 +37,15 @@
 
 
 @code {
+
+    public async Task ImgHandler(string name)
+    {
+        ImgName = name;
+    }
+
+    public string ImgName { get; set; } = null;
     public string Description { get; set; } = null;
     public bool IsQuestion { get; set; } = false;
+  
 
 }
