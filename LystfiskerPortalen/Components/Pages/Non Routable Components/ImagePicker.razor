@@ -13,20 +13,20 @@
     </label>
    
 </div>
-
 <div>
-    @if (imageFiles.Any())
+    @if (ImageService.GetImages().Any())
     {
-        foreach (var img in imageFiles)
+        foreach (var img in ImageService.GetImages())
         {
-            <img src="@($"/Images/{img}")"
-                 alt="@($"Uploaded image: {img}")"
+            <img src="@($"/Images/{img.ImageName}")"
+                 alt="@($"Uploaded image: {img.ImageName}")"
                  style="max-width:200px; margin:5px;" />
         }
     }
 </div>
+
 @code {
-    private List<string> imageFiles = new();
+    
     private async Task ImageHandler(InputFileChangeEventArgs e)
     {
         foreach (var file in e.GetMultipleFiles())
@@ -40,7 +40,7 @@
             await using var fs = new FileStream(path, FileMode.Create);
             await file.OpenReadStream().CopyToAsync(fs);
 
-            imageFiles.Add(fileName);
+            
             ImageService.AddImage(fileName);
         }
         StateHasChanged();
