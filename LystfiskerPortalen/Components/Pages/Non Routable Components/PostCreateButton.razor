@@ -5,7 +5,7 @@
 @inject NavigationManager navManager
 @rendermode InteractiveServer
 
-<InputFile OnChange="@ImageHandler"></InputFile>
+<InputFile OnChange="@ImageHandler" multiple></InputFile>
 <div class="modal-footer">
     <button type="button" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
 </div>
@@ -56,7 +56,10 @@
             },
             ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
             IsQuestion = IsQuestion,
-            Picture = fileName
+            Images = new List<Image> {
+                new Image { ImageName = fileName }
+            },
+
             
     };
         PostRepository.Add(generalPost);
@@ -65,16 +68,18 @@
 
     private async Task ImageHandler(InputFileChangeEventArgs e)
     {
-        var file = e.File;
-        if (!file.ContentType.StartsWith("image/")) return;
+        foreach (var file in e.GetMultipleFiles())
+        {
+            if (!file.ContentType.StartsWith("image/")) return;
 
-        var folder = Path.Combine("wwwroot", "Images");
+            var folder = Path.Combine("wwwroot", "Images");
 
-        fileName = $"{Guid.NewGuid()}_{file.Name}";
-        var path = Path.Combine(folder, fileName);
+            fileName = $"{Guid.NewGuid()}_{file.Name}";
+            var path = Path.Combine(folder, fileName);
 
-        await using var fs = new FileStream(path, FileMode.Create);
-        await file.OpenReadStream().CopyToAsync(fs);
+            await using var fs = new FileStream(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(fs);
+        }
         
     }
 }

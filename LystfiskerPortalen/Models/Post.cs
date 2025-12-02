@@ -19,10 +19,10 @@ namespace LystfiskerPortalen.Models
 
 
         // Constructor
-        public Post(DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+        public Post(DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
         {
             PostTime = postTime;
-            Picture = picture;
+            Images = images;
             Description = description;
             Location = location;
             Comments = comments;

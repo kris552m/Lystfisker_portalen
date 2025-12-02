@@ -32,9 +32,12 @@
                 </div>
                 <p class="card-text">@post.PostTime</p>
                 <p class="card-text">@post.Description</p>
-                @if (!string.IsNullOrEmpty(post.Picture))
+                @if (!string.IsNullOrEmpty(post.Images[0].ImageName))
                 {
-                    <img class="card-img-top" src="@post.Picture" alt="Card image">
+                    foreach (Image img in post.Images)
+                    {
+                        <img class="card-img-top" src="@post.Images" alt="Card image">
+                    }
                 }
             </div>
             <ul class="list-group list-group-flush">
@@ -71,7 +74,9 @@
             {
                 Name = "Odense Å" 
             }, 
-            Picture ="/Images/Makrel.jpg", 
+            Images = new List<Image> {
+                new Image { ImageName = "/Images/Makrel.jpg" }
+            },
             PostTime = DateTime.Now, 
             Comments = new List<Comment>() 
             { 
@@ -99,7 +104,9 @@
             {
                 Name = "Århus"
             },
-            Picture = "/Images/Makrel.jpg",
+            Images = new List<Image> {
+                new Image { ImageName = "/Images/Makrel.jpg" }
+            },
             PostTime = DateTime.Now,
             Comments = new List<Comment>
             {

@@ -91,6 +91,28 @@ namespace LystfiskerPortalen.Migrations
                     b.ToTable("Fishes");
                 });
 
+            modelBuilder.Entity("LystfiskerPortalen.Models.Image", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("LystfiskerPortalen.Models.Location", b =>
                 {
                     b.Property<int>("LocationId")
@@ -128,10 +150,6 @@ namespace LystfiskerPortalen.Migrations
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PostTime")
                         .HasColumnType("datetime2");
@@ -477,6 +495,17 @@ namespace LystfiskerPortalen.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("LystfiskerPortalen.Models.Image", b =>
+                {
+                    b.HasOne("LystfiskerPortalen.Models.Post", "Post")
+                        .WithMany("Images")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("LystfiskerPortalen.Models.Post", b =>
                 {
                     b.HasOne("LystfiskerPortalen.Models.Location", "Location")
@@ -624,6 +653,8 @@ namespace LystfiskerPortalen.Migrations
             modelBuilder.Entity("LystfiskerPortalen.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Images");
 
                     b.Navigation("Reactions");
                 });

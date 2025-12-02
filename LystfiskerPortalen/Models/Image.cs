@@ -4,7 +4,7 @@ namespace LystfiskerPortalen.Models
 {
     public class Image
     {
-        //image name er en guid+image name så den er en unik identifier
+        public int ImageId { get; set; }
         public string ImageName { get; set; }
 
         [ForeignKey(nameof(Post))]
