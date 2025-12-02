@@ -12,6 +12,9 @@
 
 @code{
     public string fileName = null;
+
+    public List<string> ImageNames = [];
+
     [Parameter]
     public string Description { get; set; }
 
@@ -30,7 +33,7 @@
         navManager.Refresh();
         switch(PostType){
             case "general":
-                    CreateGeneralPost();
+                CreateGeneralPost();
                 break;
             case "catch":
                 // Logic for creating a catch post
@@ -56,16 +59,23 @@
             },
             ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
             IsQuestion = IsQuestion,
-            Images = new List<Image> {
-                new Image { ImageName = fileName }
-            },
+            Images = GetImages()
 
-            
-    };
+        };
         PostRepository.Add(generalPost);
         Console.WriteLine("General Post Created");
     }
+    public List<Image> GetImages()
+    {
+        List<Image> images = [];
+        foreach(string img in ImageNames)
+        {
+            Image imgName = new Image { ImageName = img };
+            images.Add(imgName);
 
+        }
+        return images;
+    }
     private async Task ImageHandler(InputFileChangeEventArgs e)
     {
         foreach (var file in e.GetMultipleFiles())
@@ -75,10 +85,12 @@
             var folder = Path.Combine("wwwroot", "Images");
 
             fileName = $"{Guid.NewGuid()}_{file.Name}";
+            ImageNames.Add(fileName);
             var path = Path.Combine(folder, fileName);
 
             await using var fs = new FileStream(path, FileMode.Create);
             await file.OpenReadStream().CopyToAsync(fs);
+
         }
         
     }
