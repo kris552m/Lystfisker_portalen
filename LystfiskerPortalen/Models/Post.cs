@@ -20,7 +20,7 @@ namespace LystfiskerPortalen.Models
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
 
         [ForeignKey(nameof(Profile))]
-        public int ProfileId { get; set; }
+        public string ProfileId { get; set; }
         public Profile Profile { get; set; }
 
 
