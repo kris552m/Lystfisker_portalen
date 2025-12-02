@@ -29,7 +29,8 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-builder.Services.AddIdentityCore<Profile>(options => options.SignIn.RequireConfirmedAccount = true)
+// Allow login without confirmed email
+builder.Services.AddIdentityCore<Profile>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<LystFiskerContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
