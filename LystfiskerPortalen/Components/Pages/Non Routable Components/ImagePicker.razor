@@ -1,0 +1,48 @@
+﻿@using LystfiskerPortalen.Models
+@rendermode InteractiveServer
+
+<div class="ms-auto d-flex">
+    <!-- Hidden file input -->
+    <InputFile id="fileInput" OnChange="@ImageHandler" multiple class="d-none" />
+
+    <!-- Label styled as a button -->
+    <label for="fileInput" class="btn btn-primary">
+        <i class="bi bi-image"></i> 
+    </label>
+</div>
+
+@code {
+    public string fileName = null;
+
+    public List<string> ImageNames = [];
+
+    public List<Image> GetImages()
+    {
+        List<Image> images = [];
+        foreach (string img in ImageNames)
+        {
+            Image imgName = new Image { ImageName = img };
+            images.Add(imgName);
+
+        }
+        return images;
+    }
+    private async Task ImageHandler(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            if (!file.ContentType.StartsWith("image/")) return;
+
+            var folder = Path.Combine("wwwroot", "Images");
+
+            fileName = $"{Guid.NewGuid()}_{file.Name}";
+            ImageNames.Add(fileName);
+            var path = Path.Combine(folder, fileName);
+
+            await using var fs = new FileStream(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(fs);
+
+        }
+
+    }
+}
