@@ -1,0 +1,54 @@
+﻿@inject IGeolocationService GeolocationService
+
+@* Fjern modal, vi renderer bare komponentet når man klikker på knappen. *@
+<div class="modal fade" id="locationPickerComponent" tabindex="-1" style="z-index: 1000;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="btn btn-primary mb-3" @onclick="LoadLocationAndMap">
+                    <i class="bi bi-geo-alt-fill"></i> Find min lokation
+                </button>
+                <RealTimeMap @ref="realTimeMap" height="400px" width="400px"/>    
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private GeolocationPosition? currentPosition { get; set; }
+    RealTimeMap? realTimeMap;
+    
+    RealTimeMap.LoadParameters parameters = new RealTimeMap.LoadParameters {
+        location = new RealTimeMap.Location {
+            latitude = 55.6761,
+            longitude = 12.5683,
+        }
+    };
+
+    private async Task LoadLocationAndMap()
+    {
+        var options = new PositionOptions
+        {
+            EnableHighAccuracy = true,
+            Timeout = 10000,
+            MaximumAge = 0
+        };
+
+        await GeolocationService.GetCurrentPositionAsync(
+            async position => {
+                currentPosition = position;
+                
+                if (realTimeMap != null) 
+                {
+                    parameters.location.latitude = currentPosition.Coords.Latitude;
+                    parameters.location.longitude = currentPosition.Coords.Longitude;
+                }
+                StateHasChanged(); 
+            },
+            error => {
+                Console.WriteLine($"Error: {error.Message}");
+            },
+            options
+        );
+    }
+}
