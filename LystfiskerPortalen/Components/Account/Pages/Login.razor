@@ -100,7 +100,7 @@
         if (result.Succeeded)
         {
             Logger.LogInformation("Bruger loggede ind.");
-            RedirectManager.RedirectTo(ReturnUrl);
+            RedirectManager.RedirectTo("/Profile");
         }
         else if (result.RequiresTwoFactor)
         {

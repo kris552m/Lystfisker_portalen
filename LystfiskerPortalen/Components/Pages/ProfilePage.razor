@@ -1,11 +1,133 @@
 ﻿@page "/profile"
-<h3>ProfilePage</h3>
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@inject IPostRepository PostRepo
+@inject IProfileRepository ProfileRepo
 
+<h1>Profilside</h1>
 
+@if (authState is null)
+{
+    <div>Indlæser...</div>
+}
+else
+{
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <img src="@ProfileImageUrl" class="rounded-circle mb-3" alt="Profile Picture" width="120" height="120" />
+                <h3>@UserName</h3>
+                <button class="btn btn-primary me-2">Follow</button>
+                <button class="btn btn-outline-secondary">Message</button>
+            </div>
+        </div>
 
+        <div class="row text-center mt-2">
+            <div class="col">
+                <h5>@FollowersCount</h5>
+                <small>Followers</small>
+            </div>
+            <div class="col">
+                <h5>@FollowingCount</h5>
+                <small>Following</small>
+            </div>
+        </div>
 
-
+        <div class="mt-4">
+            @if (UserPosts?.Count > 0)
+            {
+                @foreach (var post in UserPosts)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title">@post.Description</h6>
+                            @if (!string.IsNullOrWhiteSpace(post.Picture))
+                            {
+                                <img src="@post.Picture" alt="Post image" class="img-fluid mb-2" />
+                            }
+                            <small class="text-muted">@post.PostTime.ToString("MMM dd, yyyy")</small>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-muted">No posts yet.</div>
+            }
+        </div>
+    </div>
+}
 
 @code {
+    [CascadingParameter] private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    private AuthenticationState? authState;
+
+    private Profile? CurrentProfile;
+    private string UserName = string.Empty;
+    private string ProfileImageUrl = string.Empty;
+    private int FollowersCount;
+    private int FollowingCount;
+    private List<Post> UserPosts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        if (AuthenticationStateTask is null)
+            return;
+
+        authState = await AuthenticationStateTask;
+        
+        // Ensure the user is authenticated
+        // If not, we do not proceed further
+        if (authState?.User?.Identity?.IsAuthenticated != true)
+            return;
+
+        // Get the user ID from claims
+        // Support multiple claim types for flexibility
+        var user = authState.User;
+        var userId =
+            user.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+            user.FindFirst("sub")?.Value ??
+            user.Identity?.Name;
+        
+        if (string.IsNullOrWhiteSpace(userId))
+            return;
+
+        // Fetch the profile from the repository
+        CurrentProfile = await ProfileRepo.GetByUserIdAsync(userId);
+
+        // Populate profile data
+        // Use default values if profile data is missing
+        if (CurrentProfile is not null)
+        {
+            UserName = CurrentProfile.UserName ?? GetUserName(user);
+            ProfileImageUrl = string.IsNullOrWhiteSpace(CurrentProfile.ProfilePicture)
+                ? "/images/default-profile.png"
+                : CurrentProfile.ProfilePicture;
+            FollowersCount = CurrentProfile.FollowersCount; // Fetch followers count from profile 
+            FollowingCount = CurrentProfile.FollowingCount; // Fetch following count from profile 
+            UserPosts = await PostRepo.GetPostsByProfileIdAsync(CurrentProfile.Id); // Fetch user posts by profile ID 
+        }
+        else
+        {
+            UserName = GetUserName(user);
+            ProfileImageUrl = "/images/default-profile.png";
+        }
+    }
+    // Helper method to get a user-friendly name
+    private static string GetUserName(ClaimsPrincipal user) =>
+        user.FindFirst("name")?.Value ??
+        user.FindFirst("preferred_username")?.Value ??
+        user.FindFirst(ClaimTypes.GivenName)?.Value ??
+        user.Identity?.Name ??
+        "Bruger";
+
+
+    
 
 }
+
