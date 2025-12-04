@@ -20,14 +20,22 @@
 </div>
 @if (showLocationPicker)
 {
-    <LocationPickerComponent />
+    <LocationPickerComponent OnLocationSelected="HandleChildLocation" />
 }
 <Emojipicker></Emojipicker>
 
 @code {
+    [Parameter]
+    public EventCallback<string> OnLocationForwarded { get; set; }
     private bool showLocationPicker = false;
     private void ToggleLocationPicker()
     {
         showLocationPicker = !showLocationPicker;
+    }
+
+    //Fordi dette komponent ikke er en Post, så skal vi videresende lokationen op til CreatePostModal, Catch eller Event.
+    private async Task HandleChildLocation(string location)
+    {
+        await OnLocationForwarded.InvokeAsync(location);
     }
 }
