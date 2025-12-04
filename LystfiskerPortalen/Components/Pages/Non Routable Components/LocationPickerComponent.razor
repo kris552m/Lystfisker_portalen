@@ -1,50 +1,95 @@
-﻿@inject IGeolocationService GeolocationService
+﻿@rendermode InteractiveServer
+@inject IGeolocationService GeolocationService
+
 <div>
-    <div>
-        <button class="btn btn-primary mb-3" @onclick="LoadLocationAndMap">
-            <i class="bi bi-geo-alt-fill"></i> Find min lokation
-        </button>
-        <p></p>
-    </div>
-    <RealTimeMap @ref="realTimeMap" height="400px" width="400px" Parameters="parameters" />
+    <button class="btn btn-primary mb-3" @onclick="LoadLocationAndMap">
+        <i class="bi bi-geo-alt-fill"></i> Find min lokation
+    </button>
+
+    <RealTimeMap @ref="realTimeMap" height="400px" width="100%" Parameters="parameters"
+        OnAfterMapLoaded="OnMapLoaded" />
 </div>
 
 @code {
-    [Parameter]
-    public GeolocationPosition? currentPosition { get; set; }
     RealTimeMap? realTimeMap;
+    bool mapLoaded = false;
+    Guid userMarkerId = Guid.NewGuid();
 
     RealTimeMap.LoadParameters parameters = new RealTimeMap.LoadParameters
     {
-        location = new RealTimeMap.Location
-        {
-            // Default to center of Denmark
-            latitude = 56.2639,
-            longitude = 9.5018,
-        },
+        location = new RealTimeMap.Location { latitude = 56.2639, longitude = 9.5018 },
         zoomLevel = 7
     };
+
+    RealTimeMap.PointSymbol mySymbol = new RealTimeMap.PointSymbol
+    {
+        color = "black",
+        fillColor = "red",
+        radius = 12,
+        weight = 2,
+        opacity = 1,
+        fillOpacity = 1
+    };
+
+    private void OnMapLoaded()
+    {
+        mapLoaded = true;
+        realTimeMap.Geometric.Points.Appearance(x => x.guid == userMarkerId).pattern = mySymbol;
+    }
 
     private async Task LoadLocationAndMap()
     {
         var options = new PositionOptions
         {
-            EnableHighAccuracy = true,
-            Timeout = 10000,
+            EnableHighAccuracy = false,
+            Timeout = 5000,
             MaximumAge = 0
         };
 
         await GeolocationService.GetCurrentPositionAsync(
         async position =>
         {
-            currentPosition = position;
-
-            if (realTimeMap != null)
+            await InvokeAsync(() => OnLocationReceived(position));
+        },
+        async error =>
+        {
+            // Hvis man ikke har GPS, så er Odense vores default.
+            var fallbackPosition = new GeolocationPosition
             {
-                parameters.location.latitude = currentPosition.Coords.Latitude;
-                parameters.location.longitude = currentPosition.Coords.Longitude;
-            }
+                Coords = new GeolocationCoordinates
+                {
+                    Latitude = 55.3958,
+                    Longitude = 10.3884,
+                    Accuracy = 100
+                },
+                Timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds()
+            };
+
+            await InvokeAsync(() => OnLocationReceived(fallbackPosition));
+        },
+        options
+        );
+    }
+
+    private async Task OnLocationReceived(GeolocationPosition position)
+    {
+        if (realTimeMap != null)
+        {
+            double lat = position.Coords.Latitude;
+            double lon = position.Coords.Longitude;
+
+            realTimeMap.View.setCenter = new RealTimeMap.Location { latitude = lat, longitude = lon };
+            realTimeMap.View.setZoomLevel = 15;
+
+            var myPoint = new RealTimeMap.StreamPoint
+            {
+                guid = userMarkerId,
+                latitude = lat,
+                longitude = lon
+            };
+
+            await realTimeMap.Geometric.Points.add(myPoint);
             StateHasChanged();
-        });
+        }
     }
 }
