@@ -1,0 +1,49 @@
+﻿@page "/event"
+
+@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@inject IEventRepository EventRepo
+
+<PageTitle>Begivenheder</PageTitle>
+
+<h1 class="mb-3"> Begivenheder</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var Event in allEvents)
+    {
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    @* Event title *@
+                    <h5 class="card-title">@Event.Title</h5>
+
+                    @* Event details:  *@
+                    <p class="card-text"> @Event.Picture <br /> @Event.EventTime </p>
+
+                    @* Event description *@
+                    <p class="card-text">@Event.Description</p>
+                    <p class="card-text">@Event.Location</p>
+
+                    @* Edit and Delete buttons (currently link to Home/Index) *@
+                    <a class="btn btn-primary" asp-controller="Movies" asp-action="Edit" asp-route-id="@Event.">Edit</a>
+                    <a class="btn btn-danger" asp-controller="Movies" asp-action="Delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    public List<Event> allEvents = new();
+    protected override void OnInitialized()
+    {
+        allEvents = EventRepo.GetAllEvents().ToList();
+        base.OnInitialized();
+    }
+
+
+
+
+}
+

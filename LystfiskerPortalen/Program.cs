@@ -17,6 +17,7 @@ builder.Services.AddIdentityApiEndpoints<Profile>()
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddGeolocationServices();
 
 // Add services to the container.
