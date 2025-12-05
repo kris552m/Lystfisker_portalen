@@ -15,8 +15,8 @@ namespace LystfiskerPortalen.Models
 
 
         //Constructor
-        public GeneralPost(bool isQuestion, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
-            : base(postTime, picture, description, location, comments, reactions)
+        public GeneralPost(bool isQuestion, DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, images, description, location, comments, reactions)
         {
             IsQuestion = isQuestion;
         }

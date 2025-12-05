@@ -1,4 +1,6 @@
-﻿@rendermode InteractiveServer
+﻿
+@rendermode InteractiveServer
+
 <!-- Modal -->
 <div class="modal fade" id="CreatePostModal" tabindex="-1" role="dialog" aria-labelledby="CreatePostModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -21,7 +23,7 @@
                                 @bind="Description"
                                 >
                     </textarea>
-
+                
                     <div class="form-check "style="margin:10px 8px;"> 
                         <InputCheckbox type="checkbox" class="form-check-input" id="isQuestion" @bind-Value="IsQuestion"></InputCheckbox>
                         <label class="form-check-label" for="isQuestion" >Er det et spørgsmål?</label> 
@@ -37,7 +39,12 @@
 
 
 @code {
+
+    
+
+    
     public string Description { get; set; } = null;
     public bool IsQuestion { get; set; } = false;
+  
 
 }

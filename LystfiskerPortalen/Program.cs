@@ -2,6 +2,7 @@ using LystfiskerPortalen.Components;
 using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
 using LystfiskerPortalen.Persistence;
+using LystfiskerPortalen.Services;
 using Microsoft.EntityFrameworkCore;
 using LystfiskerPortalen.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -17,6 +18,7 @@ builder.Services.AddIdentityApiEndpoints<Profile>()
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<ImageService>();
 builder.Services.AddGeolocationServices();
 
 // Add services to the container.
