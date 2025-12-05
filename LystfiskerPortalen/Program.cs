@@ -1,12 +1,13 @@
 using LystfiskerPortalen.Components;
+using LystfiskerPortalen.Components.Account;
 using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Hubs;
 using LystfiskerPortalen.Models;
 using LystfiskerPortalen.Persistence;
-using Microsoft.EntityFrameworkCore;
-using LystfiskerPortalen.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.JSInterop;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddIdentityApiEndpoints<Profile>()
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddGeolocationServices();
+builder.Services.AddSignalR();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -58,5 +60,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapAdditionalIdentityEndpoints(); ;
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
