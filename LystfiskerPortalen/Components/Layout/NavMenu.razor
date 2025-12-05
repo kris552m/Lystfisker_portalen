@@ -10,16 +10,16 @@
     <div class="navbar-menu">
 
         <div class="nav-links-left">
-            <NavLink class="nav-link" href="/feed">
+            <NavLink class="nav-link" href="/">
                 Feed
             </NavLink>
-            <NavLink class="nav-link" href="/lokationer">
+            <NavLink class="nav-link" href="/locations">
                 Lokationer
             </NavLink>
-            <NavLink class="nav-link" href="/statistik">
+            <NavLink class="nav-link" href="/statistics">
                 Statistik
             </NavLink>
-            <NavLink class="nav-link" href="/begivenheder">
+            <NavLink class="nav-link" href="/event">
                 Begivenheder
             </NavLink>
             <NavLink class="nav-link" href="/chat">
@@ -30,19 +30,25 @@
         <div class="nav-links-right">
             <AuthorizeView>
                 <Authorized>
-                    <a class="nav-link" href="Identity/Account/Manage">
+                    <a class="nav-link" href="Account/Manage">
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
                     </a>
-                    <form action="Identity/Account/Logout" method="post" class="logout-form">
-                        <button type="submit" class="nav-link btn-link">Logout</button>
-                        <input name="__RequestVerificationToken" type="hidden" />
+
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken />
+
+                        <input type="hidden" name="ReturnUrl" value="" />
+
+                        <button type="submit" class="nav-link btn-link">
+                            <span class="bi bi-arrow-bar-right-nav-menu" aria-hidden="true"></span> Logout
+                        </button>
                     </form>
                 </Authorized>
                 <NotAuthorized>
-                    <NavLink class="nav-link" href="Identity/Account/Register">
+                    <NavLink class="nav-link" href="/Account/Register">
                         Register
                     </NavLink>
-                    <NavLink class="nav-link" href="Identity/Account/Login">
+                    <NavLink class="nav-link" href="/Account/Pages/Login">
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Login
                     </NavLink>
                 </NotAuthorized>
