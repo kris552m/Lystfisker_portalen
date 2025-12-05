@@ -5,6 +5,15 @@
         <div class="col-12">
             <article class="content px-4">
                 @Body
+                @* Required *@
+                <MudThemeProvider />
+                <MudPopoverProvider />
+
+                @* Needed for dialogs *@
+                <MudDialogProvider />
+
+                @* Needed for snackbars *@
+                <MudSnackbarProvider />
             </article>
         </div>
     </div>
