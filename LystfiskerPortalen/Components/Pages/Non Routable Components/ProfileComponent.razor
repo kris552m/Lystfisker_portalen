@@ -6,14 +6,13 @@
 </div>
 @code{
     public int ProfileId { get; set; }
-    public string ProfileUserName { get; set; }
+    [Parameter]
+    public string ProfileUserName { get; set; } = string.Empty;
+    [Parameter]
     public string? ProfileImgPath { get; set; }
 
     protected override void OnInitialized()
     {
         ProfileImgPath = "https://github.com/mdo.png";
-        ProfileUserName = "user.identity.name";
-    }
-    
-    
+    }    
 }

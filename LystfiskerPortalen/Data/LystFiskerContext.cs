@@ -115,6 +115,8 @@ namespace LystfiskerPortalen.Data
                 .WithMany()
                 .UsingEntity(j => j.ToTable("ProfileFollowings"));
 
+            modelBuilder.Seed();
+
         }
 
     }

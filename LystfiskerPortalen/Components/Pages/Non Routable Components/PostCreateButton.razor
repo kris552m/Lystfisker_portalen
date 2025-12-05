@@ -9,7 +9,7 @@
 
 
 <div class="modal-footer">
-    <button type="button" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
+    <button type="button" data-bs-dismiss="modal" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
 </div>
 
 @code{
@@ -30,7 +30,7 @@
 
     public void CreatePost()
     {
-        navManager.Refresh();
+       
         switch(PostType){
             case "general":
                 CreateGeneralPost();
@@ -43,6 +43,7 @@
                 break;
         }
 
+       
     }
 
     public void CreateGeneralPost()
