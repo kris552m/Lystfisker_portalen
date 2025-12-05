@@ -1,14 +1,23 @@
 ﻿@rendermode InteractiveServer
 @inject IGeolocationService GeolocationService
 
-<div class="mt-3">
+<div>
     <button class="btn btn-primary mb-3" @onclick="LoadLocationAndMap">
         <i class="bi bi-geo-alt-fill"></i> Find min lokation
     </button>
 
     <RealTimeMap @ref="realTimeMap" height="400px" width="100%" Parameters="parameters"
         OnAfterMapLoaded="OnMapLoaded" />
-</div>
+
+    <div>
+        <button class="btn btn-primary mb-3" @onclick="LoadLocationAndMap">
+            <i class="bi bi-geo-alt-fill"></i> Find min lokation
+        </button>
+
+        <RealTimeMap @ref="realTimeMap" height="400px" width="100%" Parameters="parameters"
+            OnAfterMapLoaded="OnMapLoaded" />
+    </div>
+
 @code {
     [Parameter]
     public EventCallback<string> OnLocationSelected { get; set; }
@@ -35,7 +44,7 @@
     private void OnMapLoaded()
     {
         mapLoaded = true;
-        realTimeMap.Geometric.Points.Appearance(_ => true).pattern = mySymbol;
+        realTimeMap.Geometric.Points.Appearance(x => x.guid == userMarkerId).pattern = mySymbol;
     }
 
     private async Task LoadLocationAndMap()
@@ -96,3 +105,4 @@
         }
     }
 }
+    }
