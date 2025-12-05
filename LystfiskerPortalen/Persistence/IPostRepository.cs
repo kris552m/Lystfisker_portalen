@@ -10,5 +10,9 @@ namespace LystfiskerPortalen.Persistence
         public Post Add(Post post);
         public void Delete(int id);
         public void Update(Post post);
+        Task<List<Post>> GetPostsByProfileIdAsync(string profileId);
+
+
+
     }
 }

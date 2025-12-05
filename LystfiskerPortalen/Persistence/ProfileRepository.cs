@@ -45,5 +45,11 @@ namespace LystfiskerPortalen.Persistence
                 _context.SaveChanges();
             }
         }
+
+        public async Task<Profile> GetByUserIdAsync(string userId)
+        {
+            return await _context.Profiles.FindAsync(userId);
+        }
+
     }
 }

@@ -57,5 +57,19 @@ namespace LystfiskerPortalen.Persistence
 
             }
         }
+
+        // Added method to get posts by profile ID with related data included and ordered by post time descending 
+        public async Task<List<Post>> GetPostsByProfileIdAsync(string profileId)
+        {
+            return await context.Posts
+               .AsNoTracking()
+               .Where(p => p.ProfileId == profileId)
+               .Include(p => p.Comments).ThenInclude(c => c.Profile)
+               .Include(p => p.Reactions)
+               .Include(p => p.Location)
+               .OrderByDescending(p => p.PostTime)
+               .ToListAsync();
+        }
+
     }
 }

@@ -100,8 +100,26 @@ namespace LystfiskerPortalen.Data
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Following)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("ProfileFollowings"));
+                .WithMany(p => p.Followers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProfileFollowings",
+                    j => j
+                        .HasOne<Profile>()
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .HasPrincipalKey(p => p.Id)
+                        .OnDelete(DeleteBehavior.NoAction),
+                    j => j
+                        .HasOne<Profile>()
+                        .WithMany()
+                        .HasForeignKey("FollowingId")
+                        .HasPrincipalKey(p => p.Id)
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j =>
+                    {
+                        j.HasKey("FollowerId", "FollowingId");
+                        j.ToTable("ProfileFollowings");
+                    });
 
             modelBuilder.Seed();
 

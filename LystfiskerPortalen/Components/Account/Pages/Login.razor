@@ -1,4 +1,4 @@
-﻿@page "/Account/Pages/Login"
+﻿@page "/Account/Login"
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
@@ -100,7 +100,7 @@
         if (result.Succeeded)
         {
             Logger.LogInformation("Bruger loggede ind.");
-            RedirectManager.RedirectTo(ReturnUrl);
+            RedirectManager.RedirectTo("/Profile");
         }
         else if (result.RequiresTwoFactor)
         {
