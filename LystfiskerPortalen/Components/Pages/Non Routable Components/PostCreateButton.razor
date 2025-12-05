@@ -1,20 +1,15 @@
 ﻿@using LystfiskerPortalen.Data
 @using LystfiskerPortalen.Models
 @using LystfiskerPortalen.Persistence
-@using LystfiskerPortalen.Services
 @inject IPostRepository PostRepository
 @inject NavigationManager navManager
-@inject ImageService ImageService
+
 @rendermode InteractiveServer
-
-
 <div class="modal-footer">
     <button type="button" data-bs-dismiss="modal" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
 </div>
 
 @code{
-    
-
     [Parameter]
     public string Description { get; set; }
 
@@ -60,12 +55,8 @@
             },
             ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
             IsQuestion = IsQuestion,
-            Images = ImageService.GetImages()
-
         };
         PostRepository.Add(generalPost);
         Console.WriteLine("General Post Created");
     }
-   
-   
 }

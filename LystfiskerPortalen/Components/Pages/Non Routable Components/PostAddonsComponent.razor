@@ -1,12 +1,13 @@
-﻿@using System.Threading.Tasks
-@rendermode InteractiveServer
+﻿@rendermode InteractiveServer
 
 <div class="d-flex align-items-center "
     style="border-radius:6px; padding-left:12px; border: solid 1px; border-color: lightgrey;">
     <span>Føj noget til dit opslag</span>
 
-    <div class="ms-auto d-flex">
-        <ImagePicker></ImagePicker>
+    <div class="ms-auto o-flex">
+        <button class="btn">
+            <i class="bi bi-image"></i>
+        </button>
 
         <button class="border-0" @onclick="ToggleLocationPicker" style="background: transparent;">
             <span style="color:red;"><i class="bi bi-geo-alt-fill"></i></span>

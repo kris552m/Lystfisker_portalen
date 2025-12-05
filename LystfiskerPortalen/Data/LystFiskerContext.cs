@@ -14,7 +14,6 @@ namespace LystfiskerPortalen.Data
         public DbSet<GeneralPost> GeneralPosts { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Image> Images { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
         public LystFiskerContext(DbContextOptions options) : base(options)
         {
@@ -32,11 +31,6 @@ namespace LystfiskerPortalen.Data
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Post>()
-               .HasMany(p => p.Images)
-               .WithOne(c => c.Post)
-               .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Post>()
                 .HasMany(p => p.Reactions)
                 .WithOne(r => r.Post)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -44,12 +38,6 @@ namespace LystfiskerPortalen.Data
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.Location)
                 .WithMany(l => l.Posts);
-
-            modelBuilder.Entity<Image>()
-                .HasOne(i => i.Post)
-                .WithMany(p => p.Images)
-                .HasForeignKey(i => i.PostId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Comment>()
               .HasMany(c => c.Reactions)
