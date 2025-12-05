@@ -12,7 +12,7 @@ namespace LystfiskerPortalen.Models
     {
         //Properties
 
-        public DateTime CatchTime { get; set; }
+        public string CatchTime { get; set; }
         public string Lure { get; set; } = string.Empty;
         public string Technique { get; set; } = string.Empty;
         [ForeignKey(nameof(Fish))]
@@ -21,7 +21,7 @@ namespace LystfiskerPortalen.Models
 
 
         //Constructor
-        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+        public Catch(string catchTime, string lure, string technique, Fish fish, DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
             : base(postTime, images, description, location, comments, reactions)
         {
             CatchTime = catchTime;
@@ -34,10 +34,5 @@ namespace LystfiskerPortalen.Models
             
         }
         
-
-
-
-
-
     }
 }

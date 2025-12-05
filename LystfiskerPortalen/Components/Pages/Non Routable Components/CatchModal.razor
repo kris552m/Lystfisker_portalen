@@ -100,7 +100,17 @@
 
             </div>
             <div class="modal-footer">
-                <PostCreateButton />
+                <PostCreateButton 
+                    PostType="catch" 
+                    FishSpecies="@selectedFishSpecies" 
+                    Technique="@selectedFishingTechnique"
+                    FishWeight="@fishWeight"
+                    FishLength="@fishLength"
+                    Lure="@selectedLure"
+                    TimeCaught="@timeCaught"
+                    Description="@generalPost"
+                    
+                                  />
             </div>
         </div>
     </div>

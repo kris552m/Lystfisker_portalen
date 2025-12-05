@@ -28,6 +28,23 @@
     [Parameter]
     public string PostType { get; set; }
 
+    //catch
+    [Parameter]
+    public string TimeCaught { get; set; }
+    [Parameter]
+    public string Lure { get; set; }
+    [Parameter]
+    public string Technique { get; set; }
+
+    //fish
+    [Parameter]
+    public string FishSpecies { get; set; }
+    [Parameter]
+    public double FishWeight { get; set; }
+    [Parameter]
+    public int FishLength { get; set; }
+
+
     public void CreatePost()
     {
         navManager.Refresh();
@@ -36,13 +53,43 @@
                 CreateGeneralPost();
                 break;
             case "catch":
-                // Logic for creating a catch post
+                CreateCatchPost();
                 break;
             case "event":
                 // Logic for creating a catch post
                 break;
         }
 
+    }
+    public void CreateCatchPost()
+    {
+        var catchPost = new Catch
+        {
+            //post
+            PostTime = DateTime.UtcNow,
+            Description = Description,
+            Location = new Location
+            {
+                Name = "Placeholder",
+                Latitude = 0.0,
+                Longitude = 0.0
+            },
+            ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
+            Images = ImageService.GetImages(),
+
+            //catch
+            CatchTime = TimeCaught,
+            Lure = Lure,
+            Technique = Technique,
+            Fish = new Fish
+            {
+                Name = FishSpecies,
+                Weight = FishWeight,
+                Length = FishLength
+            }
+        };
+        PostRepository.Add(catchPost);
+        Console.WriteLine("Catch Post Created");
     }
 
     public void CreateGeneralPost()
