@@ -38,13 +38,13 @@
                 </div>
                 <p class="card-text">@post.PostTime</p>
                 <p class="card-text">@post.Description</p>
-                @if (!string.IsNullOrEmpty(post.Images[0].ImageName))
+                @if (post.Images != null)
                 {
                     foreach (Image img in post.Images)
                     {
                         <img class="card-img-top" src="@post.Images" alt="Card image">
                     }
-                }
+                } 
             </div>
             <div class="card-text ms-3 mb-2"><span class="badge bg-warning">@post.Reactions.Count</span></div>
             <ul class="list-group list-group-flush">
