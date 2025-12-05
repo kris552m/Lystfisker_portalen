@@ -1,24 +1,64 @@
 ﻿@inherits LayoutComponentBase
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-<div>
-    <div style="position: sticky; top: 0; z-index: 1000;">
-        <NavMenu />
-    </div>
-    
+<div class="container">
+    @* <div class="text-center fw-bold mb-2">
+        @PageTitle
+    </div> *@
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded shadow my-4">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/feed">Feed</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/lokationer">Lokationer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/statistik">Statistik</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/begivenheder">Begivenheder</a>
+            </li>
+            
+            @*Replace or delte after dev is done. href is defined in the Login.razor   *@
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/Account/Pages/Login">Login</NavLink>
+            </li>
+           
 
-    <div class="page">
 
-        <main>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-12">
             <article class="content px-4">
                 @Body
             </article>
-        </main>
-    </div>
-
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
+        </div>
     </div>
 </div>
+
+@code {
+    private string PageTitle => GetPageTitle();
+
+    private string GetPageTitle()
+    {
+        var uri = NavigationManager.Uri.ToLower();
+        if (uri.Contains("/feed"))
+            return "Feed";
+        if (uri.Contains("/lokationer"))
+            return "Lokationer";
+        if (uri.Contains("/statistik"))
+            return "Statistik";
+        if (uri.Contains("/begivenheder"))
+            return "Begivenheder";
+        
+        @*Replace or delte after dev is done  *@
+            if (uri.Contains("/account/login"))
+            return "Log in";
+        
+        
+            
+            return "Home";
+    }
+}

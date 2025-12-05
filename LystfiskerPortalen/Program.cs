@@ -1,10 +1,13 @@
-
 using LystfiskerPortalen.Components;
 using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
 using LystfiskerPortalen.Persistence;
 using LystfiskerPortalen.Services;
 using Microsoft.EntityFrameworkCore;
+using LystfiskerPortalen.Components.Account;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +19,25 @@ builder.Services.AddIdentityApiEndpoints<Profile>()
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.AddGeolocationServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddScoped<IdentityUserAccessor>();
+
+builder.Services.AddScoped<IdentityRedirectManager>();
+
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddIdentityCore<Profile>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<LystFiskerContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 
@@ -40,5 +58,7 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapAdditionalIdentityEndpoints(); ;
 
 app.Run();

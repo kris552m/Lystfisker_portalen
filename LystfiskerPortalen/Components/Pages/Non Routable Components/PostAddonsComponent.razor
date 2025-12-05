@@ -1,28 +1,40 @@
 ﻿@using System.Threading.Tasks
 @rendermode InteractiveServer
 
-<div class="d-flex align-items-center " style="border-radius:6px; padding-left:12px; border: solid 1px; border-color: lightgrey;">
+<div class="d-flex align-items-center "
+    style="border-radius:6px; padding-left:12px; border: solid 1px; border-color: lightgrey;">
     <span>Føj noget til dit opslag</span>
 
     <div class="ms-auto d-flex">
         <ImagePicker></ImagePicker>
 
-        <button class="btn">
-            <i class="bi bi-geo-alt"></i>
+        <button class="border-0" @onclick="ToggleLocationPicker" style="background: transparent;">
+            <span style="color:red;"><i class="bi bi-geo-alt-fill"></i></span>
         </button>
-        
-        <button type="button" class="btn" data-toggle="modal" data-target="#OpenEmojiePicker">
+
+        <button type="button" class="btn" oata-toggle="modal" data-target="#OpenEmojiePicker">
             <i class="bi bi-emoji-smile"></i>
         </button>
     </div>
 </div>
-
-
+@if (showLocationPicker)
+{
+    <LocationPickerComponent OnLocationSelected="HandleChildLocation" />
+}
 <Emojipicker></Emojipicker>
 
 @code {
-     
+    [Parameter]
+    public EventCallback<string> OnLocationForwarded { get; set; }
+    private bool showLocationPicker = false;
+    private void ToggleLocationPicker()
+    {
+        showLocationPicker = !showLocationPicker;
+    }
+
+    //Fordi dette komponent ikke er en Post, så skal vi videresende lokationen op til CreatePostModal, Catch eller Event.
+    private async Task HandleChildLocation(string location)
+    {
+        await OnLocationForwarded.InvokeAsync(location);
+    }
 }
-
-
-

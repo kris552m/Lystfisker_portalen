@@ -1,0 +1,131 @@
+﻿@page "/Account/Pages/Login"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using LystfiskerPortalen.Data
+
+@inject SignInManager<Profile> SignInManager
+@inject ILogger<Login> Logger
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>Log ind</PageTitle>
+
+<div class="d-flex align-items-center justify-content-center">
+    <div class="card shadow-sm border-0" style="max-width: 420px; width: 100%; ">
+        <div class="card-body p-4">
+            <div class="text-center mb-3">
+                <!-- Opdater stien til dit faktiske logo under wwwroot -->
+                <img src="/images/Logo1.png" alt="Lystfisker Portalen" class="img-fluid" style="height:72px;">
+            </div>
+
+            <h1 class="h3 text-center mb-4">Log ind</h1>
+
+            <StatusMessage Message="@errorMessage" />
+
+            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mailadresse</label>
+                    <InputText id="email"
+                               @bind-Value="Input.Email"
+                               class="form-control"
+                               autocomplete="username"
+                               aria-required="true"
+                               placeholder="E-mailadresse" />
+                    <ValidationMessage For="() => Input.Email" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Adgangskode</label>
+                    <InputText id="password"
+                               type="password"
+                               @bind-Value="Input.Password"
+                               class="form-control"
+                               autocomplete="current-password"
+                               aria-required="true"
+                               placeholder="Adgangskode" />
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+
+                <div class="form-check mb-3">
+                    <InputCheckbox id="remember" @bind-Value="Input.RememberMe" class="form-check-input" />
+                    <label for="remember" class="form-check-label">Husk mig</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Log ind</button>
+            </EditForm>
+
+            <div class="text-center mt-3 small">
+                <a href="/Account/ForgotPassword" class="text-decoration-none">Glemt adgangskode?</a>
+            </div>
+            <div class="text-center mt-2 small">
+                <a href="@(NavigationManager.GetUriWithQueryParameters("/Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))"
+                   class="text-decoration-none">Registrer ny bruger</a>
+            </div>
+            <div class="text-center mt-2 small">
+                <a href="/Account/ResendEmailConfirmation" class="text-decoration-none">Gensend e-mailbekræftelse</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? errorMessage;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            // Ryd eksisterende ekstern cookie for at sikre en ren login-proces
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        }
+    }
+
+    public async Task LoginUser()
+    {
+        var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+            Logger.LogInformation("Bruger loggede ind.");
+            RedirectManager.RedirectTo(ReturnUrl);
+        }
+        else if (result.RequiresTwoFactor)
+        {
+            RedirectManager.RedirectTo("Account/LoginWith2fa", new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
+        }
+        else if (result.IsLockedOut)
+        {
+            Logger.LogWarning("Brugerkonto låst.");
+            RedirectManager.RedirectTo("Account/Lockout");
+        }
+        else
+        {
+            errorMessage = "Fejl: Ugyldigt loginforsøg.";
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required, DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        [Display(Name = "Husk mig?")]
+        public bool RememberMe { get; set; }
+    }
+}
