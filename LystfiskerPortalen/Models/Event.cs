@@ -13,8 +13,8 @@ namespace LystfiskerPortalen.Models
         public DateTime EventTime { get; set; }
 
         //Constructor
-        public Event(string title, DateTime eventTime, DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
-            : base(postTime, images, description, location, comments, reactions)
+        public Event(string title, DateTime eventTime, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, picture, description, location, comments, reactions)
         {
             Title = title;
             EventTime = eventTime;

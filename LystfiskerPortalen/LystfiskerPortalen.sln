@@ -5,7 +5,7 @@ VisualStudioVersion = 18.0.11217.181 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LystfiskerPortalen", "LystfiskerPortalen.csproj", "{FE00C795-4838-4D83-A6F6-FACEC79B1124}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostTests", "..\PostTests\PostTests.csproj", "{C1985612-209F-422E-BAE2-7DEF52694AD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostTests", "..\PostTests\PostTests.csproj", "{C1985612-209F-422E-BAE2-7DEF52694AD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
