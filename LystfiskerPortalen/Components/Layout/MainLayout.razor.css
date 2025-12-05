@@ -1,6 +1,6 @@
 /* 1. FORCE TOP-TO-BOTTOM LAYOUT ALWAYS */
 .page {
-    position: relative;
+    
     display: flex;
     flex-direction: column;
     /* This was 'row' on desktop before - that was the bug */
