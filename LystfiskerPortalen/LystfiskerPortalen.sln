@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LystfiskerPortalen", "LystfiskerPortalen.csproj", "{FE00C795-4838-4D83-A6F6-FACEC79B1124}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostTests", "..\PostTests\PostTests.csproj", "{C1985612-209F-422E-BAE2-7DEF52694AD1}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE00C795-4838-4D83-A6F6-FACEC79B1124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE00C795-4838-4D83-A6F6-FACEC79B1124}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE00C795-4838-4D83-A6F6-FACEC79B1124}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE00C795-4838-4D83-A6F6-FACEC79B1124}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C1985612-209F-422E-BAE2-7DEF52694AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C1985612-209F-422E-BAE2-7DEF52694AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1985612-209F-422E-BAE2-7DEF52694AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
