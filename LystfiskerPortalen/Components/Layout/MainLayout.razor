@@ -1,9 +1,6 @@
 ﻿@inherits LayoutComponentBase
-
-
-
-        </ul>
-    </nav>
+<div class="container">
+    <NavMenu />
     <div class="row">
         <div class="col-12">
             <article class="content px-4">
@@ -12,28 +9,3 @@
         </div>
     </div>
 </div>
-
-@code {
-    private string PageTitle => GetPageTitle();
-
-    private string GetPageTitle()
-    {
-        var uri = NavigationManager.Uri.ToLower();
-        if (uri.Contains("/feed"))
-            return "Feed";
-        if (uri.Contains("/lokationer"))
-            return "Lokationer";
-        if (uri.Contains("/statistik"))
-            return "Statistik";
-        if (uri.Contains("/begivenheder"))
-            return "Begivenheder";
-        
-        @*Replace or delte after dev is done  *@
-            if (uri.Contains("/account/login"))
-            return "Log in";
-        
-        
-            
-            return "Home";
-    }
-}
