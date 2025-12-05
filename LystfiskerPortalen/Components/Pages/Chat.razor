@@ -9,22 +9,35 @@
 <div>
     <input @bind="UserName" placeholder="Enter your name" />
     <input @bind="MessageInput" placeholder="Enter your message" @onkeypress="SendOnEnter" />
-    <button @onclick="SendMessage">Send</button>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SendMessage">Send</MudButton>
 </div>
 
 <div style="margin-top: 20px;">
     <h4>Messages:</h4>
-    <ul>
+  
         @foreach (var message in Messages)
-        {
-            <li>@message</li>
+    {
+          <MudChat ChatPosition="ChatBubblePosition.Start">
+            <MudAvatar>
+                <MudImage Src="Images/Logo1.png" />
+            </MudAvatar>
+            <MudChatBubble Variant="Variant.Filled" Color="Color.Primary">
+                @message
+            </MudChatBubble>
+         </MudChat>
+
         }
-    </ul>
+       
+    
 </div>
+<MudChat ChatPosition="ChatBubblePosition.Start">
+    
+</MudChat>
 
 @code {
     private HubConnection? hubConnection;
     private string? UserName;
+    
     private string? MessageInput;
     private List<string> Messages = new();
 
