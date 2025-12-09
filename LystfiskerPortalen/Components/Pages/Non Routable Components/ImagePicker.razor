@@ -1,0 +1,48 @@
+﻿@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Services
+@rendermode InteractiveServer
+@inject ImageService ImageService
+
+<div class="ms-auto d-flex">
+    <!-- Hidden file input -->
+    <InputFile id="fileInput" OnChange="@ImageHandler" multiple class="d-none" />
+
+    <!-- Label styled as a button -->
+    <label for="fileInput" class="btn btn-primary">
+        <i class="bi bi-image"></i> 
+    </label>
+   
+</div>
+<div>
+    @if (ImageService.GetImages().Any())
+    {
+        foreach (var img in ImageService.GetImages())
+        {
+            <img src="@($"/Images/{img.ImageName}")"
+                 alt="@($"Uploaded image: {img.ImageName}")"
+                 style="max-width:200px; margin:5px;" />
+        }
+    }
+</div>
+
+@code {
+    
+    private async Task ImageHandler(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            if (!file.ContentType.StartsWith("image/")) return;
+
+            var folder = Path.Combine("wwwroot", "Images");
+            var fileName = $"{Guid.NewGuid()}_{file.Name}";
+            var path = Path.Combine(folder, fileName);
+
+            await using var fs = new FileStream(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(fs);
+
+            
+            ImageService.AddImage(fileName);
+        }
+        StateHasChanged();
+    }
+}
