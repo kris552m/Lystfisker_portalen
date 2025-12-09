@@ -24,9 +24,12 @@
                     <p class="card-text">@Event.Description</p>
                     <p class="card-text">@Event.Location</p>
 
-                    @* Edit and Delete buttons (currently link to Home/Index) *@
-                    <a class="btn btn-primary" asp-controller="Movies" asp-action="Edit" asp-route-id="@Event.">Edit</a>
-                    <a class="btn btn-danger" asp-controller="Movies" asp-action="Delete">Delete</a>
+                    @* Buttons *@
+                    <a class="btn btn-primary" asp-controller="Events" asp-action="Se mere" asp-route-id="@Event.">Se mere</a>
+                   @*
+                       <a class="btn btn-danger" asp-controller="Events" asp-action="">Slet</a> 
+                       <a class="btn btn-danger" asp-controller="Events" asp-action="">Rediger</a> 
+                   *@
                 </div>
             </div>
         </div>
