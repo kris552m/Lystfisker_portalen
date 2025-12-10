@@ -10,11 +10,16 @@ namespace LystfiskerPortalen.Models
     public class Profile : IdentityUser
     {
         //Properties
+        
         public string ProfilePicture { get; set; } = string.Empty;
         public List<Profile> Following { get; set; } = new List<Profile>();
+        public int FollowingCount { get { return Following?.Count ?? 0; } }
         public List<Post> Posts { get; set; } = new List<Post>();
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
+        public List<Profile> Followers { get; set; }
+        public int FollowersCount {get { return Followers != null ? Followers.Count : 0;} }
+
 
         //Constructor
         public Profile(string profilePicture, List<Profile> following)
@@ -27,7 +32,7 @@ namespace LystfiskerPortalen.Models
             
         }
 
-
+        
         // Additional Methods
         public List<Profile> GetAllFollowing()
         {

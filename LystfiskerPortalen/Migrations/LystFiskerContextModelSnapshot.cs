@@ -17,7 +17,7 @@ namespace LystfiskerPortalen.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -71,7 +71,7 @@ namespace LystfiskerPortalen.Migrations
                         new
                         {
                             CommentId = 1,
-                            CommentTime = new DateTime(2025, 11, 16, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7316),
+                            CommentTime = new DateTime(2025, 11, 23, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1253),
                             PostId = 3,
                             ProfileId = "user-guid-2",
                             Text = "Kæmpe tillykke Jens! Det er en drømmefisk."
@@ -79,7 +79,7 @@ namespace LystfiskerPortalen.Migrations
                         new
                         {
                             CommentId = 2,
-                            CommentTime = new DateTime(2025, 11, 16, 14, 20, 37, 556, DateTimeKind.Local).AddTicks(7327),
+                            CommentTime = new DateTime(2025, 11, 23, 12, 35, 32, 316, DateTimeKind.Local).AddTicks(1255),
                             PostId = 3,
                             ProfileId = "user-guid-3",
                             Text = "Hvad tog den på? Flue eller spinner?"
@@ -87,7 +87,7 @@ namespace LystfiskerPortalen.Migrations
                         new
                         {
                             CommentId = 3,
-                            CommentTime = new DateTime(2025, 11, 24, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7332),
+                            CommentTime = new DateTime(2025, 12, 1, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1257),
                             PostId = 4,
                             ProfileId = "user-guid-1",
                             Text = "Respekt for C&R! Flot fisk."
@@ -95,7 +95,7 @@ namespace LystfiskerPortalen.Migrations
                         new
                         {
                             CommentId = 4,
-                            CommentTime = new DateTime(2025, 11, 19, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7336),
+                            CommentTime = new DateTime(2025, 11, 26, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1258),
                             PostId = 7,
                             ProfileId = "user-guid-2",
                             Text = "Jeg kommer helt sikkert!"
@@ -325,16 +325,16 @@ namespace LystfiskerPortalen.Migrations
                         {
                             Id = "user-guid-1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7f7d5657-aa41-418a-a0ca-bcf08247c75e",
+                            ConcurrencyStamp = "995e5580-2eeb-4488-9fda-102520ca9bd4",
                             Email = "jens@lystfisker.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JENS@LYSTFISKER.DK",
                             NormalizedUserName = "JENS@LYSTFISKER.DK",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOXkJ3o3fwGZlAX1LctSC4InVaLhUA7gp8gNnE8zV00FN1spF8jQIxNHnzlrotac4Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENARgSVoBuMTAtuH1fi5fV/KsVMa44Qj2dXhMhijN80k5OBNb7lNNmrN3lIsgFMiLQ==",
                             PhoneNumberConfirmed = false,
                             ProfilePicture = "https://example.com/jens.jpg",
-                            SecurityStamp = "151a58f1-accc-445a-9b97-cfb5b369aa67",
+                            SecurityStamp = "7655deef-fbb6-4cde-9c8e-a20a5d89b071",
                             TwoFactorEnabled = false,
                             UserName = "jens@lystfisker.dk"
                         },
@@ -342,16 +342,16 @@ namespace LystfiskerPortalen.Migrations
                         {
                             Id = "user-guid-2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ba4fff5-3383-446e-909f-3b27ec13e896",
+                            ConcurrencyStamp = "9538670f-602a-476d-8a3f-9469634c3a42",
                             Email = "anne@lystfisker.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ANNE@LYSTFISKER.DK",
                             NormalizedUserName = "ANNE@LYSTFISKER.DK",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKGhEbxs1qwTIn5kGEf92lE21S7QCVzVc/BIWf0Ba1uyIS6K8Q4tYWyCPkD4EyPcpQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF5/jfxRZwG9qFHAaSnHChoAbR3xTl4YpKTQt2YIC7NGoSP5FYV6vXIn0/oaHwX4Zw==",
                             PhoneNumberConfirmed = false,
                             ProfilePicture = "https://example.com/anne.jpg",
-                            SecurityStamp = "16aedb11-87ef-496b-846b-c4c013d46aa5",
+                            SecurityStamp = "b206e42d-10fe-4138-be95-a56ee751876e",
                             TwoFactorEnabled = false,
                             UserName = "anne@lystfisker.dk"
                         },
@@ -359,16 +359,16 @@ namespace LystfiskerPortalen.Migrations
                         {
                             Id = "user-guid-3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b111ff6-01fd-4bae-a9f9-d93759ec4cea",
+                            ConcurrencyStamp = "ede4db3a-91e2-4d26-be23-6d5404d1649c",
                             Email = "peter@lystfisker.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PETER@LYSTFISKER.DK",
                             NormalizedUserName = "PETER@LYSTFISKER.DK",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPYetasqhyB75R52XVFFt6EgHmf5tyflHXCb/ZXjhp7Dixcjx7rOyFbAIrM5FxQNrg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOaLPKG4U/Mz+lcCYEX/txQn3dlKTpufYFHGrXASQZHDXJ9Jl4DglZkkrsb/2fkgTA==",
                             PhoneNumberConfirmed = false,
                             ProfilePicture = "https://example.com/peter.jpg",
-                            SecurityStamp = "84ecd1db-e3cf-4fa2-ae53-e37a910f9568",
+                            SecurityStamp = "acefa2e9-e1b5-4359-9d2b-4da752a9e916",
                             TwoFactorEnabled = false,
                             UserName = "peter@lystfisker.dk"
                         });
@@ -579,9 +579,9 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Min første laks! Efter 3 dages forgæves fiskeri lykkedes det endelig.",
                             LocationId = 4,
                             Picture = "laks.jpg",
-                            PostTime = new DateTime(2025, 11, 15, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(6678),
+                            PostTime = new DateTime(2025, 11, 22, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1198),
                             ProfileId = "user-guid-1",
-                            CatchTime = new DateTime(2025, 11, 15, 10, 20, 37, 556, DateTimeKind.Local).AddTicks(6740),
+                            CatchTime = new DateTime(2025, 11, 22, 8, 35, 32, 316, DateTimeKind.Local).AddTicks(1199),
                             FishId = 4,
                             Lure = "Spinner",
                             Technique = "Spinnefiskeri"
@@ -592,9 +592,9 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Stor gedde i Esrum. Tog denne madamme på en stor wobler. Den fik friheden igen efter billedet.",
                             LocationId = 2,
                             Picture = "gedde.jpg",
-                            PostTime = new DateTime(2025, 11, 23, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(6751),
+                            PostTime = new DateTime(2025, 11, 30, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1202),
                             ProfileId = "user-guid-2",
-                            CatchTime = new DateTime(2025, 11, 23, 11, 20, 37, 556, DateTimeKind.Local).AddTicks(6755),
+                            CatchTime = new DateTime(2025, 11, 30, 9, 35, 32, 316, DateTimeKind.Local).AddTicks(1203),
                             FishId = 1,
                             Lure = "Wobler",
                             Technique = "Dørgning"
@@ -605,9 +605,9 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Aftentur efter torsk. Fik et par fine torsk med hjem til aftensmaden.",
                             LocationId = 3,
                             Picture = "torsk.jpg",
-                            PostTime = new DateTime(2025, 11, 25, 0, 20, 37, 556, DateTimeKind.Local).AddTicks(6954),
+                            PostTime = new DateTime(2025, 12, 1, 22, 35, 32, 316, DateTimeKind.Local).AddTicks(1204),
                             ProfileId = "user-guid-3",
-                            CatchTime = new DateTime(2025, 11, 24, 22, 20, 37, 556, DateTimeKind.Local).AddTicks(6967),
+                            CatchTime = new DateTime(2025, 12, 1, 20, 35, 32, 316, DateTimeKind.Local).AddTicks(1205),
                             FishId = 5,
                             Lure = "Pirk",
                             Technique = "Pirkefiskeri"
@@ -634,9 +634,9 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Kom og vær med til årets store geddekonkurrence på Esrum Sø. Fine præmier!",
                             LocationId = 2,
                             Picture = "",
-                            PostTime = new DateTime(2025, 10, 25, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7159),
+                            PostTime = new DateTime(2025, 11, 2, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1222),
                             ProfileId = "user-guid-3",
-                            EventTime = new DateTime(2026, 1, 25, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7168),
+                            EventTime = new DateTime(2026, 2, 2, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1225),
                             Title = "Esrum Open 2025"
                         },
                         new
@@ -645,9 +645,9 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Vi mødes ved broen og samler affald. Foreningen giver kaffe og kage bagefter.",
                             LocationId = 1,
                             Picture = "",
-                            PostTime = new DateTime(2025, 11, 18, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7174),
+                            PostTime = new DateTime(2025, 11, 25, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1230),
                             ProfileId = "user-guid-1",
-                            EventTime = new DateTime(2025, 12, 9, 12, 20, 37, 556, DateTimeKind.Local).AddTicks(7178),
+                            EventTime = new DateTime(2025, 12, 16, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1231),
                             Title = "Fælles oprydning ved Gudenåen"
                         });
                 });
@@ -668,7 +668,7 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Sæsonstart ved Gudenåen! Vandstanden ser perfekt ud, og vejret er med os. Knæk og bræk til alle derude.",
                             LocationId = 1,
                             Picture = "",
-                            PostTime = new DateTime(2025, 11, 11, 12, 20, 37, 553, DateTimeKind.Local).AddTicks(8697),
+                            PostTime = new DateTime(2025, 11, 18, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1119),
                             ProfileId = "user-guid-1",
                             IsQuestion = false
                         },
@@ -678,7 +678,7 @@ namespace LystfiskerPortalen.Migrations
                             Description = "Er der nogen der har erfaring med det nye Shimano hjul? Overvejer at købe det til kystfiskeri.",
                             LocationId = 3,
                             Picture = "",
-                            PostTime = new DateTime(2025, 11, 20, 12, 20, 37, 553, DateTimeKind.Local).AddTicks(8771),
+                            PostTime = new DateTime(2025, 11, 27, 10, 35, 32, 316, DateTimeKind.Local).AddTicks(1168),
                             ProfileId = "user-guid-3",
                             IsQuestion = true
                         });
