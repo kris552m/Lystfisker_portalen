@@ -11,7 +11,7 @@
 </div>
 @code {
     [Parameter]
-    public EventCallback<string> OnLocationSelected { get; set; }
+    public EventCallback<(double, double)> OnLocationSelected { get; set; }
     RealTimeMap? realTimeMap;
     bool mapLoaded = false;
     Guid userMarkerId = Guid.NewGuid();
@@ -89,8 +89,7 @@
             };
             await realTimeMap.Geometric.Points.add(myPoint);
 
-            string locationString = $"{lat},{lon}";
-            await OnLocationSelected.InvokeAsync(locationString);
+            await OnLocationSelected.InvokeAsync((lat, lon));
 
             StateHasChanged();
         }

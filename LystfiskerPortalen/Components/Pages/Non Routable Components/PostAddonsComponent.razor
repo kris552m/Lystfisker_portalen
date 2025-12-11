@@ -5,9 +5,7 @@
     <span>Føj noget til dit opslag</span>
 
     <div class="ms-auto o-flex">
-        <button class="btn">
-            <i class="bi bi-image"></i>
-        </button>
+        <ImagePicker></ImagePicker>
 
         <button class="border-0" @onclick="ToggleLocationPicker" style="background: transparent;">
             <span style="color:red;"><i class="bi bi-geo-alt-fill"></i></span>
@@ -26,7 +24,7 @@
 
 @code {
     [Parameter]
-    public EventCallback<string> OnLocationForwarded { get; set; }
+    public EventCallback<(double, double)> OnLocationForwarded { get; set; }
     private bool showLocationPicker = false;
     private void ToggleLocationPicker()
     {
@@ -34,7 +32,7 @@
     }
 
     //Fordi dette komponent ikke er en Post, så skal vi videresende lokationen op til CreatePostModal, Catch eller Event.
-    private async Task HandleChildLocation(string location)
+    private async Task HandleChildLocation((double lat, double lon) location)
     {
         await OnLocationForwarded.InvokeAsync(location);
     }

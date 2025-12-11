@@ -1,6 +1,5 @@
 ﻿using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -30,10 +29,13 @@ namespace LystfiskerPortalen.Persistence
         public List<Post> GetAll()
         {
             return context.Posts
+            .Include(p => p.Location)
+            .Include(p => p.Profile)
             .Include(p => p.Comments)
             .ThenInclude(c => c.Profile)
             .ThenInclude(c => c.Reactions)
-            .Include(p => p.Reactions).ToList();
+            .Include(p => p.Reactions)
+            .Include(p => p.Pictures).ToList();
         }
 
         public Post? GetById(int id)
@@ -46,7 +48,7 @@ namespace LystfiskerPortalen.Persistence
             Post postToUpdate = GetById(post.PostId);
             if (postToUpdate != null)
             {
-                postToUpdate.Picture = post.Picture;
+                postToUpdate.Pictures = post.Pictures;
                 postToUpdate.Reactions = post.Reactions;
                 postToUpdate.Comments = post.Comments;
                 postToUpdate.PostTime = post.PostTime;
