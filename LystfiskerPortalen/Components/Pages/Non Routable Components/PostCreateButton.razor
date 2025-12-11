@@ -13,7 +13,7 @@
 </div>
 
 @code{
-    
+
 
     [Parameter]
     public string Description { get; set; }
@@ -64,30 +64,30 @@
     public void CreateCatchPost()
     {
         var catchPost = new Catch
-        {
-            //post
-            PostTime = DateTime.UtcNow,
-            Description = Description,
-            Location = new Location
             {
-                Name = "Placeholder",
-                Latitude = 0.0,
-                Longitude = 0.0
-            },
-            ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
-            Images = ImageService.GetImages(),
+            //post
+                PostTime = DateTime.UtcNow,
+                Description = Description,
+                Location = new Location
+                {
+                    Name = "Placeholder",
+                    Latitude = 0.0,
+                    Longitude = 0.0
+                },
+                ProfileId = "acee7f97-286e-4f36-9186-607a8834aeac",
+                Images = ImageService.GetImages(),
 
             //catch
-            CatchTime = TimeCaught,
-            Lure = Lure,
-            Technique = Technique,
-            Fish = new Fish
-            {
-                Name = FishSpecies,
-                Weight = FishWeight,
-                Length = FishLength
-            }
-        };
+                CatchTime = TimeCaught,
+                Lure = Lure,
+                Technique = Technique,
+                Fish = new Fish
+                {
+                    Name = FishSpecies,
+                    Weight = FishWeight,
+                    Length = FishLength
+                }
+            };
         PostRepository.Add(catchPost);
         Console.WriteLine("Catch Post Created");
     }

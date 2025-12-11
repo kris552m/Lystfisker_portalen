@@ -16,6 +16,7 @@ namespace LystfiskerPortalen.Persistence
         }
         public Post Add(Post post)
         {
+
             context.Posts.Add(post);
             context.SaveChanges();
             return post;
@@ -29,7 +30,7 @@ namespace LystfiskerPortalen.Persistence
 
         public List<Post> GetAll()
         {
-            return context.Posts.Include(p => p.Comments).ToList();
+            return context.Posts.ToList();
         }
 
         public Post? GetById(int id)
