@@ -18,6 +18,7 @@ namespace LystfiskerPortalen.Models
         public Location Location { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
+        public List<Picture> Pictures { get; set; } = new List<Picture>();
 
         [ForeignKey(nameof(Profile))]
         public string ProfileId { get; set; }
