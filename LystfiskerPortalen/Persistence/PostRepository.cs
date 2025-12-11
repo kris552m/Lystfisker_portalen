@@ -50,7 +50,7 @@ namespace LystfiskerPortalen.Persistence
             Post postToUpdate = GetById(post.PostId);
             if (postToUpdate != null)
             {
-                postToUpdate.Picture = post.Picture;
+                postToUpdate.Pictures = post.Pictures;
                 postToUpdate.Reactions = post.Reactions;
                 postToUpdate.Comments = post.Comments;
                 postToUpdate.PostTime = post.PostTime;

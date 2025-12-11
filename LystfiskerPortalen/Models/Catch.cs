@@ -21,8 +21,8 @@ namespace LystfiskerPortalen.Models
 
 
         //Constructor
-        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
-            : base(postTime, picture, description, location, comments, reactions)
+        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, List<Picture> pictures, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, pictures, description, location, comments, reactions)
         {
             CatchTime = catchTime;
             Lure = lure;

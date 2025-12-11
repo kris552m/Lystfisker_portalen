@@ -13,7 +13,6 @@ namespace LystfiskerPortalen.Models
         // Properties
         public int PostId { get; set; }
         public DateTime PostTime { get; set; }
-        public string Picture { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public Location Location { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
@@ -26,10 +25,10 @@ namespace LystfiskerPortalen.Models
 
 
         // Constructor
-        public Post(DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+        public Post(DateTime postTime, List<Picture> pictures, string description, Location location, List<Comment> comments, List<Reaction> reactions)
         {
             PostTime = postTime;
-            Picture = picture;
+            Pictures = pictures;
             Description = description;
             Location = location;
             Comments = comments;

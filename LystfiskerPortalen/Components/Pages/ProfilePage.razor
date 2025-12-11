@@ -45,9 +45,12 @@ else
                     <div class="card mb-3">
                         <div class="card-body">
                             <h6 class="card-title">@post.Description</h6>
-                            @if (!string.IsNullOrWhiteSpace(post.Picture))
+                            @if (!string.IsNullOrWhiteSpace(post.Pictures[0].PictureName))
                             {
-                                <img src="@post.Picture" alt="Post image" class="img-fluid mb-2" />
+                                foreach (Picture img in post.Pictures)
+                                {
+                                    <img src="@img" alt="Post image" class="img-fluid mb-2" />
+                                }
                             }
                             <small class="text-muted">@post.PostTime.ToString("MMM dd, yyyy")</small>
                         </div>
