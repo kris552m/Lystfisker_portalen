@@ -1,8 +1,6 @@
 ﻿using LystfiskerPortalen.Data;
 using LystfiskerPortalen.Models;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
 
 
 namespace LystfiskerPortalen.Persistence
