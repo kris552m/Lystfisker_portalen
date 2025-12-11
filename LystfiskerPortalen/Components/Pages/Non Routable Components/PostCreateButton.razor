@@ -1,70 +1,40 @@
-﻿@using LystfiskerPortalen.Data
-@using LystfiskerPortalen.Models
-@using LystfiskerPortalen.Persistence
-@using LystfiskerPortalen.Services
-@inject IPostRepository PostRepository
+﻿@using Microsoft.AspNetCore.Identity
 @inject NavigationManager navManager
-@inject ImageService ImageService
+@inject AuthenticationStateProvider AuthState
+@inject UserManager<Profile> UserManager
+
 @rendermode InteractiveServer
+<AuthorizeView>
+    <Authorized>
+        <div class="modal-footer">
+            <button type="button" data-bs-dismiss="modal" @onclick="() => CreatePost()"
+                class="btn btn-primary w-100">Slå
+                op</button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary w-100" disabled>Log ind for at oprette opslag</button>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
-
-<div class="modal-footer">
-    <button type="button" @onclick="()=>CreatePost()" class="btn btn-primary w-100">Slå op</button>
-</div>
-
-@code{
-    
-
-    [Parameter]
-    public string Description { get; set; }
-
-    [CascadingParameter]
-    public string ProfileId { get; set; }
-
-    [Parameter]
-    public bool IsQuestion { get; set; }
-
+@code {
 
     [Parameter]
-    public string PostType { get; set; }
+    public EventCallback<string> OnPostCreated { get; set; }
 
-    public void CreatePost()
+    /* I Stedet for at oprette opslaget i dette komponent så lader vi forælderen håndtere det
+    det gør det også nemmere at genbruge knappen */
+    private async Task CreatePost()
     {
-        navManager.Refresh();
-        switch(PostType){
-            case "general":
-                CreateGeneralPost();
-                break;
-            case "catch":
-                // Logic for creating a catch post
-                break;
-            case "event":
-                // Logic for creating a catch post
-                break;
-        }
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var currentUser = await UserManager.GetUserAsync(user);
 
-    }
-
-    public void CreateGeneralPost()
-    {
-        var generalPost = new GeneralPost
+        if (currentUser != null)
         {
-            PostTime = DateTime.UtcNow,
-            Description = Description,
-            Location = new Location
-            {
-                Name = "Placeholder",
-                Latitude = 0.0,
-                Longitude = 0.0
-            },
-                ProfileId = "67066540-31fb-423f-b29b-2020f8d54b1d",
-            IsQuestion = IsQuestion,
-            Images = ImageService.GetImages()
-
-        };
-        PostRepository.Add(generalPost);
-        Console.WriteLine("General Post Created");
+            await OnPostCreated.InvokeAsync(currentUser.Id);
+        }
     }
-   
-   
 }

@@ -14,12 +14,12 @@
    
 </div>
 <div>
-    @if (ImageService.GetImages().Any())
+    @if (ImageService.GetPictures().Any())
     {
-        foreach (var img in ImageService.GetImages())
+        foreach (var pic in ImageService.GetPictures())
         {
-            <img src="@($"/Images/{img.ImageName}")"
-                 alt="@($"Uploaded image: {img.ImageName}")"
+            <img src="@($"/Images/{pic.PictureName}")"
+                 alt="@($"Uploaded image: {pic.PictureName}")"
                  style="max-width:200px; margin:5px;" />
         }
     }

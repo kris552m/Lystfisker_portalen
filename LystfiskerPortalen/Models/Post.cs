@@ -1,4 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LystfiskerPortalen.Models
 {
@@ -7,11 +13,11 @@ namespace LystfiskerPortalen.Models
         // Properties
         public int PostId { get; set; }
         public DateTime PostTime { get; set; }
-        public List<Image> Images { get; set; } = new List<Image>();
         public string Description { get; set; } = string.Empty;
         public Location Location { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Reaction> Reactions { get; set; } = new List<Reaction>();
+        public List<Picture> Pictures { get; set; } = new List<Picture>();
 
         [ForeignKey(nameof(Profile))]
         public string ProfileId { get; set; }
@@ -19,10 +25,10 @@ namespace LystfiskerPortalen.Models
 
 
         // Constructor
-        public Post(DateTime postTime, List<Image> images, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+        public Post(DateTime postTime, List<Picture> pictures, string description, Location location, List<Comment> comments, List<Reaction> reactions)
         {
             PostTime = postTime;
-            Images = images;
+            Pictures = pictures;
             Description = description;
             Location = location;
             Comments = comments;

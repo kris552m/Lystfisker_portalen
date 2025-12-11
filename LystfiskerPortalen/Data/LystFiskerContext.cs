@@ -14,8 +14,8 @@ namespace LystfiskerPortalen.Data
         public DbSet<GeneralPost> GeneralPosts { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Image> Images { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
         public LystFiskerContext(DbContextOptions options) : base(options)
         {
         }
@@ -32,9 +32,9 @@ namespace LystfiskerPortalen.Data
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Post>()
-               .HasMany(p => p.Images)
-               .WithOne(c => c.Post)
-               .OnDelete(DeleteBehavior.Cascade);
+              .HasMany(p => p.Pictures)
+              .WithOne(p => p.Post)
+              .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Reactions)
@@ -45,10 +45,10 @@ namespace LystfiskerPortalen.Data
                 .HasOne(p => p.Location)
                 .WithMany(l => l.Posts);
 
-            modelBuilder.Entity<Image>()
-                .HasOne(i => i.Post)
-                .WithMany(p => p.Images)
-                .HasForeignKey(i => i.PostId)
+            modelBuilder.Entity<Picture>()
+                .HasOne(p => p.Post)
+                .WithMany(post => post.Pictures)
+                .HasForeignKey(p => p.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Comment>()
@@ -112,8 +112,28 @@ namespace LystfiskerPortalen.Data
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Following)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("ProfileFollowings"));
+                .WithMany(p => p.Followers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProfileFollowings",
+                    j => j
+                        .HasOne<Profile>()
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .HasPrincipalKey(p => p.Id)
+                        .OnDelete(DeleteBehavior.NoAction),
+                    j => j
+                        .HasOne<Profile>()
+                        .WithMany()
+                        .HasForeignKey("FollowingId")
+                        .HasPrincipalKey(p => p.Id)
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j =>
+                    {
+                        j.HasKey("FollowerId", "FollowingId");
+                        j.ToTable("ProfileFollowings");
+                    });
+
+            modelBuilder.Seed();
 
         }
 
