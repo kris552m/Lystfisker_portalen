@@ -2,6 +2,7 @@
 using LystfiskerPortalen.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 
 
 namespace LystfiskerPortalen.Persistence
@@ -30,6 +31,8 @@ namespace LystfiskerPortalen.Persistence
         public List<Post> GetAll()
         {
             return context.Posts
+            .Include(p => p.Location)
+            .Include(p => p.Profile)
             .Include(p => p.Comments)
             .ThenInclude(c => c.Profile)
             .ThenInclude(c => c.Reactions)

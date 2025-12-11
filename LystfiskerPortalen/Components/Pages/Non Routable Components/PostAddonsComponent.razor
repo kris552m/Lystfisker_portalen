@@ -24,7 +24,7 @@
 
 @code {
     [Parameter]
-    public EventCallback<string> OnLocationForwarded { get; set; }
+    public EventCallback<(double, double)> OnLocationForwarded { get; set; }
     private bool showLocationPicker = false;
     private void ToggleLocationPicker()
     {
@@ -32,7 +32,7 @@
     }
 
     //Fordi dette komponent ikke er en Post, så skal vi videresende lokationen op til CreatePostModal, Catch eller Event.
-    private async Task HandleChildLocation(string location)
+    private async Task HandleChildLocation((double lat, double lon) location)
     {
         await OnLocationForwarded.InvokeAsync(location);
     }

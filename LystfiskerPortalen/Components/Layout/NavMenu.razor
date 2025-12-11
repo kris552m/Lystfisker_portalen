@@ -10,7 +10,7 @@
     <div class="navbar-menu">
 
         <div class="nav-links-left">
-            <NavLink class="nav-link" href="/feed">
+            <NavLink class="nav-link" href="/">
                 Feed
             </NavLink>
             <NavLink class="nav-link" href="/lokationer">
@@ -19,7 +19,7 @@
             <NavLink class="nav-link" href="/statistik">
                 Statistik
             </NavLink>
-            <NavLink class="nav-link" href="/begivenheder">
+            <NavLink class="nav-link" href="/events">
                 Begivenheder
             </NavLink>
         </div>
@@ -27,19 +27,19 @@
         <div class="nav-links-right">
             <AuthorizeView>
                 <Authorized>
-                    <a class="nav-link" href="Identity/Account/Manage">
+                    <a class="nav-link" href="Account/Manage">
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
                     </a>
-                    <form action="Identity/Account/Logout" method="post" class="logout-form">
+                    <form action="Account/Logout" method="post" class="logout-form">
                         <button type="submit" class="nav-link btn-link">Logout</button>
                         <input name="__RequestVerificationToken" type="hidden" />
                     </form>
                 </Authorized>
                 <NotAuthorized>
-                    <NavLink class="nav-link" href="Identity/Account/Register">
+                    <NavLink class="nav-link" href="/Account/Register">
                         Register
                     </NavLink>
-                    <NavLink class="nav-link" href="Identity/Account/Login">
+                    <NavLink class="nav-link" href="/Account/Login">
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Login
                     </NavLink>
                 </NotAuthorized>
