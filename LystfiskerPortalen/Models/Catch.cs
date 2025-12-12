@@ -15,6 +15,7 @@ namespace LystfiskerPortalen.Models
         public DateTime CatchTime { get; set; }
         public string Lure { get; set; } = string.Empty;
         public string Technique { get; set; } = string.Empty;
+
         [ForeignKey(nameof(Fish))]
         public int FishId { get; set; }
         public Fish Fish { get; set; }

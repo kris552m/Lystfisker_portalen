@@ -1,4 +1,16 @@
-﻿<div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
+﻿@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@using LystfiskerPortalen.Services
+@using Microsoft.AspNetCore.Identity
+
+@rendermode InteractiveServer
+
+@inject ImageService ImageService
+@inject AuthenticationStateProvider AuthState
+@inject UserManager<Profile> UserManager
+@inject IPostRepository PostRepository
+
+<div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -73,36 +85,68 @@
                             </div>
                         </div>
 
-                            <PostAddonsComponent />
+                        <PostAddonsComponent OnLocationForwarded="GetLocation" />
                     </div>
                 </div>
 
 
             </div>
             <div class="modal-footer">
-                <PostCreateButton 
-                    PostType="catch" 
-                    FishSpecies="@selectedFishSpecies" 
-                    Technique="@selectedFishingTechnique"
-                    FishWeight="@fishWeight"
-                    FishLength="@fishLength"
-                    Lure="@selectedLure"
-                    TimeCaught="@timeCaught"
-                    Description="@description"
-
-                    />
+                <PostCreateButton OnPostCreated="CreateCatchPost"/>
             </div>
         </div>
     </div>
 </div>
 
 @code {
+    public void GetLocation((double lat, double lon) location)
+    {
+        latitude = location.lat;
+        longitude = location.lon;
+    }
+    public async Task CreateCatchPost(string userId)
+    {
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var currentUser = await UserManager.GetUserAsync(user);
 
+        var catchPost = new Catch
+        {
+            PostTime = DateTime.UtcNow,
+            Description = description,
+
+            Location = new Location
+            {
+                Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
+                Latitude = latitude ?? 0.0,
+                Longitude = longitude ?? 0.0,
+            },
+
+            ProfileId = userId,
+            Pictures = ImageService.GetPictures(),
+
+            Fish = new Fish
+            {
+                Name = selectedFishSpecies,
+                Weight = fishWeight,
+                Length = fishLength
+            },
+
+            CatchTime = catchDate,
+            Technique = selectedFishingTechnique,
+            Lure = selectedLure
+            
+        };
+        PostRepository.Add(catchPost);
+    }
 
     #region Slet
     private string description { get; set; } = string.Empty;
     private string catchPost { get; set; } = string.Empty;
     private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3" };
+
+    private double? latitude;
+    private double? longitude;
 
     private string selectedFishSpecies { get; set; } = string.Empty;
 
