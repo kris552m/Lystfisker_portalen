@@ -33,64 +33,61 @@
                             <textarea 
                                 class="form-control" 
                                 @bind="description"
-                                placeholder="Skriv hvad du fangede... :D">
+                                placeholder="Fortæl os om din fangst...">
                         </textarea>
                         </div>
 
                         <div class="row">
                             <div class="col-sm">
                                 <div class="form-group">
-                                    <label for="fishSpecies">Fiskearter</label>
+                                    <label for="fishSpecies">Hvilken fisk har du fanget?</label>
                                     <input type="text" @bind="selectedFishSpecies" class="form-control" />
        
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Vægt</label>
+                                    <label>Hvor meget vejer fisken?</label>
                                     <input type="number" @bind="fishWeight" class="form-control" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Blink</label>
+                                    <label>Hvilke blink anvendte du?</label>
                                     <input type="text" class="form-control" @bind="selectedLure" />
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="catchDate">Dato</label>
+                                <div class="form-group" style="margin-bottom:20px;">
+                                    <label for="catchDate">Dato på fangst</label>
                                     <input type="date" id="catchDate" class="form-control" @bind="catchDate" />
                                 </div>
                             </div>
 
                             <div class="col-sm">
-                                <div class="form-group">
-                                    <label for="fishSpecies">Teknik</label>
-                                    <input @bind="selectedFishingTechnique" />
-                                </div>
 
                                 <div class="form-group">
-                                    <label for="fishLength">Længde</label>
+                                    <label for="fishLength">Hvor lang er fisken?</label>
                                     <input type="number" @bind="fishLength" class="form-control" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="equipment">Udstyr</label>
-                                    <input type="text" id="equipment" class="form-control" @bind="equipment" />
+                                    <label for="fishingTechniques">Hvilken teknik anvendte du?</label>
+                                    <input type="text" id="fishingTechniques" class="form-control" @bind="selectedFishingTechnique" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="timeCaught">Klokkeslæt</label>
+                                    <label for="timeCaught">Hvornår på dagen fangede du fisken?</label>
                                     <input type="text" id="timeCaught" class="form-control" @bind="timeCaught" />
                                 </div>
 
                             </div>
                         </div>
-
+            
                         <PostAddonsComponent OnLocationForwarded="GetLocation" />
                     </div>
                 </div>
 
 
             </div>
+
             <div class="modal-footer">
                 <PostCreateButton OnPostCreated="CreateCatchPost"/>
             </div>

@@ -3,16 +3,16 @@
 @rendermode InteractiveServer
 @inject ImageService ImageService
 
-<div class="ms-auto d-flex">
+   
     <!-- Hidden file input -->
     <InputFile id="fileInput" OnChange="@ImageHandler" multiple class="d-none" />
 
     <!-- Label styled as a button -->
-    <label for="fileInput" class="btn btn-primary">
+    <label style="color:blue;" for="fileInput">
         <i class="bi bi-image"></i> 
     </label>
    
-</div>
+
 <div>
     @if (ImageService.GetPictures().Any())
     {
