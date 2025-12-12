@@ -1,0 +1,86 @@
+﻿@page "/chat"
+@rendermode InteractiveServer
+
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+
+<h3>Chat Application</h3>
+
+<div>
+    <input @bind="UserName" placeholder="Enter your name" />
+    <input @bind="MessageInput" placeholder="Enter your message" @onkeypress="SendOnEnter" />
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SendMessage">Send</MudButton>
+</div>
+
+<div style="margin-top: 20px;">
+    <h4>Messages:</h4>
+  
+        @foreach (var message in Messages)
+    {
+          <MudChat ChatPosition="ChatBubblePosition.Start">
+            <MudAvatar>
+                <MudImage Src="Images/Logo1.png" />
+            </MudAvatar>
+            <MudChatBubble Variant="Variant.Filled" Color="Color.Dark">
+                @message
+            </MudChatBubble>
+         </MudChat>
+
+        }
+       
+    
+</div>
+<MudChat ChatPosition="ChatBubblePosition.Start">
+    
+</MudChat>
+
+@code {
+    private HubConnection? hubConnection;
+    private string? UserName;
+    
+    private string? MessageInput;
+    private List<string> Messages = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialize SignalR connection
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        // Listen to incoming messages
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            Messages.Add($"{user}: {message}");
+            InvokeAsync(StateHasChanged);
+        });
+
+        // Start connection
+        await hubConnection.StartAsync();
+    }
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(MessageInput) && hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", UserName, MessageInput);
+            MessageInput = string.Empty;
+        }
+    }
+
+    private async Task SendOnEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
