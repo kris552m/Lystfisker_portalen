@@ -31,7 +31,6 @@ namespace LystfiskerPortalen.Persistence
 
         public List<Post> GetAll()
         {
-            return context.Posts.ToList();
             return context.Posts
             .Include(p => p.Location)
             .Include(p => p.Profile)
