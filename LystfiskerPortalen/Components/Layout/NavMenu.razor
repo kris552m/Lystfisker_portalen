@@ -1,46 +1,52 @@
-﻿
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Routing
 
-    <a class="navbar-brand" href="">
-        <img class="rounded" src="/Images/Logo1.png" width="90" height="65" alt="">
-    </a>
+<nav class="navbar-container">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="">Lystfisker Portalen</a>
+        <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+    </div>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="navbar-menu">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/feed">Feed</a>
-                    
-                </li>
-               
-                <li class="nav-item">
-                <a class="nav-link" href="/lokation">Lokationer</a>
-                
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="/statistik">Statistik</a>
-                   
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/begivenheder">Begivenheder</a>
-                </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Weather">Weather</a>
-            </li>
-
-            </ul>
-
+        <div class="nav-links-left">
+            <NavLink class="nav-link" href="/">
+                Feed
+            </NavLink>
+            <NavLink class="nav-link" href="/lokationer">
+                Lokationer
+            </NavLink>
+            <NavLink class="nav-link" href="/statistik">
+                Statistik
+            </NavLink>
+            <NavLink class="nav-link" href="/events">
+                Begivenheder
+            </NavLink>
         </div>
-      <div class="float-end">
-        <a class="navbar-brand" href="/">
-            <img class="rounded-circle" src="/Images/ProfileTest.png" width="90" height="65" alt="">
-        </a>
-      </div>
-    </nav>
 
+        <div class="nav-links-right">
+            <AuthorizeView>
+                <Authorized>
+                    <a class="nav-link" href="Account/Manage">
+                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                    </a>
+                    <form action="Account/Logout" method="post" class="logout-form">
+                        <button type="submit" class="nav-link btn-link">Logout</button>
+                        <input name="__RequestVerificationToken" type="hidden" />
+                    </form>
+                </Authorized>
+                <NotAuthorized>
+                    <NavLink class="nav-link" href="/Account/Register">
+                        Register
+                    </NavLink>
+                    <NavLink class="nav-link" href="/Account/Login">
+                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Login
+                    </NavLink>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</nav>
 
-
+@code {
+}

@@ -11,10 +11,22 @@
     <label for="fileInput" class="btn btn-primary">
         <i class="bi bi-image"></i> 
     </label>
+   
+</div>
+<div>
+    @if (ImageService.GetPictures().Any())
+    {
+        foreach (var pic in ImageService.GetPictures())
+        {
+            <img src="@($"/Images/{pic.PictureName}")"
+                 alt="@($"Uploaded image: {pic.PictureName}")"
+                 style="max-width:200px; margin:5px;" />
+        }
+    }
 </div>
 
 @code {
-   
+    
     private async Task ImageHandler(InputFileChangeEventArgs e)
     {
         foreach (var file in e.GetMultipleFiles())
@@ -28,8 +40,9 @@
             await using var fs = new FileStream(path, FileMode.Create);
             await file.OpenReadStream().CopyToAsync(fs);
 
+            
             ImageService.AddImage(fileName);
         }
-
+        StateHasChanged();
     }
 }

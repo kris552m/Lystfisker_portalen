@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LystfiskerPortalen.Migrations
 {
     [DbContext(typeof(LystFiskerContext))]
-    [Migration("20251128112723_OneToManyPostToImage")]
-    partial class OneToManyPostToImage
+    [Migration("20251211095728_PictureMigration")]
+    partial class PictureMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -69,6 +69,40 @@ namespace LystfiskerPortalen.Migrations
                     b.HasIndex("ProfileId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            CommentId = 1,
+                            CommentTime = new DateTime(2025, 12, 2, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8677),
+                            PostId = 3,
+                            ProfileId = "user-guid-2",
+                            Text = "Kæmpe tillykke Jens! Det er en drømmefisk."
+                        },
+                        new
+                        {
+                            CommentId = 2,
+                            CommentTime = new DateTime(2025, 12, 2, 12, 57, 28, 60, DateTimeKind.Local).AddTicks(8680),
+                            PostId = 3,
+                            ProfileId = "user-guid-3",
+                            Text = "Hvad tog den på? Flue eller spinner?"
+                        },
+                        new
+                        {
+                            CommentId = 3,
+                            CommentTime = new DateTime(2025, 12, 10, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8683),
+                            PostId = 4,
+                            ProfileId = "user-guid-1",
+                            Text = "Respekt for C&R! Flot fisk."
+                        },
+                        new
+                        {
+                            CommentId = 4,
+                            CommentTime = new DateTime(2025, 12, 5, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8719),
+                            PostId = 7,
+                            ProfileId = "user-guid-2",
+                            Text = "Jeg kommer helt sikkert!"
+                        });
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.Fish", b =>
@@ -92,28 +126,43 @@ namespace LystfiskerPortalen.Migrations
                     b.HasKey("FishId");
 
                     b.ToTable("Fishes");
-                });
 
-            modelBuilder.Entity("LystfiskerPortalen.Models.Image", b =>
-                {
-                    b.Property<int>("ImageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
-
-                    b.Property<string>("ImageName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ImageId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Images");
+                    b.HasData(
+                        new
+                        {
+                            FishId = 1,
+                            Length = 150,
+                            Name = "Gedde",
+                            Weight = 20.0
+                        },
+                        new
+                        {
+                            FishId = 2,
+                            Length = 50,
+                            Name = "Aborre",
+                            Weight = 2.5
+                        },
+                        new
+                        {
+                            FishId = 3,
+                            Length = 100,
+                            Name = "Havørred",
+                            Weight = 15.0
+                        },
+                        new
+                        {
+                            FishId = 4,
+                            Length = 130,
+                            Name = "Laks",
+                            Weight = 25.0
+                        },
+                        new
+                        {
+                            FishId = 5,
+                            Length = 120,
+                            Name = "Torsk",
+                            Weight = 30.0
+                        });
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.Location", b =>
@@ -137,6 +186,58 @@ namespace LystfiskerPortalen.Migrations
                     b.HasKey("LocationId");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            LocationId = 1,
+                            Latitude = 56.460500000000003,
+                            Longitude = 9.9804999999999993,
+                            Name = "Gudenåen"
+                        },
+                        new
+                        {
+                            LocationId = 2,
+                            Latitude = 56.0,
+                            Longitude = 12.380000000000001,
+                            Name = "Esrum Sø"
+                        },
+                        new
+                        {
+                            LocationId = 3,
+                            Latitude = 55.75,
+                            Longitude = 12.666700000000001,
+                            Name = "Øresund"
+                        },
+                        new
+                        {
+                            LocationId = 4,
+                            Latitude = 56.366700000000002,
+                            Longitude = 8.6166999999999998,
+                            Name = "Storeåen"
+                        });
+                });
+
+            modelBuilder.Entity("LystfiskerPortalen.Models.Picture", b =>
+                {
+                    b.Property<int>("PictureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PictureId"));
+
+                    b.Property<string>("PictureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PictureId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.Post", b =>
@@ -153,6 +254,10 @@ namespace LystfiskerPortalen.Migrations
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PostTime")
                         .HasColumnType("datetime2");
@@ -239,6 +344,59 @@ namespace LystfiskerPortalen.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "user-guid-1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2d32f809-bc8b-4f7d-b4c8-21396f9a92b7",
+                            Email = "jens@lystfisker.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JENS@LYSTFISKER.DK",
+                            NormalizedUserName = "JENS@LYSTFISKER.DK",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE+RlLu470u9gFjng25nn8nnUGDnTWWcmv2BafdSLz6tRkeHWSqpffdrXG5HmDN5CQ==",
+                            PhoneNumberConfirmed = false,
+                            ProfilePicture = "https://example.com/jens.jpg",
+                            SecurityStamp = "d940288f-b74c-42d0-a3ef-7597fbdbb315",
+                            TwoFactorEnabled = false,
+                            UserName = "jens@lystfisker.dk"
+                        },
+                        new
+                        {
+                            Id = "user-guid-2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bc81bab4-96c8-4032-8965-65f160e9a71b",
+                            Email = "anne@lystfisker.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ANNE@LYSTFISKER.DK",
+                            NormalizedUserName = "ANNE@LYSTFISKER.DK",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIm0qsOpX0SI1xO8O/iVrVdGOehxBRvFviP2Qw9pA5AkOwbfQ0kKpnF645fxb2yxXw==",
+                            PhoneNumberConfirmed = false,
+                            ProfilePicture = "https://example.com/anne.jpg",
+                            SecurityStamp = "c0190277-d660-4b4f-b08c-8b108dfa70b8",
+                            TwoFactorEnabled = false,
+                            UserName = "anne@lystfisker.dk"
+                        },
+                        new
+                        {
+                            Id = "user-guid-3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f6a213a3-4e1d-4192-b84f-54ddddc62392",
+                            Email = "peter@lystfisker.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PETER@LYSTFISKER.DK",
+                            NormalizedUserName = "PETER@LYSTFISKER.DK",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOONmbQBHIlSMvtXtr2gmL+Isi5+X8nEMfIE11XUUCvOeGOM7pzxG9GyGtyj3mIpdQ==",
+                            PhoneNumberConfirmed = false,
+                            ProfilePicture = "https://example.com/peter.jpg",
+                            SecurityStamp = "c3eb11a2-e70a-406b-9040-9ab5d7c991c9",
+                            TwoFactorEnabled = false,
+                            UserName = "peter@lystfisker.dk"
+                        });
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.Reaction", b =>
@@ -402,17 +560,17 @@ namespace LystfiskerPortalen.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProfileProfile", b =>
+            modelBuilder.Entity("ProfileFollowings", b =>
                 {
+                    b.Property<string>("FollowerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("FollowingId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProfileId")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("FollowerId", "FollowingId");
 
-                    b.HasKey("FollowingId", "ProfileId");
-
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("FollowingId");
 
                     b.ToTable("ProfileFollowings", (string)null);
                 });
@@ -438,6 +596,47 @@ namespace LystfiskerPortalen.Migrations
                     b.HasIndex("FishId");
 
                     b.ToTable("Catches");
+
+                    b.HasData(
+                        new
+                        {
+                            PostId = 3,
+                            Description = "Min første laks! Efter 3 dages forgæves fiskeri lykkedes det endelig.",
+                            LocationId = 4,
+                            Picture = "laks.jpg",
+                            PostTime = new DateTime(2025, 12, 1, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8261),
+                            ProfileId = "user-guid-1",
+                            CatchTime = new DateTime(2025, 12, 1, 8, 57, 28, 60, DateTimeKind.Local).AddTicks(8391),
+                            FishId = 4,
+                            Lure = "Spinner",
+                            Technique = "Spinnefiskeri"
+                        },
+                        new
+                        {
+                            PostId = 4,
+                            Description = "Stor gedde i Esrum. Tog denne madamme på en stor wobler. Den fik friheden igen efter billedet.",
+                            LocationId = 2,
+                            Picture = "gedde.jpg",
+                            PostTime = new DateTime(2025, 12, 9, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8403),
+                            ProfileId = "user-guid-2",
+                            CatchTime = new DateTime(2025, 12, 9, 9, 57, 28, 60, DateTimeKind.Local).AddTicks(8405),
+                            FishId = 1,
+                            Lure = "Wobler",
+                            Technique = "Dørgning"
+                        },
+                        new
+                        {
+                            PostId = 5,
+                            Description = "Aftentur efter torsk. Fik et par fine torsk med hjem til aftensmaden.",
+                            LocationId = 3,
+                            Picture = "torsk.jpg",
+                            PostTime = new DateTime(2025, 12, 10, 22, 57, 28, 60, DateTimeKind.Local).AddTicks(8420),
+                            ProfileId = "user-guid-3",
+                            CatchTime = new DateTime(2025, 12, 10, 20, 57, 28, 60, DateTimeKind.Local).AddTicks(8421),
+                            FishId = 5,
+                            Lure = "Pirk",
+                            Technique = "Pirkefiskeri"
+                        });
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.Event", b =>
@@ -452,6 +651,30 @@ namespace LystfiskerPortalen.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            PostId = 6,
+                            Description = "Kom og vær med til årets store geddekonkurrence på Esrum Sø. Fine præmier!",
+                            LocationId = 2,
+                            Picture = "",
+                            PostTime = new DateTime(2025, 11, 11, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8585),
+                            ProfileId = "user-guid-3",
+                            EventTime = new DateTime(2026, 2, 11, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8592),
+                            Title = "Esrum Open 2025"
+                        },
+                        new
+                        {
+                            PostId = 7,
+                            Description = "Vi mødes ved broen og samler affald. Foreningen giver kaffe og kage bagefter.",
+                            LocationId = 1,
+                            Picture = "",
+                            PostTime = new DateTime(2025, 12, 4, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8611),
+                            ProfileId = "user-guid-1",
+                            EventTime = new DateTime(2025, 12, 25, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(8613),
+                            Title = "Fælles oprydning ved Gudenåen"
+                        });
                 });
 
             modelBuilder.Entity("LystfiskerPortalen.Models.GeneralPost", b =>
@@ -462,6 +685,28 @@ namespace LystfiskerPortalen.Migrations
                         .HasColumnType("bit");
 
                     b.ToTable("GeneralPosts");
+
+                    b.HasData(
+                        new
+                        {
+                            PostId = 1,
+                            Description = "Sæsonstart ved Gudenåen! Vandstanden ser perfekt ud, og vejret er med os. Knæk og bræk til alle derude.",
+                            LocationId = 1,
+                            Picture = "",
+                            PostTime = new DateTime(2025, 11, 27, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(7707),
+                            ProfileId = "user-guid-1",
+                            IsQuestion = false
+                        },
+                        new
+                        {
+                            PostId = 2,
+                            Description = "Er der nogen der har erfaring med det nye Shimano hjul? Overvejer at købe det til kystfiskeri.",
+                            LocationId = 3,
+                            Picture = "",
+                            PostTime = new DateTime(2025, 12, 6, 10, 57, 28, 60, DateTimeKind.Local).AddTicks(7828),
+                            ProfileId = "user-guid-3",
+                            IsQuestion = true
+                        });
                 });
 
             modelBuilder.Entity("CommentReactions", b =>
@@ -498,10 +743,10 @@ namespace LystfiskerPortalen.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("LystfiskerPortalen.Models.Image", b =>
+            modelBuilder.Entity("LystfiskerPortalen.Models.Picture", b =>
                 {
                     b.HasOne("LystfiskerPortalen.Models.Post", "Post")
-                        .WithMany("Images")
+                        .WithMany("Pictures")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -598,18 +843,18 @@ namespace LystfiskerPortalen.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProfileProfile", b =>
+            modelBuilder.Entity("ProfileFollowings", b =>
                 {
                     b.HasOne("LystfiskerPortalen.Models.Profile", null)
                         .WithMany()
-                        .HasForeignKey("FollowingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("LystfiskerPortalen.Models.Profile", null)
                         .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -657,7 +902,7 @@ namespace LystfiskerPortalen.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Images");
+                    b.Navigation("Pictures");
 
                     b.Navigation("Reactions");
                 });
