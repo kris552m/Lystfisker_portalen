@@ -1,11 +1,12 @@
 ﻿@inherits LayoutComponentBase
-<div class="container">
-    <NavMenu />
-    <div class="row">
-        <div class="col-12">
-            <article class="content px-4">
-                @Body
-            </article>
-        </div>
-    </div>
+<div class="page">
+    <header class="top-row-navigation">
+        <NavMenu />
+    </header>
+
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
 </div>
