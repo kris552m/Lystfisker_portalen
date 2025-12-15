@@ -1,6 +1,12 @@
-﻿@using LystfiskerPortalen.Persistence
+@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@using LystfiskerPortalen.Services
+@using Microsoft.AspNetCore.Identity
 @rendermode InteractiveServer
 
+@inject ImageService ImageService
+
+@inject NavigationManager navManager
 @inject AuthenticationStateProvider AuthState
 @inject UserManager<Profile> UserManager
 
@@ -74,7 +80,10 @@
 
             ProfileId = userId,
             IsQuestion = IsQuestion,
+            Pictures = ImageService.GetPictures()
         };
         PostRepository.Add(generalPost);
+
+        navManager.NavigateTo(navManager.Uri, forceLoad: true);
     }
 }

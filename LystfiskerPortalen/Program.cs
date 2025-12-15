@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
+using Microsoft.JSInterop;
+using LystfiskerPortalen.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddIdentityApiEndpoints<Profile>()
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<ImageService>();
 builder.Services.AddGeolocationServices();
 builder.Services.AddSignalR();
 builder.Services.AddMudServices();

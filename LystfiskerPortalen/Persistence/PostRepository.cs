@@ -12,7 +12,6 @@ namespace LystfiskerPortalen.Persistence
         private readonly LystFiskerContext context;
         public PostRepository(LystFiskerContext context)
         {
-
             this.context = context;
         }
         public Post Add(Post post)
@@ -35,8 +34,10 @@ namespace LystfiskerPortalen.Persistence
             .Include(p => p.Profile)
             .Include(p => p.Comments)
             .ThenInclude(c => c.Profile)
-            .ThenInclude(c => c.Reactions)
-            .Include(p => p.Reactions).ToList();
+            .Include(p => p.Reactions)
+            .ThenInclude(r => r.Profile)
+            .OrderByDescending(p => p.PostTime)
+            .ToList();
         }
 
         public Post? GetById(int id)
@@ -49,7 +50,7 @@ namespace LystfiskerPortalen.Persistence
             Post postToUpdate = GetById(post.PostId);
             if (postToUpdate != null)
             {
-                postToUpdate.Picture = post.Picture;
+                postToUpdate.Pictures = post.Pictures;
                 postToUpdate.Reactions = post.Reactions;
                 postToUpdate.Comments = post.Comments;
                 postToUpdate.PostTime = post.PostTime;
