@@ -2,10 +2,10 @@
 
 namespace LystfiskerPortalen.Models
 {
-    public class Image
+    public class Picture
     {
-        public int ImageId { get; set; }
-        public string ImageName { get; set; }
+        public int PictureId { get; set; }
+        public string PictureName { get; set; }
 
         [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
