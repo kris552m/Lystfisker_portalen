@@ -2,25 +2,32 @@
 @using LystfiskerPortalen.Models
 @using LystfiskerPortalen.Persistence
 @inject IPostRepository PostRepo
-
+@rendermode InteractiveServer
 
 <div class="d-flex justify-content-center mb-3">
-    <div style="width:45rem; display:flex; justify-content:space-between;">
-        <button class="btn btn-outline-secondary">Sorter Efter:</button>
+    <div style="width:45rem; display:flex; justify-content:space-between; align-items:center;">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary me-2">Sorter Efter:</button>
+            <select class="form-select" style="width:auto;" @bind="SelectedFilter">
+                <option value="All">Alle opslag</option>
+                <option value="Fangst">Fangst</option>
+                <option value="Spørgsmål">Spørgsmål</option>
+                <option value="General">General opslag</option>
+            </select>
+        </div>
         <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#catchModal">Ny Fangst</button>
     </div>
 </div>
 
 <div class="d-flex flex-column align-items-center">
     <textarea class="form-control mb-4 border-4" 
-        style="width:45rem; cursor:pointer;" 
-        placeholder="Nyt opslag.."
-        data-bs-toggle="modal" 
-        data-bs-target="#CreatePostModal"></textarea>
+    style="width:45rem; cursor:pointer;" 
+    placeholder="Nyt opslag.."
+    data-bs-toggle="modal" 
+    data-bs-target="#CreatePostModal"></textarea>
     <CreatePostModal />
-    
-      
-    @foreach (var post in Posts)
+
+    @foreach (var post in FilteredPosts)
     {
         <div class="card mb-5 border-3" style="width: 45rem;">
             <div class="card-body">
@@ -48,35 +55,58 @@
                 @foreach (var comment in post.Comments)
                 {
                     <li class="list-group-item">
-                    <img class="rounded-circle me-1" 
-                            width="24" 
-                            height="24"
-                            src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
-                            @comment.Profile | 
-                            @comment.Text
-                        </li>
+                        <img class="rounded-circle me-1" 
+                        width="24" 
+                        height="24"
+                        src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
+                        @comment.Profile | 
+                        @comment.Text
+                    </li>
                 }
             </ul>
             <EditForm Model="post" class="card-text p-2">
                 <InputTextArea class="form-control mt-2" @bind-Value="NewComment.Text"
-                    Placeholder="Skriv en kommentar..." />
+                Placeholder="Skriv en kommentar..." />
                 <button type="submit" class="btn btn-primary mt-2">Kommenter</button>
             </EditForm>
         </div>
     }
-
 </div>
 
-
-
 @code {
-    protected override void OnInitialized()
-    {
-        Posts = PostRepo.GetAll().ToList();
-        base.OnInitialized();
-    }
     public GeneralPost NewPost { get; set; } = new GeneralPost();
     public Comment NewComment { get; set; } = new Comment();
-    public List<Post> Posts { get; set; } = new List<Post>();
+    public List<Post> AllPosts { get; set; } = new();
+    private string selectedFilter = "All";
+    public string SelectedFilter
+    {
+        get => selectedFilter;
+        set
+        {
+            if (selectedFilter != value)
+            {
+                selectedFilter = value;
+                ApplyFilter();
+            }
+        }
+    }
+    public List<Post> FilteredPosts { get; set; } = new();
 
+    protected override void OnInitialized()
+    {
+        AllPosts = PostRepo.GetAll();
+        ApplyFilter();
+        base.OnInitialized();
+    }
+
+    private void ApplyFilter()
+    {
+        FilteredPosts = SelectedFilter switch
+        {
+            "Fangst" => FilteredPosts.Where(p => (p is Catch)).ToList(),
+            "Spørgsmål" => FilteredPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == true)).ToList(),
+            "General" => FilteredPosts.Where(p => (p is GeneralPost)).ToList(),
+            _ => AllPosts.ToList(),
+        };
+    }
 }
