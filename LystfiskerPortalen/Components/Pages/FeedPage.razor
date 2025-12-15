@@ -25,7 +25,7 @@
         data-bs-toggle="modal" data-bs-target="#CreatePostModal"></textarea>
     <CreatePostModal />
 
-    @foreach (var post in Posts)
+    @foreach (var post in FilteredPosts)
     {
         <div class="card mb-5 border-3" style="width: 45rem;">
             <div class="card-body">
