@@ -13,24 +13,25 @@
     {
         <div class="col">
             <div class="card" style="width: 18rem; height: 18rem">
-                <div class="card-body" >
+                <div class="card-body">
                     @* Event title *@
                     <h5 class="card-title">@Event.Title</h5>
 
                     @* Event details:  *@
                     @foreach (Picture img in Event.Pictures)
                     {
-                        <img src="@img" alt="Event image" class="img-fluid mb-2" />
+                        <img src="@img.PictureName" alt="Event image" class="img-fluid mb-2" />
                     }
-                    <p class="card-text"> @Event.Pictures <br /> @Event.EventTime </p>
+                    <p class="card-text"> <br /> @Event.EventTime </p>
 
                     @* Event description *@
                     <p class="card-text">@Event.Description</p>
                     <p class="card-text">@Event.Location</p>
 
                     @* Buttons *@
-                    <a class="btn btn-primary" asp-controller="Events" asp-action="Se mere" asp-route-id="@Event.">Se mere</a>
-                   @*
+                    <a class="btn btn-primary" asp-controller="Events" asp-action="Se mere" asp-route-id="@Event.">Se
+                        mere</a>
+                    @*
                        <a class="btn btn-danger" asp-controller="Events" asp-action="">Slet</a> 
                        <a class="btn btn-danger" asp-controller="Events" asp-action="">Rediger</a> 
                    *@
@@ -53,4 +54,3 @@
 
 
 }
-
