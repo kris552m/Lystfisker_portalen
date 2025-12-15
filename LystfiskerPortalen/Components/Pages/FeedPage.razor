@@ -5,8 +5,16 @@
 @inject IPostRepository PostRepo
 
 <div class="d-flex justify-content-center mb-3">
-    <div style="width:45rem; display:flex; justify-content:space-between;">
-        <button class="btn btn-outline-secondary">Sorter Efter:</button>
+    <div style="width:45rem; display:flex; justify-content:space-between; align-items:center;">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary me-2">Sorter Efter:</button>
+            <select class="form-select" style="width:auto;" @bind="SelectedFilter">
+                <option value="All">Alle opslag</option>
+                <option value="Fangst">Fangst</option>
+                <option value="Spørgsmål">Spørgsmål</option>
+                <option value="General">General opslag</option>
+            </select>
+        </div>
         <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#catchModal">Ny Fangst</button>
         <CatchModal />
     </div>
@@ -17,7 +25,7 @@
         data-bs-toggle="modal" data-bs-target="#CreatePostModal"></textarea>
     <CreatePostModal />
 
-    @foreach (var post in Posts)
+    @foreach (var post in FilteredPosts)
     {
         <div class="card mb-5 border-3" style="width: 45rem;">
             <div class="card-body">
@@ -38,7 +46,7 @@
                 <p class="card-text">@post.Description</p>
                 @if (post.Pictures.Count > 0)
                 {
-                    foreach(Picture img in post.Pictures)
+                    foreach (Picture img in post.Pictures)
                     {
                         <img class="card-img-top" src="@img" alt="Card image">
                     }
@@ -63,19 +71,42 @@
             </EditForm>
         </div>
     }
-
 </div>
 
-
-
 @code {
-    protected override void OnInitialized()
-    {
-        Posts = PostRepo.GetAll().ToList();
-        base.OnInitialized();
-    }
     public GeneralPost NewPost { get; set; } = new GeneralPost();
     public Comment NewComment { get; set; } = new Comment();
-    public List<Post> Posts { get; set; } = new List<Post>();
+    public List<Post> AllPosts { get; set; } = new();
+    private string selectedFilter = "All";
+    public string SelectedFilter
+    {
+        get => selectedFilter;
+        set
+        {
+            if (selectedFilter != value)
+            {
+                selectedFilter = value;
+                ApplyFilter();
+            }
+        }
+    }
+    public List<Post> FilteredPosts { get; set; } = new();
 
+    protected override void OnInitialized()
+    {
+        AllPosts = PostRepo.GetAll();
+        ApplyFilter();
+        base.OnInitialized();
+    }
+
+    private void ApplyFilter()
+    {
+        FilteredPosts = SelectedFilter switch
+        {
+            "Fangst" => FilteredPosts.Where(p => (p is Catch)).ToList(),
+            "Spørgsmål" => FilteredPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == true)).ToList(),
+            "General" => FilteredPosts.Where(p => (p is GeneralPost)).ToList(),
+            _ => AllPosts.ToList(),
+        };
+    }
 }
