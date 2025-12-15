@@ -8,6 +8,7 @@
     <div style="width:45rem; display:flex; justify-content:space-between;">
         <button class="btn btn-outline-secondary">Sorter Efter:</button>
         <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#catchModal">Ny Fangst</button>
+        <CatchModal />
     </div>
 </div>
 
@@ -15,7 +16,6 @@
     <textarea class="form-control mb-4 border-4" style="width:45rem; cursor:pointer;" placeholder="Nyt opslag.."
         data-bs-toggle="modal" data-bs-target="#CreatePostModal"></textarea>
     <CreatePostModal />
-
 
     @foreach (var post in Posts)
     {
@@ -36,9 +36,12 @@
                 </div>
                 <p class="card-text">@post.PostTime</p>
                 <p class="card-text">@post.Description</p>
-                @if (!string.IsNullOrEmpty(post.Picture))
+                @if (post.Pictures.Count > 0)
                 {
-                    <img class="card-img-top" src="@post.Picture" alt="Card image">
+                    foreach(Picture img in post.Pictures)
+                    {
+                        <img class="card-img-top" src="@img" alt="Card image">
+                    }
                 }
             </div>
             <div class="card-text ms-3 mb-2"><span class="badge bg-warning">@post.Reactions.Count</span></div>
