@@ -3,7 +3,6 @@
 @using LystfiskerPortalen.Models
 @using LystfiskerPortalen.Persistence
 @inject IPostRepository PostRepo
-@rendermode InteractiveServer
 
 <div class="d-flex justify-content-center mb-3">
     <div style="width:45rem; display:flex; justify-content:space-between; align-items:center;">
@@ -21,11 +20,8 @@
 </div>
 
 <div class="d-flex flex-column align-items-center">
-    <textarea class="form-control mb-4 border-4" 
-    style="width:45rem; cursor:pointer;" 
-    placeholder="Nyt opslag.."
-    data-bs-toggle="modal" 
-    data-bs-target="#CreatePostModal"></textarea>
+    <textarea class="form-control mb-4 border-4" style="width:45rem; cursor:pointer;" placeholder="Nyt opslag.."
+        data-bs-toggle="modal" data-bs-target="#CreatePostModal"></textarea>
     <CreatePostModal />
 
     @foreach (var post in FilteredPosts)
@@ -57,18 +53,16 @@
                 @foreach (var comment in post.Comments)
                 {
                     <li class="list-group-item">
-                        <img class="rounded-circle me-1" 
-                        width="24" 
-                        height="24"
-                        src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
-                        @comment.Profile | 
+                        <img class="rounded-circle me-1" width="24" height="24"
+                            src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
+                        @comment.Profile |
                         @comment.Text
                     </li>
                 }
             </ul>
             <EditForm Model="post" class="card-text p-2">
                 <InputTextArea class="form-control mt-2" @bind-Value="NewComment.Text"
-                Placeholder="Skriv en kommentar..." />
+                    Placeholder="Skriv en kommentar..." />
                 <button type="submit" class="btn btn-primary mt-2">Kommenter</button>
             </EditForm>
         </div>

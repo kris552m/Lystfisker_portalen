@@ -2,7 +2,7 @@
 
 namespace LystfiskerPortalen.Models
 {
-    public class Image
+    public class Picture
     {
         public int ImageId { get; set; }
         public string ImageName { get; set; }

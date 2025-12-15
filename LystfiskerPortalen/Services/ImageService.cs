@@ -6,12 +6,12 @@ namespace LystfiskerPortalen.Services
     {
         private readonly List<string> _imageNames = new();
 
-        public List<Image> GetImages()
+        public List<Picture> GetImages()
         {
-            List<Image> images = [];
+            List<Picture> images = [];
             foreach (string img in _imageNames)
             {
-                Image imgName = new Image { ImageName = img };
+                Picture imgName = new Picture { ImageName = img };
                 images.Add(imgName);
 
             }
