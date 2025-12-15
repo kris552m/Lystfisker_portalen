@@ -1,6 +1,16 @@
-﻿@rendermode InteractiveServer
+﻿@using LystfiskerPortalen.Persistence
+@rendermode InteractiveServer
+
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider AuthState
+@inject UserManager<Profile> UserManager
+
+@inject IPostRepository PostRepository
+
+
 <!-- Modal -->
-<div class="modal fade" id="CreatePostModal" tabindex="-1" role="dialog" aria-labelledby="CreatePostModalLabel" aria-hidden="true">
+<div class="modal fade" id="CreatePostModal" tabindex="-1" role="dialog" aria-labelledby="CreatePostModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,34 +20,64 @@
                 </button>
             </div>
 
-                <div class="modal-body">
-                        <ProfileComponent></ProfileComponent>
+            <div class="modal-body">
+                <ProfileComponent></ProfileComponent>
 
-                    <textarea 
-                                class="form-control" 
-                                id="message-text"
-                                style="height: 156px; margin-top:12px;"
-                                placeholder="Opret et offentligt opslag"
-                                @bind="Description"
-                                >
+                <textarea class="form-control" id="message-text" style="height: 156px; margin-top:12px;"
+                    placeholder="Opret et offentligt opslag" @bind="Description">
                     </textarea>
 
-                    <div class="form-check "style="margin:10px 8px;"> 
-                        <InputCheckbox type="checkbox" class="form-check-input" id="isQuestion" @bind-Value="IsQuestion"></InputCheckbox>
-                        <label class="form-check-label" for="isQuestion" >Er det et spørgsmål?</label> 
-                    </div>
-                    <PostAddonsComponent></PostAddonsComponent>
-
+                <div class="form-check " style="margin:10px 8px;">
+                    <InputCheckbox type="checkbox" class="form-check-input" id="isQuestion" @bind-Value="IsQuestion">
+                    </InputCheckbox>
+                    <label class="form-check-label" for="isQuestion">Er det et spørgsmål?</label>
                 </div>
-           
-            <PostCreateButton  PostType="general" Description="@Description" IsQuestion="@IsQuestion"></PostCreateButton>
+                <PostAddonsComponent OnLocationForwarded="GetLocation"></PostAddonsComponent>
+
+            </div>
+
+            <PostCreateButton OnPostCreated="CreateGeneralPost">
+            </PostCreateButton>
         </div>
     </div>
 </div>
 
 
 @code {
-    public string Description { get; set; } = null;
+    public string Description { get; set; } = string.Empty;
     public bool IsQuestion { get; set; } = false;
 
+    private double? latitude = 0.0;
+    private double? longitude = 0.0;
+
+    public void GetLocation((double lat, double lon) location)
+    {
+        latitude = location.lat;
+        longitude = location.lon;
+    }
+    public async Task CreateGeneralPost(string userId)
+    {
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var currentUser = await UserManager.GetUserAsync(user);
+
+        var generalPost = new GeneralPost
+        {
+            PostTime = DateTime.UtcNow,
+            Description = Description,
+
+            Location = new Location
+            {
+                Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
+                Latitude = latitude ?? 0.0,
+                Longitude = longitude ?? 0.0,
+            },
+
+            ProfileId = userId,
+            IsQuestion = IsQuestion,
+        };
+        PostRepository.Add(generalPost);
+
+        navManager.NavigateTo(navManager.Uri, forceLoad: true);
+    }
 }

@@ -1,17 +1,36 @@
+/* 1. FORCE TOP-TO-BOTTOM LAYOUT ALWAYS */
 .page {
-    position: relative;
+    
     display: flex;
     flex-direction: column;
+    /* This was 'row' on desktop before - that was the bug */
+    min-height: 100vh;
+    /* Ensure footer pushes down if you have one */
 }
 
 main {
     flex: 1;
 }
 
+/* 2. REMOVE SIDEBAR STYLING */
+/* We don't want a 250px fixed sidebar anymore. 
+   We want the menu to stretch full width at the top. */
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background: white;
+    /* No more gradient */
+    width: 100%;
+    /* Full width */
+    height: auto;
+    /* Height fits the content */
+    position: sticky;
+    /* Optional: keeps menu at top when scrolling */
+    top: 0;
+    z-index: 1000;
 }
 
+/* 3. CLEAN UP TOP-ROW */
+/* In the default template, top-row is the bar "About" link. 
+   You might not need this anymore if your NavMenu handles everything. */
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
@@ -21,61 +40,39 @@ main {
     align-items: center;
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
-
-        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-            text-decoration: underline;
-        }
-
-        .top-row ::deep a:first-child {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-@media (max-width: 640.98px) {
-    .top-row {
-        justify-content: space-between;
-    }
-
-        .top-row ::deep a, .top-row ::deep .btn-link {
-            margin-left: 0;
-        }
+.top-row ::deep a,
+.top-row ::deep .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
 }
 
+.top-row ::deep a:hover,
+.top-row ::deep .btn-link:hover {
+    text-decoration: underline;
+}
+
+/* 4. CONTENT PADDING */
 @media (min-width: 641px) {
+
+    /* Since we removed the sidebar, we just need to ensure 
+       the content has some breathing room */
     .page {
-        flex-direction: row;
+        flex-direction: column;
+        /* KEY FIX: Keep it column on desktop */
     }
 
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-        .top-row.auth ::deep a:first-child {
-            flex: 1;
-            text-align: right;
-            width: 0;
-        }
-
-    .top-row, article {
+    article {
         padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
+        padding-right: 2rem !important;
+        max-width: 1200px;
+        /* Optional: Stop content from getting too wide */
+        margin: 0 auto;
+        /* Center the content */
     }
 }
 
+/* 5. ERROR UI (Standard Blazor stuff) */
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -88,9 +85,9 @@ main {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}

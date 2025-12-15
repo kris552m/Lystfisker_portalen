@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@page "/"
 @using LystfiskerPortalen.Models
 @using LystfiskerPortalen.Persistence
 @inject IPostRepository PostRepo
@@ -33,12 +34,13 @@
             <div class="card-body">
                 <div class="card-title">
                     <div class="d-flex">
-                        <ProfileComponent ProfileUserName="@post.Profile.UserName"/>
+                        <ProfileComponent ProfileUserName="@post.Profile.UserName" />
                         @if ((post as GeneralPost)?.IsQuestion == true)
                         {
                             <span class="badge bg-success ms-3 " style="height:23px ">Spørgsmål</span>
                         }
-                        @if ((post is Catch)) {
+                        @if ((post is Catch))
+                        {
                             <span class="badge bg-info ms-3 " style="height:23px ">Fangst</span>
                         }
                     </div>

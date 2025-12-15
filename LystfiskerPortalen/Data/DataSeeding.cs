@@ -71,10 +71,10 @@ namespace LystfiskerPortalen.Data
             modelBuilder.Entity<Profile>().HasData(user1, user2, user3);
 
             // 4. Seed Posts
-            
+
             // General Posts
             modelBuilder.Entity<GeneralPost>().HasData(
-                new 
+                new
                 {
                     PostId = 1,
                     PostTime = DateTime.Now.AddDays(-14),
@@ -84,7 +84,7 @@ namespace LystfiskerPortalen.Data
                     LocationId = 1,
                     IsQuestion = false
                 },
-                new 
+                new
                 {
                     PostId = 2,
                     PostTime = DateTime.Now.AddDays(-5),
@@ -98,7 +98,7 @@ namespace LystfiskerPortalen.Data
 
             // Catches (Fangster)
             modelBuilder.Entity<Catch>().HasData(
-                new 
+                new
                 {
                     PostId = 3,
                     PostTime = DateTime.Now.AddDays(-10),
@@ -111,7 +111,7 @@ namespace LystfiskerPortalen.Data
                     Lure = "Spinner",
                     Technique = "Spinnefiskeri"
                 },
-                new 
+                new
                 {
                     PostId = 4,
                     PostTime = DateTime.Now.AddDays(-2),
@@ -124,7 +124,7 @@ namespace LystfiskerPortalen.Data
                     Lure = "Wobler",
                     Technique = "Dørgning"
                 },
-                new 
+                new
                 {
                     PostId = 5,
                     PostTime = DateTime.Now.AddHours(-12),
@@ -141,7 +141,7 @@ namespace LystfiskerPortalen.Data
 
             // Events
             modelBuilder.Entity<Event>().HasData(
-                new 
+                new
                 {
                     PostId = 6,
                     PostTime = DateTime.Now.AddMonths(-1),
@@ -152,7 +152,7 @@ namespace LystfiskerPortalen.Data
                     LocationId = (int?)2,
                     EventTime = DateTime.Now.AddMonths(2)
                 },
-                new 
+                new
                 {
                     PostId = 7,
                     PostTime = DateTime.Now.AddDays(-7),
