@@ -18,7 +18,11 @@
                     <h5 class="card-title">@Event.Title</h5>
 
                     @* Event details:  *@
-                    <p class="card-text"> @Event.Picture <br /> @Event.EventTime </p>
+                    @foreach (Picture img in Event.Pictures)
+                    {
+                        <img src="@img" alt="Event image" class="img-fluid mb-2" />
+                    }
+                    <p class="card-text"> @Event.Pictures <br /> @Event.EventTime </p>
 
                     @* Event description *@
                     <p class="card-text">@Event.Description</p>
