@@ -34,9 +34,10 @@ namespace LystfiskerPortalen.Persistence
             .Include(p => p.Profile)
             .Include(p => p.Comments)
             .ThenInclude(c => c.Profile)
-            .ThenInclude(c => c.Reactions)
             .Include(p => p.Reactions)
-            .Include(p => p.Pictures).ToList();
+            .ThenInclude(r => r.Profile)
+            .OrderByDescending(p => p.PostTime)
+            .ToList();
         }
 
         public Post? GetById(int id)
