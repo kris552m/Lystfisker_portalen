@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,20 @@ namespace LystfiskerPortalen.Models
     {
         //Properties
 
-        public DateTime CatchTime { get; set; }
+        public DateTime CatchTime { get; set; } = DateTime.UtcNow;
+        [Required(ErrorMessage = "Udfyld hvilket blink du har brugt")]
         public string Lure { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Udfyld hvilken teknik du har brugt")]
         public string Technique { get; set; } = string.Empty;
+
         [ForeignKey(nameof(Fish))]
         public int FishId { get; set; }
-        public Fish Fish { get; set; }
+        public Fish Fish { get; set; } = new Fish();
 
 
         //Constructor
-        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, string picture, string description, Location location, List<Comment> comments, List<Reaction> reactions)
-            : base(postTime, picture, description, location, comments, reactions)
+        public Catch(DateTime catchTime, string lure, string technique, Fish fish, DateTime postTime, List<Picture> pictures, string description, Location location, List<Comment> comments, List<Reaction> reactions)
+            : base(postTime, pictures, description, location, comments, reactions)
         {
             CatchTime = catchTime;
             Lure = lure;
@@ -31,13 +35,8 @@ namespace LystfiskerPortalen.Models
         }
         public Catch()
         {
-            
+
         }
-        
-
-
-
-
 
     }
 }

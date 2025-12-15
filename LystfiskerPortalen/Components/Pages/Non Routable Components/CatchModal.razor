@@ -1,13 +1,28 @@
-﻿<div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
+﻿@using LystfiskerPortalen.Models
+@using LystfiskerPortalen.Persistence
+@using LystfiskerPortalen.Services
+@using Microsoft.AspNetCore.Identity
+
+@rendermode InteractiveServer
+
+@inject ImageService ImageService
+@inject AuthenticationStateProvider AuthState
+@inject UserManager<Profile> UserManager
+
+@inject NavigationManager navManager
+@inject IPostRepository PostRepository
+
+<div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="catchModalLabel">Opret Fangst</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
@@ -15,119 +30,116 @@
                             <ProfileComponent />
                         </div>
 
-                        <EditForm Model="@generalPost">
+                        <EditForm Model="@Catch" OnValidSubmit="() => CreateCatchPost()">
+                            <DataAnnotationsValidator />
                             <div class="form-group">
-                                <InputTextArea class="form-control" @bind-Value="generalPost"
-                                    Placeholder="Del din fangst her..." />
+                                <InputTextArea class="form-control" @bind-value="Catch.Description"
+                                    placeholder="Fortæl os om din fangst...">
+                                </InputTextArea>
                             </div>
-                        </EditForm>
 
-                        <EditForm Model="@catchPost">
                             <div class="row">
-
                                 <div class="col-sm">
                                     <div class="form-group">
-                                        <label for="fishSpecies">Fiskearter</label>
-                                        <InputSelect @bind-Value="selectedFishSpecies" TValue="string"
-                                            class="form-select">
-                                            <option value="">Vælg fiskearter</option>
-                                            @foreach (var species in fishSpecies)
-                                            {
-                                                <option value="@species">@species</option>
-                                            }
-                                        </InputSelect>
+                                        <label for="fishSpecies">Hvilken fisk har du fanget?</label>
+                                        <InputText @bind-value="Catch.Fish.Name" class="form-control" />
+                                        <ValidationMessage For="@(() => Catch.Fish.Name)" />
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="fishWeight">Vægt</label>
-                                        <InputNumber id="fishWeight" @bind-Value="fishWeight" class="form-control" />
+                                        <label>Hvor meget vejer fisken?</label>
+                                        <InputNumber @bind-value="Catch.Fish.Weight" class="form-control" />
+                                        <ValidationMessage For="@(() => Catch.Fish.Weight)" />
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lure">Blink</label>
-                                        <InputSelect class="form-select" @bind-Value="selectedLure" TValue="string">
-                                            <option value="">Vælg blink</option>
-                                            @foreach (var lure in lures)
-                                            {
-                                                <option value="@lure">@lure</option>
-                                            }
-                                        </InputSelect>
+                                        <label>Hvilke blink anvendte du?</label>
+                                        <InputText class="form-control" @bind-value="Catch.Lure" />
+                                        <ValidationMessage For="@(() => Catch.Lure)" />
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="catchDate">Dato</label>
-                                        <InputDate id="catchDate" class="form-control" @bind-Value="catchDate" />
-                                    </div>
                                 </div>
 
                                 <div class="col-sm">
+
                                     <div class="form-group">
-                                        <label for="fishSpecies">Teknik</label>
-                                        <InputSelect @bind-Value="selectedFishingTechnique" TValue="string"
-                                            class="form-select">
-                                            <option value="">Vælg teknik</option>
-                                            @foreach (var technique in fishingTechniques)
-                                            {
-                                                <option value="@technique">@technique</option>
-                                            }
-                                        </InputSelect>
+                                        <label for="fishLength">Hvor lang er fisken?</label>
+                                        <InputNumber @bind-value="Catch.Fish.Length" class="form-control" />
+                                        <ValidationMessage For="@(() => Catch.Fish.Length)" />
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="fishLength">Længde</label>
-                                        <InputNumber id="fishLength" @bind-Value="fishLength" class="form-control" />
+                                        <label for="fishingTechniques">Hvilken teknik anvendte du?</label>
+                                        <InputText id="fishingTechniques" class="form-control"
+                                            @bind-value="Catch.Technique" />
+                                        <ValidationMessage For="@(() => Catch.Technique)" />
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <label for="equipment">Udstyr</label>
-                                        <InputTextArea id="equipment" class="form-control" @bind-Value="equipment" />
+                                    <div class="form-group" style="margin-bottom:20px;">
+                                        <label for="catchDate">Dato på fangst</label>
+                                        <InputDate id="catchDate" class="form-control" @bind-value="Catch.CatchTime" />
+                                        <ValidationMessage For="@(() => Catch.CatchTime)" />
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="timeCaught">Klokkeslæt</label>
-                                        <InputText id="timeCaught" class="form-control" @bind-Value="timeCaught" />
-                                    </div>
-
                                 </div>
                             </div>
-
-                            <PostAddonsComponent />
+                            <PostAddonsComponent OnLocationForwarded="GetLocation" />
+                            <div class="modal-footer">
+                                <button type="submit" class=" btn btn-primary">Opret fangst</button>
+                            </div>
                         </EditForm>
+
                     </div>
                 </div>
 
 
             </div>
-            <div class="modal-footer">
-                <PostCreateButton />
-            </div>
+
         </div>
     </div>
 </div>
 
 @code {
+    [SupplyParameterFromForm]
+    public Catch Catch { get; set; } = new Catch();
+
+    public void GetLocation((double lat, double lon) location)
+    {
+        latitude = location.lat;
+        longitude = location.lon;
+    }
+
+    public async Task CreateCatchPost()
+    {
+
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var currentUser = await UserManager.GetUserAsync(user);
+
+        var userId = currentUser.Id;
 
 
-    #region Slet
-    private string generalPost { get; set; } = string.Empty;
-    private string catchPost { get; set; } = string.Empty;
-    private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3" };
 
-    private string selectedFishSpecies { get; set; } = string.Empty;
+        Catch catchPost = new Catch
+        {
+            PostTime = DateTime.UtcNow,
+            Location = new Location
+            {
+                Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
+                Latitude = latitude ?? 0.0,
+                Longitude = longitude ?? 0.0,
+            },
+            ProfileId = userId,
+            Pictures = ImageService.GetPictures(),
+        };
+        catchPost.Description = Catch.Description;
+        catchPost.Fish = Catch.Fish;
+        catchPost.Lure = Catch.Lure;
+        catchPost.Technique = Catch.Technique;
+        catchPost.CatchTime = Catch.CatchTime;
 
-    private List<string> fishingTechniques = new List<string> { "Teknik 1", "Teknik 2", "Teknik 3" };
+        PostRepository.Add(catchPost);
+        navManager.NavigateTo(navManager.Uri, forceLoad: true);
+    }
 
-    private string selectedFishingTechnique { get; set; } = string.Empty;
-
-    private int fishWeight { get; set; } = 0;
-    private int fishLength { get; set; } = 0;
-
-    private string selectedLure { get; set; } = string.Empty;
-    private List<string> lures = new List<string> { "Lure1", "Lure2", "Lure3" };
-    private DateTime catchDate { get; set; } = DateTime.Now;
-    private string timeCaught { get; set; } = string.Empty;
-    private string equipment { get; set; } = string.Empty;
-
-    #endregion
+    private double? latitude;
+    private double? longitude;
 }

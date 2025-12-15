@@ -3,23 +3,23 @@
 @rendermode InteractiveServer
 @inject ImageService ImageService
 
-<div class="ms-auto d-flex">
+   
     <!-- Hidden file input -->
     <InputFile id="fileInput" OnChange="@ImageHandler" multiple class="d-none" />
 
     <!-- Label styled as a button -->
-    <label for="fileInput" class="btn btn-primary">
+    <label style="color:blue;" for="fileInput">
         <i class="bi bi-image"></i> 
     </label>
    
-</div>
+
 <div>
-    @if (ImageService.GetImages().Any())
+    @if (ImageService.GetPictures().Any())
     {
-        foreach (var img in ImageService.GetImages())
+        foreach (var pic in ImageService.GetPictures())
         {
-            <img src="@($"/Images/{img.ImageName}")"
-                 alt="@($"Uploaded image: {img.ImageName}")"
+            <img src="@($"/Images/{pic.PictureName}")"
+                 alt="@($"Uploaded image: {pic.PictureName}")"
                  style="max-width:200px; margin:5px;" />
         }
     }

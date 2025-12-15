@@ -4,28 +4,28 @@ namespace LystfiskerPortalen.Services
 {
     public class ImageService
     {
-        private readonly List<string> _imageNames = new();
+        private readonly List<string> _pictureNames = new();
 
-        public List<Picture> GetImages()
+        public List<Picture> GetPictures()
         {
-            List<Picture> images = [];
-            foreach (string img in _imageNames)
+            List<Picture> pictures = [];
+            foreach (string pic in _pictureNames)
             {
-                Picture imgName = new Picture { ImageName = img };
-                images.Add(imgName);
+                Picture picName = new Picture { PictureName = pic };
+                pictures.Add(picName);
 
             }
-            return images;
+            return pictures;
         }
 
         public void AddImage(string fileName)
         {
-            _imageNames.Add(fileName);
+            _pictureNames.Add(fileName);
         }
 
         public void ClearImages()
         {
-            _imageNames.Clear();
+            _pictureNames.Clear();
         }
     }
 }
