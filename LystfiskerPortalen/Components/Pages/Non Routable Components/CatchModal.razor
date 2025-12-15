@@ -140,61 +140,6 @@
         navManager.NavigateTo(navManager.Uri, forceLoad: true);
     }
 
-    // public async Task CreateCatchPost(string userId)
-    // {
-    // var authState = await AuthState.GetAuthenticationStateAsync();
-    // var user = authState.User;
-    // var currentUser = await UserManager.GetUserAsync(user);
-
-
-
-    // var catchPost = new Catch
-    // {
-    // PostTime = DateTime.UtcNow,
-    // Description = description,
-
-    // Location = new Location
-    // {
-    // Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
-    // Latitude = latitude ?? 0.0,
-    // Longitude = longitude ?? 0.0,
-    // },
-
-    // ProfileId = userId,
-    // Pictures = ImageService.GetPictures(),
-
-    // Fish = new Fish
-    // {
-    // Name = selectedFishSpecies,
-    // Weight = fishWeight,
-    // Length = fishLength
-    // },
-
-    // CatchTime = catchDate,
-    // Technique = selectedFishingTechnique,
-    // Lure = selectedLure
-
-    // };
-    // PostRepository.Add(catchPost);
-    // }
-
     private double? latitude;
     private double? longitude;
-
-    #region Slet
-    // private string description { get; set; } = string.Empty;
-    // private string catchPost { get; set; } = string.Empty;
-    // private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3"
-    // private string selectedFishSpecies { get; set; } = string.Empty;
-    // private List<string> fishingTechniques = new List<string> { "Teknik 1", "Teknik 2", "Teknik 3" };
-    // private string selectedFishingTechnique { get; set; } = string.Empty;
-    // private int fishWeight { get; set; } = 0;
-    // private int fishLength { get; set; } = 0;
-    // private string selectedLure { get; set; } = string.Empty;
-    // private List<string> lures = new List<string> { "Lure1", "Lure2", "Lure3" };
-    // private DateTime catchDate { get; set; } = DateTime.Now;
-    // private string timeCaught { get; set; } = string.Empty;
-    // private string equipment { get; set; } = string.Empty;
-
-    #endregion
 }
