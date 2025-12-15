@@ -13,11 +13,10 @@ namespace LystfiskerPortalen.Models
     {
         //Properties
 
-        
-        public DateTime CatchTime { get; set; }
-        [Required(ErrorMessage ="Udfyld hvilket blink du har brugt")]
+        public DateTime CatchTime { get; set; } = DateTime.UtcNow;
+        [Required(ErrorMessage = "Udfyld hvilket blink du har brugt")]
         public string Lure { get; set; } = string.Empty;
-        [Required(ErrorMessage ="Udfyld hvilken teknik du har brugt")]
+        [Required(ErrorMessage = "Udfyld hvilken teknik du har brugt")]
         public string Technique { get; set; } = string.Empty;
 
         [ForeignKey(nameof(Fish))]
@@ -36,8 +35,8 @@ namespace LystfiskerPortalen.Models
         }
         public Catch()
         {
-            
+
         }
-        
+
     }
 }

@@ -12,12 +12,10 @@ namespace LystfiskerPortalen.Persistence
         private readonly LystFiskerContext context;
         public PostRepository(LystFiskerContext context)
         {
-
             this.context = context;
         }
         public Post Add(Post post)
         {
-
             context.Posts.Add(post);
             context.SaveChanges();
             return post;

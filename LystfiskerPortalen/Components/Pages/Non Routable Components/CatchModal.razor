@@ -8,6 +8,8 @@
 @inject ImageService ImageService
 @inject AuthenticationStateProvider AuthState
 @inject UserManager<Profile> UserManager
+
+@inject NavigationManager navManager
 @inject IPostRepository PostRepository
 
 <div class="modal fade" id="catchModal" tabindex="-1" role="dialog" aria-labelledby="catchModalLabel"
@@ -16,7 +18,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="catchModalLabel">Opret Fangst</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -28,14 +30,12 @@
                             <ProfileComponent />
                         </div>
 
-                        <EditForm Model="@Catch" OnValidSubmit="()=>CreateCatchPost()">
+                        <EditForm Model="@Catch" OnValidSubmit="() => CreateCatchPost()">
                             <DataAnnotationsValidator />
                             <div class="form-group">
-                                <InputTextArea 
-                                    class="form-control" 
-                                    @bind-value="Catch.Description"
+                                <InputTextArea class="form-control" @bind-value="Catch.Description"
                                     placeholder="Fortæl os om din fangst...">
-                            </InputTextArea>
+                                </InputTextArea>
                             </div>
 
                             <div class="row">
@@ -70,7 +70,8 @@
 
                                     <div class="form-group">
                                         <label for="fishingTechniques">Hvilken teknik anvendte du?</label>
-                                        <InputText id="fishingTechniques" class="form-control" @bind-value="Catch.Technique" />
+                                        <InputText id="fishingTechniques" class="form-control"
+                                            @bind-value="Catch.Technique" />
                                         <ValidationMessage For="@(() => Catch.Technique)" />
                                     </div>
                                     <div class="form-group" style="margin-bottom:20px;">
@@ -80,12 +81,12 @@
                                     </div>
                                 </div>
                             </div>
-                        <PostAddonsComponent OnLocationForwarded="GetLocation" />
+                            <PostAddonsComponent OnLocationForwarded="GetLocation" />
                             <div class="modal-footer">
                                 <button type="submit" class=" btn btn-primary">Opret fangst</button>
                             </div>
                         </EditForm>
-            
+
                     </div>
                 </div>
 
@@ -108,14 +109,14 @@
 
     public async Task CreateCatchPost()
     {
-        
+
         var authState = await AuthState.GetAuthenticationStateAsync();
         var user = authState.User;
         var currentUser = await UserManager.GetUserAsync(user);
 
         var userId = currentUser.Id;
 
-        
+
 
         Catch catchPost = new Catch
         {
@@ -129,48 +130,52 @@
             ProfileId = userId,
             Pictures = ImageService.GetPictures(),
         };
-        
-        catchPost = Catch;
+        catchPost.Description = Catch.Description;
+        catchPost.Fish = Catch.Fish;
+        catchPost.Lure = Catch.Lure;
+        catchPost.Technique = Catch.Technique;
+        catchPost.CatchTime = Catch.CatchTime;
 
         PostRepository.Add(catchPost);
+        navManager.NavigateTo(navManager.Uri, forceLoad: true);
     }
 
     // public async Task CreateCatchPost(string userId)
     // {
-    //     var authState = await AuthState.GetAuthenticationStateAsync();
-    //     var user = authState.User;
-    //     var currentUser = await UserManager.GetUserAsync(user);
+    // var authState = await AuthState.GetAuthenticationStateAsync();
+    // var user = authState.User;
+    // var currentUser = await UserManager.GetUserAsync(user);
 
-    
 
-    //     var catchPost = new Catch
-    //     {
-    //         PostTime = DateTime.UtcNow,
-    //         Description = description,
 
-    //         Location = new Location
-    //         {
-    //             Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
-    //             Latitude = latitude ?? 0.0,
-    //             Longitude = longitude ?? 0.0,
-    //         },
+    // var catchPost = new Catch
+    // {
+    // PostTime = DateTime.UtcNow,
+    // Description = description,
 
-    //         ProfileId = userId,
-    //         Pictures = ImageService.GetPictures(),
+    // Location = new Location
+    // {
+    // Name = "Location Name", //Før dette linje kunne vi f.eks. kalde en geokodningsservice for at få et rigtigt navn
+    // Latitude = latitude ?? 0.0,
+    // Longitude = longitude ?? 0.0,
+    // },
 
-    //         Fish = new Fish
-    //         {
-    //             Name = selectedFishSpecies,
-    //             Weight = fishWeight,
-    //             Length = fishLength
-    //         },
+    // ProfileId = userId,
+    // Pictures = ImageService.GetPictures(),
 
-    //         CatchTime = catchDate,
-    //         Technique = selectedFishingTechnique,
-    //         Lure = selectedLure
-            
-    //     };
-    //     PostRepository.Add(catchPost);
+    // Fish = new Fish
+    // {
+    // Name = selectedFishSpecies,
+    // Weight = fishWeight,
+    // Length = fishLength
+    // },
+
+    // CatchTime = catchDate,
+    // Technique = selectedFishingTechnique,
+    // Lure = selectedLure
+
+    // };
+    // PostRepository.Add(catchPost);
     // }
 
     private double? latitude;
@@ -179,7 +184,7 @@
     #region Slet
     // private string description { get; set; } = string.Empty;
     // private string catchPost { get; set; } = string.Empty;
-    // private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3" 
+    // private List<string> fishSpecies = new List<string> { "Fiskearter 1", "Fiskearter 2", "Fiskearter 3"
     // private string selectedFishSpecies { get; set; } = string.Empty;
     // private List<string> fishingTechniques = new List<string> { "Teknik 1", "Teknik 2", "Teknik 3" };
     // private string selectedFishingTechnique { get; set; } = string.Empty;
