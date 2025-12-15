@@ -1,11 +1,14 @@
 using LystfiskerPortalen.Components;
+using LystfiskerPortalen.Components.Account;
 using LystfiskerPortalen.Data;
+using LystfiskerPortalen.Hubs;
 using LystfiskerPortalen.Models;
 using LystfiskerPortalen.Persistence;
-using Microsoft.EntityFrameworkCore;
-using LystfiskerPortalen.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
+
 using Microsoft.JSInterop;
 using LystfiskerPortalen.Services;
 
@@ -21,6 +24,8 @@ builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddGeolocationServices();
+builder.Services.AddSignalR();
+builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -62,5 +67,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapAdditionalIdentityEndpoints(); ;
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
