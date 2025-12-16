@@ -148,8 +148,7 @@
         catchPost.CatchTime = Catch.CatchTime;
 
         PostRepository.Add(catchPost);
-        StateHasChanged();
-        @* navManager.NavigateTo(navManager.Uri, forceLoad: true); *@
+        navManager.NavigateTo(navManager.Uri, forceLoad: true);
     }
 
     private double? latitude;

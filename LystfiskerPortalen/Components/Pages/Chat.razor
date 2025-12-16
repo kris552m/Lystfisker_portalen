@@ -7,37 +7,45 @@
 <h3>Chat Application</h3>
 
 <div>
-    <input @bind="UserName" placeholder="Enter your name" />
-    <input @bind="MessageInput" placeholder="Enter your message" @onkeypress="SendOnEnter" />
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SendMessage">Send</MudButton>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="UserName" Placeholder="Enter your name" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="MessageInput" Placeholder="Enter your message" OnKeyPress="SendOnEnter" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
+        </MudItem>
+    </MudGrid>
 </div>
 
 <div style="margin-top: 20px;">
     <h4>Messages:</h4>
-  
-        @foreach (var message in Messages)
+
+    @foreach (var message in Messages)
     {
-          <MudChat ChatPosition="ChatBubblePosition.Start">
+        <MudChat ChatPosition="ChatBubblePosition.Start">
             <MudAvatar>
                 <MudImage Src="Images/Logo1.png" />
             </MudAvatar>
             <MudChatBubble Variant="Variant.Filled" Color="Color.Dark">
                 @message
             </MudChatBubble>
-         </MudChat>
+        </MudChat>
 
-        }
-       
-    
+    }
+
+
 </div>
 <MudChat ChatPosition="ChatBubblePosition.Start">
-    
+
 </MudChat>
 
 @code {
     private HubConnection? hubConnection;
     private string? UserName;
-    
+
     private string? MessageInput;
     private List<string> Messages = new();
 
@@ -45,8 +53,8 @@
     {
         // Initialize SignalR connection
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-            .Build();
+        .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+        .Build();
 
         // Listen to incoming messages
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>

@@ -103,9 +103,9 @@
     {
         FilteredPosts = SelectedFilter switch
         {
-            "Fangst" => FilteredPosts.Where(p => (p is Catch)).ToList(),
-            "Spørgsmål" => FilteredPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == true)).ToList(),
-            "General" => FilteredPosts.Where(p => (p is GeneralPost)).ToList(),
+            "Fangst" => AllPosts.Where(p => (p is Catch)).ToList(),
+            "Spørgsmål" => AllPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == true)).ToList(),
+            "General" => AllPosts.Where(p => (p is GeneralPost)).ToList(),
             _ => AllPosts.ToList(),
         };
     }
