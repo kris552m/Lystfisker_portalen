@@ -45,7 +45,7 @@ else
                     <div class="card mb-3">
                         <div class="card-body">
                             <h6 class="card-title">@post.Description</h6>
-                            @if (!string.IsNullOrWhiteSpace(post.Pictures[0].PictureName))
+                            @if (post.Pictures.Count > 0 && !string.IsNullOrWhiteSpace(post.Pictures[0].PictureName))
                             {
                                 foreach (Picture img in post.Pictures)
                                 {

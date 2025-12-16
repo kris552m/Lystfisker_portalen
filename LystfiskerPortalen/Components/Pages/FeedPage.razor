@@ -113,13 +113,23 @@
                     }
                 </MudList>
                 <MudCardContent>
-                    <EditForm Model="post">
-                        <MudTextField @bind-Value="NewComment.Text" Placeholder="Skriv en kommentar..."
-                            Variant="Variant.Outlined" Lines="2" FullWidth="true" />
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2" ButtonType="ButtonType.Submit">
-                            Kommenter
-                        </MudButton>
-                    </EditForm>
+                    <AuthorizeView Context="authContext">
+                        <Authorized>
+                            <EditForm Model="@GetCommentModel(catchPost.PostId)" OnValidSubmit="@(() => AddComment(catchPost))">
+                                <MudTextField @bind-Value="@GetCommentModel(catchPost.PostId).Text"
+                                    Placeholder="Skriv en kommentar..." Variant="Variant.Outlined" Lines="2" FullWidth="true" />
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2"
+                                    ButtonType="ButtonType.Submit">
+                                    Kommenter
+                                </MudButton>
+                            </EditForm>
+                        </Authorized>
+                        <NotAuthorized>
+                            <MudText Typo="Typo.body2" Color="Color.Default" Class="pa-2">
+                                Log ind for at kommentere
+                            </MudText>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </MudCardContent>
             </MudCard>
         }
@@ -163,23 +173,31 @@
                     }
                 </MudList>
                 <MudCardContent>
-                    <EditForm Model="post">
-                        <MudTextField @bind-Value="NewComment.Text" Placeholder="Skriv en kommentar..."
-                            Variant="Variant.Outlined" Lines="2" FullWidth="true" />
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2" ButtonType="ButtonType.Submit">
-                            Kommenter
-                        </MudButton>
-                    </EditForm>
+                    <AuthorizeView Context="authContext">
+                        <Authorized>
+                            <EditForm Model="@GetCommentModel(post.PostId)" OnValidSubmit="@(() => AddComment(post))">
+                                <MudTextField @bind-Value="@GetCommentModel(post.PostId).Text"
+                                    Placeholder="Skriv en kommentar..." Variant="Variant.Outlined" Lines="2" FullWidth="true" />
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2"
+                                    ButtonType="ButtonType.Submit">
+                                    Kommenter
+                                </MudButton>
+                            </EditForm>
+                        </Authorized>
+                        <NotAuthorized>
+                            <MudText Typo="Typo.body2" Color="Color.Default" Class="pa-2">
+                                Log ind for at kommentere
+                            </MudText>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </MudCardContent>
             </MudCard>
         }
     }
 </MudContainer>
 @code {
-
-
     public GeneralPost NewPost { get; set; } = new GeneralPost();
-    public Comment NewComment { get; set; } = new Comment();
+    private Dictionary<int, Comment> commentModels = new();
     public List<Post> AllPosts { get; set; } = new();
     private string selectedFilter = "All";
     public string SelectedFilter
@@ -212,5 +230,52 @@
             "General" => AllPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == false)).ToList(),
             _ => AllPosts.ToList(),
         };
+    }
+    //Vi havde problemet før at vores kommentar var synkroniseret på tværs af alle posts, Vi bruger her en dictionary for at adskille kommentarene per post.
+    //Samme logik som at bruge et for loop over en foreach.
+    private Comment GetCommentModel(int postId)
+    {
+        if (!commentModels.ContainsKey(postId))
+        {
+            commentModels[postId] = new Comment();
+        }
+        return commentModels[postId];
+    }
+
+    private async Task AddComment(Post post)
+    {
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (!user.Identity?.IsAuthenticated ?? true)
+        {
+            return;
+        }
+
+        var currentUser = await UserManager.GetUserAsync(user);
+        var commentModel = GetCommentModel(post.PostId);
+
+        if (string.IsNullOrWhiteSpace(commentModel.Text))
+        {
+            return;
+        }
+
+        var newComment = new Comment
+        {
+            Text = commentModel.Text,
+            ProfileId = currentUser.Id,
+            Profile = currentUser,
+            PostId = post.PostId,
+            CommentTime = DateTime.UtcNow
+        };
+
+        post.Comments.Add(newComment);
+        PostRepo.Update(post);
+
+        commentModel.Text = string.Empty;
+
+        AllPosts = PostRepo.GetAll();
+        ApplyFilter();
+        StateHasChanged();
     }
 }
