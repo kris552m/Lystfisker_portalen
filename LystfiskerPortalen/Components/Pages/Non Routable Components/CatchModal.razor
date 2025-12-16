@@ -82,9 +82,20 @@
                                 </div>
                             </div>
                             <PostAddonsComponent OnLocationForwarded="GetLocation" />
-                            <div class="modal-footer">
-                                <button type="submit" class=" btn btn-primary">Opret fangst</button>
-                            </div>
+                            <AuthorizeView Context="authContext">
+                                <Authorized>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary w-100">Opret Fangst</button>
+                                    </div>
+                                </Authorized>
+                                <NotAuthorized>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary w-100" disabled>Log ind for at
+                                            oprette
+                                            fangst</button>
+                                    </div>
+                                </NotAuthorized>
+                            </AuthorizeView>
                         </EditForm>
 
                     </div>
@@ -137,7 +148,8 @@
         catchPost.CatchTime = Catch.CatchTime;
 
         PostRepository.Add(catchPost);
-        navManager.NavigateTo(navManager.Uri, forceLoad: true);
+        StateHasChanged();
+        @* navManager.NavigateTo(navManager.Uri, forceLoad: true); *@
     }
 
     private double? latitude;
