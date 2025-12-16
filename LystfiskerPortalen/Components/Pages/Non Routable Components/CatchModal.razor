@@ -47,7 +47,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Hvor meget vejer fisken?</label>
+                                        <label>Hvor meget vejer fisken? (kg)</label>
                                         <InputNumber @bind-value="Catch.Fish.Weight" class="form-control" />
                                         <ValidationMessage For="@(() => Catch.Fish.Weight)" />
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="col-sm">
 
                                     <div class="form-group">
-                                        <label for="fishLength">Hvor lang er fisken?</label>
+                                        <label for="fishLength">Hvor lang er fisken? (cm)</label>
                                         <InputNumber @bind-value="Catch.Fish.Length" class="form-control" />
                                         <ValidationMessage For="@(() => Catch.Fish.Length)" />
                                     </div>
@@ -82,20 +82,22 @@
                                 </div>
                             </div>
                             <PostAddonsComponent OnLocationForwarded="GetLocation" />
-                            <AuthorizeView Context="authContext">
-                                <Authorized>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary w-100">Opret Fangst</button>
-                                    </div>
-                                </Authorized>
-                                <NotAuthorized>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary w-100" disabled>Log ind for at
-                                            oprette
-                                            fangst</button>
-                                    </div>
-                                </NotAuthorized>
-                            </AuthorizeView>
+                            <div>
+                                <AuthorizeView Context="authContext">
+                                    <Authorized>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary w-100">Opret Fangst</button>
+                                        </div>
+                                    </Authorized>
+                                    <NotAuthorized>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary w-100" disabled>Log ind for at
+                                                oprette
+                                                fangst</button>
+                                        </div>
+                                    </NotAuthorized>
+                                </AuthorizeView>
+                            </div>
                         </EditForm>
 
                     </div>

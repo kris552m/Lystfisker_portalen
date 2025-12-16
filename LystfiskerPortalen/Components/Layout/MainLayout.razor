@@ -1,25 +1,22 @@
 ﻿@inherits LayoutComponentBase
+
+<MudThemeProvider @rendermode="InteractiveServer" />
+<MudPopoverProvider @rendermode="InteractiveServer" />
+<MudDialogProvider @rendermode="InteractiveServer" />
+<MudSnackbarProvider @rendermode="InteractiveServer" />
+
 <div class="page">
     <header class="top-row-navigation">
         <NavMenu />
     </header>
 
-   
+
     <div class="container">
-   
+
         <div class="row">
             <div class="col-12">
                 <article class="content px-4">
                     @Body
-                    @* Required *@
-                    <MudThemeProvider />
-                    <MudPopoverProvider />
-
-                    @* Needed for dialogs *@
-                    <MudDialogProvider />
-
-                    @* Needed for snackbars *@
-                    <MudSnackbarProvider />
                 </article>
             </div>
         </div>

@@ -2,78 +2,182 @@
 @page "/"
 @using LystfiskerPortalen.Models
 @using LystfiskerPortalen.Persistence
+@using MudBlazor
+@using Microsoft.AspNetCore.Identity
 @inject IPostRepository PostRepo
+@inject AuthenticationStateProvider AuthState
+@inject UserManager<Profile> UserManager
 
-<div class="d-flex justify-content-center mb-3">
-    <div style="width:45rem; display:flex; justify-content:space-between; align-items:center;">
-        <div class="d-flex align-items-center">
-            <button class="btn btn-outline-secondary me-2">Sorter Efter:</button>
-            <select class="form-select" style="width:auto;" @bind="SelectedFilter">
-                <option value="All">Alle opslag</option>
-                <option value="Fangst">Fangst</option>
-                <option value="Spørgsmål">Spørgsmål</option>
-                <option value="General">General opslag</option>
-            </select>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudPaper Class="pa-4 mb-4" Elevation="0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <MudText Typo="Typo.body1">Sorter Efter:</MudText>
+                <MudSelect T="string" @bind-Value="SelectedFilter" Variant="Variant.Outlined" Dense="true"
+                    Style="min-width: 150px;">
+                    <MudSelectItem T="string" Value="@("All")">Alle opslag</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Fangst")">Fangst</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Spørgsmål")">Spørgsmål</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("General")">General opslag</MudSelectItem>
+                </MudSelect>
+            </div>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => { })" data-bs-toggle="modal"
+                data-bs-target="#catchModal">
+                Ny Fangst
+            </MudButton>
+            <CatchModal />
         </div>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#catchModal">Ny Fangst</button>
-        <CatchModal />
-    </div>
-</div>
+    </MudPaper>
 
-<div class="d-flex flex-column align-items-center">
-    <textarea class="form-control mb-4 border-4" style="width:45rem; cursor:pointer;" placeholder="Nyt opslag.."
-        data-bs-toggle="modal" data-bs-target="#CreatePostModal"></textarea>
+    <MudPaper Class="pa-4 mb-4" Elevation="1" Style="cursor:pointer;" data-bs-toggle="modal"
+        data-bs-target="#CreatePostModal">
+        <MudText Typo="Typo.body1" Color="Color.Default">Nyt opslag...</MudText>
+    </MudPaper>
     <CreatePostModal />
 
     @foreach (var post in FilteredPosts)
     {
-        <div class="card mb-5 border-3" style="width: 45rem;">
-            <div class="card-body">
-                <div class="card-title">
-                    <div class="d-flex">
+        @if (post is Catch catchPost)
+        {
+            <MudCard Class="mb-4" Elevation="2">
+                <MudCardContent>
+                    <div class="d-flex align-items-center mb-2">
+                        <ProfileComponent ProfileUserName="@post.Profile.UserName" />
+                        <MudChip T="string" Color="Color.Info" Size="Size.Small" Class="ms-3">Fangst</MudChip>
+                    </div>
+                    <MudText Typo="Typo.caption" Color="Color.Default" Class="mb-2">
+                        @post.PostTime.ToString("dd/MM/yyyy HH:mm")
+                    </MudText>
+                    @if (!string.IsNullOrEmpty(post.Description))
+                    {
+                        <MudText Typo="Typo.body1" Class="mb-3">@post.Description</MudText>
+                    }
+
+                    <MudPaper Class="pa-3 mb-3" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                        <MudText Typo="Typo.h6" Class="mb-3">Fangst:</MudText>
+                        <MudGrid Spacing="2">
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Fisk:</strong> @catchPost.Fish.Name</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Vægt:</strong> @catchPost.Fish.Weight kg
+                                </MudText>
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Længde:</strong> @catchPost.Fish.Length cm
+                                </MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Blink:</strong> @catchPost.Lure</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Teknik:</strong> @catchPost.Technique</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-1"><strong>Fanget:</strong>
+                                    @catchPost.CatchTime.ToString("dd/MM/yyyy")</MudText>
+                            </MudItem>
+                        </MudGrid>
+                        @if (catchPost.Location != null && (catchPost.Location.Latitude != 0 || catchPost.Location.Longitude !=
+                                        0))
+                        {
+                            <MudText Typo="Typo.body2">
+                                <strong>Lokation:</strong>
+                                @if (!string.IsNullOrEmpty(catchPost.Location.Name) && catchPost.Location.Name != "Location Name")
+                                {
+                                    @catchPost.Location.Name
+                                }
+                                else
+                                {
+                                    <span>@catchPost.Location.Latitude.ToString("F4"),
+                                        @catchPost.Location.Longitude.ToString("F4")</span>
+                                }
+                            </MudText>
+                        }
+                    </MudPaper>
+
+                    @if (post.Pictures.Count > 0)
+                    {
+                        foreach (Picture img in post.Pictures)
+                        {
+                            <MudImage Src="@img.ToString()" Alt="Fangst billede" Class="rounded mb-2" Style="width: 100%;" />
+                        }
+                    }
+                </MudCardContent>
+                <MudCardActions>
+                    <MudChip T="string" Color="Color.Warning" Size="Size.Small">👍 @post.Reactions.Count</MudChip>
+                </MudCardActions>
+                <MudDivider />
+                <MudList T="string" Dense="true">
+                    @foreach (var comment in post.Comments)
+                    {
+                        <MudListItem T="string">
+                            <div class="d-flex align-items-center gap-2">
+                                <MudAvatar Size="Size.Small"
+                                    Image="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
+                                <MudText Typo="Typo.body2">@comment.Profile | @comment.Text</MudText>
+                            </div>
+                        </MudListItem>
+                    }
+                </MudList>
+                <MudCardContent>
+                    <EditForm Model="post">
+                        <MudTextField @bind-Value="NewComment.Text" Placeholder="Skriv en kommentar..."
+                            Variant="Variant.Outlined" Lines="2" FullWidth="true" />
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2" ButtonType="ButtonType.Submit">
+                            Kommenter
+                        </MudButton>
+                    </EditForm>
+                </MudCardContent>
+            </MudCard>
+        }
+        else
+        {
+            <MudCard Class="mb-4" Elevation="2">
+                <MudCardContent>
+                    <div class="d-flex align-items-center mb-2">
                         <ProfileComponent ProfileUserName="@post.Profile.UserName" />
                         @if ((post as GeneralPost)?.IsQuestion == true)
                         {
-                            <span class="badge bg-success ms-3 " style="height:23px ">Spørgsmål</span>
-                        }
-                        @if ((post is Catch))
-                        {
-                            <span class="badge bg-info ms-3 " style="height:23px ">Fangst</span>
+                            <MudChip T="string" Color="Color.Success" Size="Size.Small" Class="ms-3">Spørgsmål</MudChip>
                         }
                     </div>
-                </div>
-                <p class="card-text">@post.PostTime</p>
-                <p class="card-text">@post.Description</p>
-                @if (post.Pictures.Count > 0)
-                {
-                    foreach (Picture img in post.Pictures)
+                    <MudText Typo="Typo.caption" Color="Color.Default" Class="mb-2">
+                        @post.PostTime.ToString("dd/MM/yyyy HH:mm")
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="mb-2">@post.Description</MudText>
+                    @if (post.Pictures.Count > 0)
                     {
-                        <img class="card-img-top" src="@img" alt="Card image">
+                        foreach (Picture img in post.Pictures)
+                        {
+                            <MudImage Src="@img.ToString()" Alt="Post billede" Style="width: 100%;" />
+                        }
                     }
-                }
-            </div>
-            <div class="card-text ms-3 mb-2"><span class="badge bg-warning">@post.Reactions.Count</span></div>
-            <ul class="list-group list-group-flush">
-                @foreach (var comment in post.Comments)
-                {
-                    <li class="list-group-item">
-                        <img class="rounded-circle me-1" width="24" height="24"
-                            src="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
-                        @comment.Profile |
-                        @comment.Text
-                    </li>
-                }
-            </ul>
-            <EditForm Model="post" class="card-text p-2">
-                <InputTextArea class="form-control mt-2" @bind-Value="NewComment.Text"
-                    Placeholder="Skriv en kommentar..." />
-                <button type="submit" class="btn btn-primary mt-2">Kommenter</button>
-            </EditForm>
-        </div>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudChip T="string" Color="Color.Warning" Size="Size.Small">👍 @post.Reactions.Count</MudChip>
+                </MudCardActions>
+                <MudDivider />
+                <MudList T="string" Dense="true">
+                    @foreach (var comment in post.Comments)
+                    {
+                        <MudListItem T="string">
+                            <div class="d-flex align-items-center gap-2">
+                                <MudAvatar Size="Size.Small"
+                                    Image="@(comment.Profile.ProfilePicture ?? "https://github.com/mdo.png")" />
+                                <MudText Typo="Typo.body2">@comment.Profile | @comment.Text</MudText>
+                            </div>
+                        </MudListItem>
+                    }
+                </MudList>
+                <MudCardContent>
+                    <EditForm Model="post">
+                        <MudTextField @bind-Value="NewComment.Text" Placeholder="Skriv en kommentar..."
+                            Variant="Variant.Outlined" Lines="2" FullWidth="true" />
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2" ButtonType="ButtonType.Submit">
+                            Kommenter
+                        </MudButton>
+                    </EditForm>
+                </MudCardContent>
+            </MudCard>
+        }
     }
-</div>
-
+</MudContainer>
 @code {
+
+
     public GeneralPost NewPost { get; set; } = new GeneralPost();
     public Comment NewComment { get; set; } = new Comment();
     public List<Post> AllPosts { get; set; } = new();
@@ -105,7 +209,7 @@
         {
             "Fangst" => AllPosts.Where(p => (p is Catch)).ToList(),
             "Spørgsmål" => AllPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == true)).ToList(),
-            "General" => AllPosts.Where(p => (p is GeneralPost)).ToList(),
+            "General" => AllPosts.Where(p => (p is GeneralPost gp && gp.IsQuestion == false)).ToList(),
             _ => AllPosts.ToList(),
         };
     }
